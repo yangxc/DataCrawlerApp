@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="layout">
+    <head>
+	    <meta charset="utf-8" />
+	    <title>首页</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<body>
+		<div layout:fragment="left-menu">
+			<div>
+				<ul class="nav nav-pills nav-stacked">
+					<li class="active"><a href="#"><span
+							class="glyphicon glyphicon-list"></span> 采集</a></li>
+				</ul>
+			</div>
+			<div class="navbar-header" style="width: 100%;">
+				<h4 class="navbar-text">
+					<span class="glyphicon glyphicon-folder-open"></span> 采集任务
+				</h4>
+			</div>
+			<div style="margin-top: 50px;">
+				<ul class="nav nav-pills nav-stacked">
+					<li style="padding-left: 30px;"><a href="#"><span
+							class="badge pull-right">2</span> 就绪</a></li>
+					<li style="padding-left: 30px;"><a href="#"><span
+							class="badge pull-right">2</span> 运行中</a></li>
+					<li style="padding-left: 30px;"><a href="#"><span
+							class="badge pull-right">0</span> 已暂停</a></li>
+					<li style="padding-left: 30px;"><a href="#"><span
+							class="badge pull-right">2</span> 已停止</a></li>
+					<li style="padding-left: 30px;"><a href="#"><span
+							class="badge pull-right">3</span> 已完成</a></li>
+				</ul>
+			</div>
+			<div class="navbar-header" style="width: 100%;">
+				<h4 class="navbar-text">
+					<span class="glyphicon glyphicon-folder-close "></span> 采集分组
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="task/createGroup.html#myModal" class="dropdown-toggle" data-toggle="modal"> 
+						<span class="glyphicon glyphicon-plus"></span>
+					</a>
+				</h4>
+			</div>
+			<div style="margin-top: 50px;">
+				<ul class="nav nav-pills nav-stacked">
+					<li>
+						<a href="../skm/taskGroup.html">
+							<span class="badge pull-left">组</span> &nbsp;&nbsp;期刊类
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span class="badge pull-left">组</span>&nbsp;&nbsp;新闻类
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div  layout:fragment="righttopfirstmenu">
+			<div>
+				<p class="navbar-text">采集任务</p>
+			</div>
+			<div>
+				<form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+						<select class="form-control input-sm" style="width: 120px;">
+							<option value="">全部</option>
+							<option value="">就绪</option>
+							<option value="">运行中</option>
+							<option value="">已完成</option>
+							<option value="">已暂停</option>
+							<option value="">已停止</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="请输入任务名称"/>
+					</div>
+					<button type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</form>
+			</div>
+		</div>
+		<div layout:fragment="righttopsecondmenu">
+			<!--向左对齐-->
+			<form class="navbar-form navbar-left" role="search">
+				<button type="button" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-play"></span> 开始
+				</button>
+				&nbsp; &nbsp;
+				<button type="button" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-pause"></span> 暂停
+				</button>
+				&nbsp; &nbsp;
+				<button type="button" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-stop"></span> 停止
+				</button>
+				&nbsp; &nbsp;
+				<button type="button" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-remove"></span> 删除
+				</button>
+			</form>
+			<!--向右对齐-->
+			<form class="navbar-form navbar-right" role="search">
+				<button type="submit" class="btn btn-success" data-toggle="modal"
+					data-target="#myModal" style="width: 120px;">新建采集</button>
+				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+			</form>
+		</div>
+		<div layout:fragment="content">
+			采集主体内容
+		</div>
+	</body>
+</html>
