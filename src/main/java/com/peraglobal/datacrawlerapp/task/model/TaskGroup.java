@@ -1,10 +1,14 @@
 package com.peraglobal.datacrawlerapp.task.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskGroup {
 
 	private Long groupId;
 	private Long parentId;
 	private String groupName;
+	private List<TaskGroup> children = new ArrayList<>();
 	
 	public Long getGroupId() {
 		return groupId;
@@ -23,6 +27,16 @@ public class TaskGroup {
 	}
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+	public List<TaskGroup> getChildren() {
+		return children;
+	}
+	public void setChildren(List<TaskGroup> children) {
+		this.children = children;
+	}
+	
+	public void addChild(TaskGroup taskGroup) {
+		this.children.add(taskGroup);
 	}
 	
 }

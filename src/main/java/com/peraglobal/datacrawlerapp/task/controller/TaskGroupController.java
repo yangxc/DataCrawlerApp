@@ -1,15 +1,37 @@
+/**
+ * 用于进行采集任务分组操作的控制器；
+ */
 package com.peraglobal.datacrawlerapp.task.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.peraglobal.datacrawlerapp.task.model.TaskGroup;
+import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 
 @Controller
 @RequestMapping("/taskgroup")
 public class TaskGroupController {
 	
+	@Autowired
+	TaskGroupService taskGroupService;
 	
-	public void getGroups() {}
+	/**
+	 * 返回任务分组列表页面
+	 * @return
+	 */
+	@RequestMapping(value="/taskgroups", method=RequestMethod.GET)
+	public String getGroups(Model model, @RequestParam(value="groupId") String groupId) {
+		model.addAttribute("groups", taskGroupService.getGroups());
+		model.addAttribute("group", taskGroupService.getGroupById(Long.valueOf(groupId)));
+		return "/task/taskGroups";
+	}
 	
 	/**
 	 * 返回任务分组创建页面
@@ -17,6 +39,33 @@ public class TaskGroupController {
 	 */
 	@RequestMapping(value="/creategroup", method=RequestMethod.GET)
 	public String createGroup() {
-		return "/task/createGroup";
+		return "/task/createTaskGroup";
+	}
+	
+	/**
+	 * 保存任务分组
+	 * @return
+	 */
+	@RequestMapping(value="/savegroup", method=RequestMethod.POST)
+	public String saveGroup() {
+		return "redirect:/";
+	}
+	
+	/**
+	 * 删除对应的任务分组
+	 * @return
+	 */
+	@RequestMapping(value="/modifyTaskGroup", method=RequestMethod.POST, params={"deleteGroup"})
+	public String deleteGroup() {
+		return "/task/taskGroups";
+	}
+	
+	/**
+	 * 删除对应的任务分组
+	 * @return
+	 */
+	@RequestMapping(value="/modifyTaskGroup", method=RequestMethod.POST, params={"renameGroup"})
+	public String renameGroup() {
+		return "/task/taskGroups";
 	}
 }

@@ -39,21 +39,16 @@
 				<h4 class="navbar-text">
 					<span class="glyphicon glyphicon-folder-close "></span> 采集分组
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="task/createGroup.html#myModal" class="dropdown-toggle" data-toggle="modal"> 
+					<a href="/taskgroup/creategroup" class="dropdown-toggle" data-toggle="modal" data-target="#theModal"> 
 						<span class="glyphicon glyphicon-plus"></span>
 					</a>
 				</h4>
 			</div>
 			<div style="margin-top: 50px;">
 				<ul class="nav nav-pills nav-stacked">
-					<li>
-						<a href="../skm/taskGroup.html">
-							<span class="badge pull-left">组</span> &nbsp;&nbsp;期刊类
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<span class="badge pull-left">组</span>&nbsp;&nbsp;新闻类
+					<li th:each="taskGroup:${groups}">
+						<a th:href="@{/taskgroup/taskgroups(groupId=${taskGroup.groupId})}">
+							<span class="badge pull-left">组</span> &nbsp;&nbsp;<span th:text="${taskGroup.groupName}"></span>
 						</a>
 					</li>
 				</ul>
@@ -64,7 +59,7 @@
 				<p class="navbar-text">采集任务</p>
 			</div>
 			<div>
-				<form class="navbar-form navbar-right" role="search">
+				<form class="navbar-form navbar-right" role="search" th:action="@{/}" method="get">
 					<div class="form-group">
 						<select class="form-control input-sm" style="width: 120px;">
 							<option value="">全部</option>
@@ -110,9 +105,6 @@
 				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 			</form>
-		</div>
-		<div layout:fragment="content">
-			采集主体内容
 		</div>
 	</body>
 </html>

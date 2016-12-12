@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+</head>
+<body>
+<!-- 头部导航 -->
+<nav class="navbar navbar-default" role="navigation"
+			style="height: 600px; margin-bottom: 0;" id="leftmenu">
+	<div>
+		<ul class="nav nav-pills nav-stacked">
+			<li class="active"><a href="#"><span
+					class="glyphicon glyphicon-list"></span> 采集</a></li>
+		</ul>
+	</div>
+	<div class="navbar-header" style="width: 100%;">
+		<h4 class="navbar-text">
+			<span class="glyphicon glyphicon-folder-open"></span> 采集任务
+		</h4>
+	</div>
+	<div style="margin-top: 50px;">
+		<ul class="nav nav-pills nav-stacked">
+			<li style="padding-left: 30px;"><a href="#"><span
+					class="badge pull-right">2</span> 就绪</a></li>
+			<li style="padding-left: 30px;"><a href="#"><span
+					class="badge pull-right">2</span> 运行中</a></li>
+			<li style="padding-left: 30px;"><a href="#"><span
+					class="badge pull-right">0</span> 已暂停</a></li>
+			<li style="padding-left: 30px;"><a href="#"><span
+					class="badge pull-right">2</span> 已停止</a></li>
+			<li style="padding-left: 30px;"><a href="#"><span
+					class="badge pull-right">3</span> 已完成</a></li>
+		</ul>
+	</div>
+	<div class="navbar-header" style="width: 100%;">
+		<h4 class="navbar-text">
+			<span class="glyphicon glyphicon-folder-close "></span> 采集分组
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/taskgroup/creategroup" class="dropdown-toggle" data-toggle="modal" data-target="#theModal"> 
+				<span class="glyphicon glyphicon-plus"></span>
+			</a>
+		</h4>
+	</div>
+	<div style="margin-top: 50px;">
+		<ul class="nav nav-pills nav-stacked">
+			<li th:each="taskGroup:${groups}">
+				<a th:href="@{/taskgroup/taskgroups(groupId=${taskGroup.groupId})}">
+					<span class="badge pull-left">组</span> &nbsp;&nbsp;<span th:text="${taskGroup.groupName}"></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+</body>
+</html>
