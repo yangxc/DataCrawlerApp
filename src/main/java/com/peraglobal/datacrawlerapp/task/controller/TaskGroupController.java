@@ -5,6 +5,8 @@ package com.peraglobal.datacrawlerapp.task.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +31,8 @@ public class TaskGroupController {
 	@RequestMapping(value="/taskgroups", method=RequestMethod.GET)
 	public String getGroups(Model model, @RequestParam(value="groupId") String groupId) {
 		model.addAttribute("groups", taskGroupService.getGroups());
-		model.addAttribute("group", taskGroupService.getGroupById(Long.valueOf(groupId)));
+		model.addAttribute("group", taskGroupService.getGroupById(groupId));
+		model.addAttribute("groupId", groupId);
 		return "/task/taskGroups";
 	}
 	
@@ -48,6 +51,7 @@ public class TaskGroupController {
 	 */
 	@RequestMapping(value="/savegroup", method=RequestMethod.POST)
 	public String saveGroup() {
+		taskGroupService.createGroup(null);
 		return "redirect:/";
 	}
 	
@@ -56,16 +60,37 @@ public class TaskGroupController {
 	 * @return
 	 */
 	@RequestMapping(value="/modifyTaskGroup", method=RequestMethod.POST, params={"deleteGroup"})
-	public String deleteGroup() {
+	public String deleteGroup(HttpServletRequest request, Model model, @RequestParam(value="groupId") String groupId) {
+		String[] groupIds = request.getParameterValues("childId");
+		for (String id : groupIds) {
+			taskGroupService.deleteTaskGroup(id);
+		}
+		model.addAttribute("childIds", groupIds);
+		model.addAttribute("groups", taskGroupService.getGroups());
+		model.addAttribute("group", taskGroupService.getGroupById(groupId));
+		model.addAttribute("groupId", groupId);
 		return "/task/taskGroups";
 	}
 	
 	/**
-	 * 删除对应的任务分组
+	 * 显示任务分组重命名页面
+	 * @param groupId 对应要修改的任务分组的父任务分组id
+	 * @param childId 对应要修改的任务分组的id
+	 * @return
+	 */
+	@RequestMapping("renameGroupPage")
+	public String renameGroupPage(HttpServletRequest request, Model model, 
+			@RequestParam(value="groupId") String groupId, @RequestParam(value="childId") String childId) {
+		return "renameTaskGroupName";
+	}
+	
+	/**
+	 * 重命名对应的任务分组
 	 * @return
 	 */
 	@RequestMapping(value="/modifyTaskGroup", method=RequestMethod.POST, params={"renameGroup"})
 	public String renameGroup() {
+		taskGroupService.renameTaskGroup(null);
 		return "/task/taskGroups";
 	}
 }

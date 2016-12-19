@@ -3,23 +3,33 @@ package com.peraglobal.datacrawlerapp.task.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  <code>TaskGroup.java</code>
+ *  <p>功能:任务分组对象,提供对web api数据结构的封装
+ *  
+ *  <p>Copyright 安世亚太 2016 All right reserved.
+ *  @author xiaochen.yang	
+ *  @version 1.0
+ *  @see 2016-12-2
+ *  </br>最后修改人 无
+ */
 public class TaskGroup {
 
-	private Long groupId;
-	private Long parentId;
+	private String groupId;
+	private String parentId;
 	private String groupName;
 	private List<TaskGroup> children = new ArrayList<>();
 	
-	public Long getGroupId() {
+	public String getGroupId() {
 		return groupId;
 	}
-	public void setGroupId(Long groupId) {
+	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
-	public Long getParentId() {
+	public String getParentId() {
 		return parentId;
 	}
-	public void setParentId(Long parentId) {
+	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 	public String getGroupName() {
