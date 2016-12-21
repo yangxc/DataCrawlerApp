@@ -64,7 +64,11 @@ public class Crawler {
 	}
 
 	public int getPageCrawledCount() {
-		return pageCrawledCount;
+		int total = 0;
+		for (CrawlerHistory history : this.histories) {
+			total += history.getPageCrawledCount();
+		}
+		return total;
 	}
 
 	public void setPageCrawledCount(int pageCrawledCount) {

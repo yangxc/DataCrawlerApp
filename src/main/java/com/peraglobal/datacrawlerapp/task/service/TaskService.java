@@ -11,6 +11,10 @@ import com.peraglobal.datacrawlerapp.task.model.TaskStatus;
 @Service
 public class TaskService {
 
+	/**
+	 * 获取支持的任务状态
+	 * @return
+	 */
 	public List<String> getTaskStatuses() {
 		List<String> statuses = new ArrayList<>();
 		statuses.add(TaskStatus.FORBIDDEN.toString());
@@ -70,7 +74,7 @@ public class TaskService {
 	public List<Task> getTasksByTaskStatus(String status) {
 		List<Task> results = new ArrayList<>();
 		for (Task task : this.tasks()) {
-			if (task.getTaskStatus().equals(status)) {
+			if (task.getTaskStatus().toString().equals(status)) {
 				results.add(task);
 			}
 		}
@@ -132,26 +136,31 @@ public class TaskService {
 		task.setGroupId("1");
 		task.setTaskId("1");
 		task.setTaskName("Task Name 1");
+		task.setTaskStatus(TaskStatus.READY.toString());
 
 		Task task2 = new Task();
-		task.setGroupId("1");
-		task.setTaskId("2");
-		task.setTaskName("Task Name 2");
+		task2.setGroupId("1");
+		task2.setTaskId("2");
+		task2.setTaskName("Task Name 2");
+		task2.setTaskStatus(TaskStatus.READY.toString());
 
 		Task task3 = new Task();
-		task.setGroupId("1");
-		task.setTaskId("3");
-		task.setTaskName("Task Name 3");
+		task3.setGroupId("1");
+		task3.setTaskId("3");
+		task3.setTaskName("Task Name 3");
+		task3.setTaskStatus(TaskStatus.READY.toString());
 
 		Task task4 = new Task();
-		task.setGroupId("1");
-		task.setTaskId("4");
-		task.setTaskName("Task Name 4");
+		task4.setGroupId("1");
+		task4.setTaskId("4");
+		task4.setTaskName("Task Name 4");
+		task4.setTaskStatus(TaskStatus.READY.toString());
 
 		Task task5 = new Task();
-		task.setGroupId("1");
-		task.setTaskId("5");
-		task.setTaskName("Task Name 5");
+		task5.setGroupId("1");
+		task5.setTaskId("5");
+		task5.setTaskName("Task Name 5");
+		task5.setTaskStatus(TaskStatus.READY.toString());
 
 		tasks.add(task);
 		tasks.add(task2);

@@ -3,7 +3,9 @@
  */
 package com.peraglobal.datacrawlerapp.task.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.peraglobal.datacrawlerapp.task.model.TaskGroup;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
+import com.peraglobal.datacrawlerapp.task.service.TaskService;
 
 @Controller
 @RequestMapping("/taskgroup")
@@ -23,6 +26,8 @@ public class TaskGroupController {
 	
 	@Autowired
 	TaskGroupService taskGroupService;
+	@Autowired
+	TaskService taskService;
 	
 	/**
 	 * 返回任务分组列表页面
@@ -33,6 +38,14 @@ public class TaskGroupController {
 		model.addAttribute("groups", taskGroupService.getGroups());
 		model.addAttribute("group", taskGroupService.getGroupById(groupId));
 		model.addAttribute("groupId", groupId);
+		// 获取任务状态和对应的任务数
+		List<String> statuses = taskService.getTaskStatuses();
+		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
+		for (String status : statuses) {
+			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
+		}
+		model.addAttribute("taskStatus", statuses);
+		model.addAttribute("statusAdnCount", statusAndCount);
 		return "/task/taskGroups";
 	}
 	

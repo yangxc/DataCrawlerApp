@@ -2,9 +2,12 @@ package com.peraglobal.datacrawlerapp.crawler.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.peraglobal.datacrawlerapp.crawler.model.Crawler;
 import com.peraglobal.datacrawlerapp.crawler.model.CrawlerHistory;
 
+@Service
 public class CrawlerService {
 
 	/**
