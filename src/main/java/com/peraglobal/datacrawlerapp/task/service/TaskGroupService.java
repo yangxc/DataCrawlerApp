@@ -3,12 +3,27 @@ package com.peraglobal.datacrawlerapp.task.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import com.peraglobal.datacrawlerapp.WebServiceProperties;
 import com.peraglobal.datacrawlerapp.task.model.TaskGroup;
 
 @Service
 public class TaskGroupService {
+	
+	@Autowired
+	RestTemplate restTemplate;
+	
+	private final String taskServiceURL;
+    private final String crawlerServiceURL;
+    
+    @Autowired
+    public TaskGroupService(WebServiceProperties webServiceProperty) {
+    	taskServiceURL = webServiceProperty.getTaskService();
+    	crawlerServiceURL = webServiceProperty.getCrawlerService();
+    }
 
 	/**
 	 * 得到任务分组列表
@@ -23,6 +38,7 @@ public class TaskGroupService {
 	 * @return
 	 */
 	public TaskGroup getGroupById(String id) {
+		//TaskGroup group = restTemplate.getForObject(null, TaskGroup.class);
 		for (TaskGroup group : this.taskGroups()) {
 			if (group.getChildren().size() != 0) {
 				for (TaskGroup child: group.getChildren()) {
