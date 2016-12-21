@@ -39,7 +39,6 @@
 	</script>
 </head>
 <body>
-	<input type="hidden" name="groupId" id="groupId" th:value="${}">
 	<!-- 头部导航 -->
 	<nav class="navbar navbar-default" role="navigation"
 		style="margin-bottom: 0; height: 60px"
@@ -82,7 +81,7 @@
 					<form class="navbar-form navbar-right" method="get"
 						style="margin-top: -12px; margin-right: 0px; padding-left: 700px;"
 						role="search">
-						<a th:href="@{/taskgroup/creategroup}" class="btn btn-primary" data-toggle="modal"
+						<a th:href="@{/taskgroup/creategroup(groupId=${groupId})}" class="btn btn-primary" data-toggle="modal"
 							data-target="#theModal" style="width: 120px;">新建分组</a>
 					</form>
 				</div>
@@ -204,6 +203,5 @@
 			<div class="modal-content"></div>
 		</div>
 	</div>
-	
 </body>
 </html>
