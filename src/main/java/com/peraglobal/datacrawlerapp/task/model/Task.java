@@ -15,103 +15,146 @@ import java.util.Date;
 public class Task {
 
 	/**
-	 * 任务Id
+	 * @category 任务 ID
 	 */
 	private String taskId;
 	
 	/**
-	 * 任务所属任务分组Id
-	 */
-	private String groupId;
-	
-	/**
-	 * 任务所属任务分组名称
-	 */
-	private String groupName;
-
-	/**
-	 * 任务关联的爬虫id
-	 */
-	private String crawlerId;
-	
-	/**
-	 * 任务名称
+	 * @category 任务名称
 	 */
 	private String taskName;
 	
 	/**
-	 * 任务所处的状态（就绪、运行、停止、禁止）
+	 * @category 组 ID
 	 */
-	private String taskStatus;
+	private String groupId;
 	
 	/**
-	 * 任务创建时间
+	 * @category 组名称
 	 */
-	private Date createdTime;
+	private String groupName;
+
+	/**
+	 * @category 开始时间表达式
+	 */
+	private String startExpress;
 	
 	/**
-	 * 任务更新时间
+	 * @category 停止时间表达式
+	 */
+	private String stopExpress;
+	
+	/**
+	 * @category 开始命令
+	 */
+	private String startCommand;
+	
+	/**
+	 * @category 结束命令
+	 */
+	private String stopCommand;
+	
+	/**
+	 * @category 状态 任务所处的状态（就绪、运行、停止、禁止）
+	 */
+	private String taskState;
+	
+	/**
+	 * @category 创建时间
+	 */
+	private Date createTime;
+	
+	/**
+	 * @category 更新时间
 	 */
 	private Date updateTime;
-	
-	/**
-	 * 任务调度规则
-	 */
-	private TaskSchedulerInfo schedulerInfo;
-	
-	public TaskSchedulerInfo getSchedulerInfo() {
-		return schedulerInfo;
-	}
-	public void setSchedulerInfo(TaskSchedulerInfo schedulerInfo) {
-		this.schedulerInfo = schedulerInfo;
-	}
-	public Date getCreatedTime() {
-		return createdTime;
-	}
-	public void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	public String getTaskStatus() {
-		return taskStatus;
-	}
-	public void setTaskStatus(String taskStatus) {
-		this.taskStatus = taskStatus;
-	}
-	public String getTaskName() {
-		return taskName;
-	}
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
+
 	public String getTaskId() {
 		return taskId;
 	}
+
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
 	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
 	public String getGroupId() {
 		return groupId;
 	}
+
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
-	public String getCrawlerId() {
-		return crawlerId;
-	}
-	public void setCrawlerId(String crawlerId) {
-		this.crawlerId = crawlerId;
-	}
+
 	public String getGroupName() {
 		return groupName;
 	}
+
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	
+
+	public String getStartExpress() {
+		return startExpress;
+	}
+
+	public void setStartExpress(String startExpress) {
+		this.startExpress = startExpress;
+	}
+
+	public String getStopExpress() {
+		return stopExpress;
+	}
+
+	public void setStopExpress(String stopExpress) {
+		this.stopExpress = stopExpress;
+	}
+
+	public String getStartCommand() {
+		return startCommand;
+	}
+
+	public void setStartCommand(String startCommand) {
+		this.startCommand = startCommand;
+	}
+
+	public String getStopCommand() {
+		return stopCommand;
+	}
+
+	public void setStopCommand(String stopCommand) {
+		this.stopCommand = stopCommand;
+	}
+
+	public String getTaskState() {
+		return taskState;
+	}
+
+	public void setTaskState(String taskState) {
+		this.taskState = taskState;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
 }

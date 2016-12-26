@@ -77,30 +77,30 @@
 			<form class="navbar-form navbar-left" role="search">
 				<button type="button" class="btn btn-default btn-sm">
 					<span class="glyphicon glyphicon-play"></span> 开始
-				</button>
-				&nbsp; &nbsp;
+				</button>&nbsp; &nbsp;
 				<button type="button" class="btn btn-default btn-sm">
 					<span class="glyphicon glyphicon-pause"></span> 暂停
-				</button>
-				&nbsp; &nbsp;
+				</button>&nbsp; &nbsp;
 				<button type="button" class="btn btn-default btn-sm">
 					<span class="glyphicon glyphicon-stop"></span> 停止
-				</button>
-				&nbsp; &nbsp;
+				</button>&nbsp; &nbsp;
 				<button type="button" class="btn btn-default btn-sm">
 					<span class="glyphicon glyphicon-remove"></span> 删除
 				</button>
 			</form>
 			<!--向右对齐-->
 			<form class="navbar-form navbar-right" role="search">
-				<button type="submit" class="btn btn-success" data-toggle="modal"
-					data-target="#myModal" style="width: 120px;">新建采集</button>
+				<a th:href="@{/task/createCrawlerTask(groupId=${groupId})}" class="btn btn-success" data-toggle="modal" data-target="#theModal" style="width: 120px;">新建采集</a>
 				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 			</form>
 		</div>
-		<div layout:fragment="content">
-				网页主体内容
+		
+		<!-- 显示模态对话框 -->
+		<div class="modal fade" id="theModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content"></div>
 			</div>
+		</div>
 	</body>
 </html>

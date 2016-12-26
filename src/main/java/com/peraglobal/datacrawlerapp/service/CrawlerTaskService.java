@@ -35,7 +35,7 @@ public class CrawlerTaskService {
 		List<Task> tasks = taskService.getTasks(0, 0);
 		List<CrawlerAndTask> results = new ArrayList<>();
 		for (Task task : tasks) {
-			String crawlerId = task.getCrawlerId();
+			String crawlerId = task.getTaskId();
 			Crawler crawler = new Crawler();
 			crawler.setHistories(crawlerService.getCrawlerHistroy(crawlerId));
 			CrawlerAndTask composer = new CrawlerAndTask();

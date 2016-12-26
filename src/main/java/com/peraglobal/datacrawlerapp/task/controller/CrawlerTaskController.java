@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 import com.peraglobal.datacrawlerapp.task.service.TaskService;
@@ -40,5 +43,14 @@ public class CrawlerTaskController {
 		model.addAttribute("taskStatus", statuses);
 		model.addAttribute("statusAdnCount", statusAndCount);
 		return "index";
+	}
+	
+	/**
+	 * 返回任务分组创建页面
+	 * @return
+	 */
+	@RequestMapping(value="/createCrawlerTask", method=RequestMethod.GET)
+	public String createCrawlerTask(Model model, @RequestParam(value="groupId") String groupId) {
+		return "/task/createCrawlerTask";
 	}
 }

@@ -1,11 +1,458 @@
 <!-- 创建采集任务 -->
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<!-- js 部分 -->
 
-</body>
-</html>
+<!-- js 部分 -->
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title" id="myModalLabel">新建采集任务</h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" role="form">
+		
+		<!-- 任务名称 -->
+		<div class="form-group">
+			<label for="firstname" class="col-sm-2 control-label">任务名称</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="taskName" placeholder="请输入任务名称" />
+			</div>
+		</div>
+		<!-- 任务名称 -->
+		
+		<!-- 任务分组 -->
+		<div class="form-group">
+			<label for="lastname" class="col-sm-2 control-label">任务分组</label>
+			<div class="col-sm-10">
+				<select class="form-control" id="groupName">
+					<option>==请选择分组==</option>
+				</select>
+			</div>
+		</div>
+		<!-- 任务分组 -->
+		
+		<!-- 采集类型 -->
+		<div class="form-group">
+			<label for="lastname" class="col-sm-2 control-label">采集类型</label>
+			<div class="col-sm-10">
+				<label class="checkbox-inline"> 
+					<input type="radio" name="crawlerType" id="web.crawler" value="1" checked="checked" /> WEB采集
+				</label> 
+				<label class="checkbox-inline"> 
+					<input type="radio" name="crawlerType" id="db.crawler" value="2" /> 数据库采集
+				</label>
+			</div>
+		</div>
+		<!-- 采集类型 -->
+		
+		<div><hr /></div>
+		
+		<!-- web 采集部分 -->
+		<div id="web_div">
+			<ul id="myTab" class="nav nav-tabs">
+				<li class="active"><a href="#webRule" data-toggle="tab">采集任务规则</a></li>
+				<li><a href="#safety" data-toggle="tab">安全验证</a></li>
+				<li><a href="#taskTiming" data-toggle="tab">任务定时</a></li>
+			</ul>
+			
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade in active" id="webRule">
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label">网址规则</label>
+						<div class="col-sm-10"></div>
+					</div>
+					
+					<!-- 起始网址-->
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080">起始网址：</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="url" placeholder="请输入网址规则" style="width: 340px;" />
+						</div>
+					</div>
+					<!-- 起始网址 -->
+					
+					<!-- 列表规则 -->
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0; padding-right: 0;">列表网址规则：</label>
+						<div class="col-sm-7">
+							<div class="col-sm-7" style="padding-left: 0;">
+								<input type="text" class="form-control" id="list_url" placeholder="请输入网址规则" style="width: 340px;" />
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<select class="form-control" style="width: 110px; padding-left: 0;">
+								<option>XPATH</option>
+								<option>正则表达式</option>
+								<option>CSS</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0; padding-right: 0;">详情网址规则：</label>
+						<div class="col-sm-7">
+							<div class="col-sm-7" style="padding-left: 0;">
+								<input type="text" class="form-control" id="list_detail" placeholder="请输入详情网址规则" style="width: 340px;" />
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<select class="form-control"
+								style="width: 110px; padding-left: 0;">
+								<option>XPATH</option>
+								<option>正则表达式</option>
+								<option>CSS</option>
+							</select>
+						</div>
+					</div>
+					<!-- 列表规则 -->
+					
+					<div><hr /></div>
+					
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label">内容规则</label>
+						<div class="col-sm-2">
+							<button type="button" class="btn btn-default">增加一行</button>
+						</div>
+						<div class="col-sm-8"></div>
+					</div>
+					<!-- 内容规则 -->
+					<div class="form-group">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="fieldKey" />
+						</div>
+						<div class="col-sm-4" style="padding-left: 0;">
+							<input type="text" style="width: 210px;" class="form-control" placeholder="请输规则内容" id="fieldText" />
+						</div>
+						<div class="col-sm-2">
+							<select class="form-control" style="width: 100px; padding-left: 0;">
+								<option>XPATH</option>
+								<option>正则表达式</option>
+								<option>CSS</option>
+							</select>
+						</div>
+						<div class="col-sm-2" style="padding-left: 20px;">
+							<button type="button" class="btn btn-default">删除</button>
+						</div>
+					</div>
+					<!-- 内容规则 -->
+					
+					<!-- 附件下载，后续完善 -->
+					
+				</div>
+				
+				<!-- 安全验证 -->
+				<div class="tab-pane fade" id="safety">
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label"
+							style="font-size: 12px;"></label>
+						<div class="col-sm-10"></div>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label"
+							style="font-size: 12px;">登录请求：</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="firstname" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label"
+							style="font-size: 12px;">用户名：</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="firstname"
+								placeholder="表单项名称" />
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="firstname"
+								placeholder="表单值" />
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label"
+							style="font-size: 12px;">密码：</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="firstname"
+								placeholder="表单项名称" />
+						</div>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="firstname"
+								placeholder="表单值" />
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label"
+							style="font-size: 12px;">登录提交：</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="firstname" />
+						</div>
+					</div>
+				</div>
+				<!-- 安全验证 -->
+				
+				<!-- 定时任务 -->
+				<div class="tab-pane fade" id="taskTiming">
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label" style="font-size: 12px;"></label>
+						<div class="col-sm-10"></div>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-3 control-label" style="font-size: 12px;"> 
+							<input type="checkbox" />启用任务定时
+						</label>
+						<div class="col-sm-9"></div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12">
+							<label class="checkbox-inline"> 
+								<input type="radio" name="timeradio" id="optionsRadios1" value="1" />每天
+							</label> 
+							<label class="checkbox-inline"> 
+								<input type="radio" name="timeradio" id="optionsRadios2" value="2" /> 每周
+							</label> 
+							<label class="checkbox-inline"> 
+								<input type="radio" name="timeradio" id="optionsRadios3" value="3" /> 每月
+							</label> 
+							<label class="checkbox-inline"> 
+								<input type="radio" name="timeradio" id="optionsRadios4" value="4" /> 一次
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label" style="font-size: 12px;">开始时间：</label>
+						<div class="col-sm-4">
+							<div class="control-group">
+								<div class="controls input-append date form_datetime">
+									<input size="16" class="form-control" type="text" value="" /> 
+									<span class="form-contro add-on"> 
+										<i class="icon-remove"></i>
+									</span>
+									<span class="add-on">
+										<i class="icon-th"></i>
+									</span>
+								</div>
+								<br />
+							</div>
+						</div>
+						<label for="firstname" class="col-sm-2 control-label" style="font-size: 12px;">结束时间：</label>
+						<div class="col-sm-4">
+							<div class="control-group">
+								<div class="controls input-append date form_datetime">
+									<input size="16" class="form-control" type="text" value="" /> 
+									<span class="form-contro add-on"> 
+										<i class="icon-remove"></i>
+									</span> 
+									<span class="add-on"> 
+										<i class="icon-th"></i>
+									</span>
+								</div>
+								<br />
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 定时任务 -->
+			</div>
+		</div>
+		<!-- web 采集部分 -->
+		
+		
+		<!-- DB 采集部分 -->
+		<div id="db_div" style="display: none;">
+			<ul id="myTab" class="nav nav-tabs">
+				<li class="active"><a href="#DBRule" data-toggle="tab">采集任务规则</a></li>
+				<li><a href="#taskTiming2" data-toggle="tab">任务定时</a></li>
+			</ul>
+			<div id="myTabContent2" class="tab-content">
+
+				<div class="tab-pane fade in active" id="DBRule">
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10"></div>
+					</div>
+
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label" style="font-size: 12px; color: #808080; padding-left: 0;">数据库类型：</label>
+						<div class="col-sm-10">
+							<select class="form-control" style="width: 200px;" id="db.driverName">
+								<option value="2">Mysql</option>
+								<option value="1">Oracle</option>
+								<option value="3">SQL Server</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0;">数据库链接：</label>
+						<div class="col-sm-10">
+							<div class="col-sm-10" style="padding-left: 0;">
+								<input type="text" class="form-control" id="db.url" placeholder="请输入数据库链接" />
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0;">用户名：</label>
+						<div class="col-sm-10">
+							<div class="col-sm-10" style="padding-left: 0;">
+								<input type="text" class="form-control" id="db.name" placeholder="请输入用户名" />
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0;">密码：</label>
+						<div class="col-sm-10">
+							<div class="col-sm-10" style="padding-left: 0;">
+								<input type="text" class="form-control" id="db.password" placeholder="请输入密码" />
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0;"></label>
+						<div class="col-sm-10">
+							<div class="col-sm-10" style="padding-left: 0;">
+								<button type="button" id="db.connection" class="btn btn-default">连接</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0;">选择表/视图：</label>
+						<div class="col-sm-10">
+							<div class="col-sm-10" style="padding-left: 0;">
+								<select class="form-control" style="width: 200px;">
+									<option>GECKO_TASK</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0;">字段规则：</label>
+						<div class="col-sm-10">
+							<div class="col-sm-10" style="padding-left: 0;">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th><input type="checkbox" /></th>
+											<th>别名</th>
+											<th>列表名</th>
+											<th>列类型</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type="checkbox" /></td>
+											<td><input type="text" class="form-control" /></td>
+											<td>ID</td>
+											<td>VARCHAR</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- 附件下载，后续完善 -->
+					
+				</div>
+				
+				<!-- 任务定时 -->
+				<div class="tab-pane fade" id="taskTiming2">
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label" style="font-size: 12px;"></label>
+						<div class="col-sm-10"></div>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-3 control-label" style="font-size: 12px;"> 
+							<input type="checkbox" />启用任务定时
+						</label>
+						<div class="col-sm-9"></div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12">
+							<label class="checkbox-inline"> 
+								<input type="radio" name="timeradio" id="optionsRadios1" value="1" /> 每天
+							</label> <label class="checkbox-inline"> 
+								<input type="radio" name="timeradio" id="optionsRadios2" value="2" /> 每周
+							</label> 
+							<label class="checkbox-inline"> 
+								<input type="radio" name="timeradio" id="optionsRadios3" value="3" /> 每月
+							</label> 
+							<label class="checkbox-inline"> 
+								<input type="radio" name="timeradio" id="optionsRadios4" value="4" /> 一次
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label" style="font-size: 12px;">开始时间：</label>
+						<div class="col-sm-4">
+							<div class="control-group">
+
+								<div class="controls input-append date form_datetime">
+									<input size="16" class="form-control" type="text" /> 
+									<span class="form-contro add-on">
+										<i class="icon-remove"></i>
+									</span> 
+									<span class="add-on">
+										<i class="icon-th"></i>
+									</span>
+								</div>
+								<br />
+							</div>
+
+						</div>
+						<label for="firstname" class="col-sm-2 control-label" style="font-size: 12px;">结束时间：</label>
+						<div class="col-sm-4">
+							<div class="control-group">
+
+								<div class="controls input-append date form_datetime">
+									<input size="16" class="form-control" type="text" /> 
+									<span class="form-contro add-on">
+										<i class="icon-remove"></i>
+									</span> 
+									<span class="add-on">
+										<i class="icon-th"></i>
+									</span>
+								</div>
+								<br />
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- 任务定时 -->
+			</div>
+		</div>
+		<!-- DB 采集部分 -->
+	
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			<button type="submit" class="btn btn-primary" name="saveGroup">保存</button>
+		</div>
+
+	</form>
+</div>
