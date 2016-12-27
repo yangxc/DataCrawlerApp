@@ -1,6 +1,3 @@
-/**
- * 用于进行采集任务相关操作的控制器；
- */
 package com.peraglobal.datacrawlerapp.task.controller;
 
 import java.util.HashMap;
@@ -8,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,14 +17,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 import com.peraglobal.datacrawlerapp.task.service.TaskService;
 
+/**
+ * 用于进行采集任务相关操作的控制器；
+ */
 @Controller
 @RequestMapping("/task")
-public class CrawlerTaskController {
+public class TaskController {
 
 	@Autowired
-	TaskGroupService taskGroupService;
-	@Autowired
 	TaskService taskService;
+	
+	@Autowired
+	TaskGroupService taskGroupService;
+	
 
 	@RequestMapping("/status/{statusName}")
 	public String getTaskListByStatus(@PathVariable String statusName, Model model) {
@@ -52,5 +55,15 @@ public class CrawlerTaskController {
 	@RequestMapping(value="/createCrawlerTask", method=RequestMethod.GET)
 	public String createCrawlerTask(Model model, @RequestParam(value="groupId") String groupId) {
 		return "/task/createCrawlerTask";
+	}
+	
+	/**
+	 * 开始任务
+	 * @return
+	 */
+	@RequestMapping(value="/startTask", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void startTask(@RequestBody String taskIds) {
+		// 开始任务功能
+		taskService.startTask(taskIds);
 	}
 }

@@ -1,6 +1,5 @@
 package com.peraglobal.datacrawlerapp;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +26,17 @@ import com.peraglobal.datacrawlerapp.task.service.TaskService;
 public class IndexController {
 	
 	@Autowired
-	TaskGroupService taskGroupService;
-	@Autowired
 	TaskService taskService;
+	
+	@Autowired
+	TaskGroupService taskGroupService;
+	
 
+	/**
+	 * 程序入口
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/")
 	public String index(Model model) {
 		// 获取任务分组列表
@@ -48,8 +54,4 @@ public class IndexController {
 		return "index";
 	}
 	
-	@RequestMapping("/createGroup")
-	public String createGroup() {
-		return "createGroup";
-	}
 }

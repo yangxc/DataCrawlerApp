@@ -1,6 +1,5 @@
 package com.peraglobal.datacrawlerapp.crawler.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,70 +16,54 @@ public class Crawler {
 	/**
 	 * 爬虫的id
 	 */
-	private String id;
+	private String crawlerId;
 	
 	/**
 	 * 爬虫的名称
 	 */
-	private String name;
-
-	/**
-	 * 爬虫历史
-	 */
-	private List<CrawlerHistory> histories = new ArrayList<>();
-	
-	/**
-	 * 爬虫采集规则
-	 */
-	private CrawlerRule crawlerRule;
+	private String crawlerName;
 	
 	/**
 	 * 抓取数据的总体数量
 	 */
-	private int pageCrawledCount;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public List<CrawlerHistory> getHistories() {
-		return histories;
-	}
-
-	public void setHistories(List<CrawlerHistory> histories) {
-		this.histories = histories;
-	}
-
-	public CrawlerRule getCrawlerRule() {
-		return crawlerRule;
-	}
-
-	public void setCrawlerRule(CrawlerRule crawlerRule) {
-		this.crawlerRule = crawlerRule;
-	}
-
-	public int getPageCrawledCount() {
-		int total = 0;
-		for (CrawlerHistory history : this.histories) {
-			total += history.getPageCrawledCount();
-		}
-		return total;
-	}
-
-	public void setPageCrawledCount(int pageCrawledCount) {
-		this.pageCrawledCount = pageCrawledCount;
-	}
+	private int pageCrawlerCount;
 	
-	public String getName() {
-		return name;
+	/**
+	 * 爬虫历史
+	 */
+	private List<CrawlerHistory> crawlerHistory;
+
+	
+	public String getCrawlerId() {
+		return crawlerId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCrawlerId(String crawlerId) {
+		this.crawlerId = crawlerId;
 	}
-	
+
+	public String getCrawlerName() {
+		return crawlerName;
+	}
+
+	public void setCrawlerName(String crawlerName) {
+		this.crawlerName = crawlerName;
+	}
+
+	public int getPageCrawlerCount() {
+		return pageCrawlerCount;
+	}
+
+	public void setPageCrawlerCount(int pageCrawlerCount) {
+		this.pageCrawlerCount = pageCrawlerCount;
+	}
+
+	public List<CrawlerHistory> getCrawlerHistory() {
+		return crawlerHistory;
+	}
+
+	public void setCrawlerHistory(List<CrawlerHistory> crawlerHistory) {
+		this.crawlerHistory = crawlerHistory;
+	}
+
 }

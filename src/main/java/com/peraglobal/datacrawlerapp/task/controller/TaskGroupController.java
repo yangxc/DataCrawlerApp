@@ -1,6 +1,3 @@
-/**
- * 用于进行采集任务分组操作的控制器；
- */
 package com.peraglobal.datacrawlerapp.task.controller;
 
 import java.util.HashMap;
@@ -16,18 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.peraglobal.datacrawlerapp.task.model.Task;
 import com.peraglobal.datacrawlerapp.task.model.TaskGroup;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 import com.peraglobal.datacrawlerapp.task.service.TaskService;
 
+/**
+ * 用于进行采集任务分组操作的控制器；
+ */
 @Controller
 @RequestMapping("/taskgroup")
 public class TaskGroupController {
 	
 	@Autowired
-	TaskGroupService taskGroupService;
-	@Autowired
 	TaskService taskService;
+	
+	@Autowired
+	TaskGroupService taskGroupService;
+	
 	
 	/**
 	 * 返回任务分组列表页面
@@ -35,9 +38,15 @@ public class TaskGroupController {
 	 */
 	@RequestMapping(value="/taskgroups", method=RequestMethod.GET)
 	public String getGroups(Model model, @RequestParam(value="groupId") String groupId) {
-		model.addAttribute("groups", taskGroupService.getGroups());
-		model.addAttribute("group", taskGroupService.getGroupById(groupId));
+		List<TaskGroup> taskGroups = taskGroupService.getTaskGroupsByParentId(groupId);
+		List<Task> tasks = taskService.getTasksByGroupId(groupId);
+		// 当前组信息
+		model.addAttribute("group", taskGroupService.getGroup(groupId));
+		
+		
+		model.addAttribute("groups", taskGroups);
 		model.addAttribute("groupId", groupId);
+		model.addAttribute("groupNum", taskGroups == null ? 0 : taskGroups.size());
 		// 获取任务状态和对应的任务数
 		List<String> statuses = taskService.getTaskStatuses();
 		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
@@ -80,7 +89,7 @@ public class TaskGroupController {
 		}
 		model.addAttribute("childIds", groupIds);
 		model.addAttribute("groups", taskGroupService.getGroups());
-		model.addAttribute("group", taskGroupService.getGroupById(groupId));
+		model.addAttribute("group", taskGroupService.getGroup(groupId));
 		model.addAttribute("groupId", groupId);
 		return "/task/taskGroups";
 	}

@@ -1,16 +1,12 @@
-package com.peraglobal.datacrawlerapp.service;
+package com.peraglobal.datacrawlerapp.task.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.peraglobal.datacrawlerapp.crawler.model.Crawler;
 import com.peraglobal.datacrawlerapp.crawler.service.CrawlerService;
-import com.peraglobal.datacrawlerapp.model.CrawlerAndTask;
-import com.peraglobal.datacrawlerapp.task.model.Task;
-import com.peraglobal.datacrawlerapp.task.service.TaskService;
+import com.peraglobal.datacrawlerapp.task.model.TaskCrawler;
 
 /**
  *  <code>CrawlerTaskService.java</code>
@@ -23,7 +19,7 @@ import com.peraglobal.datacrawlerapp.task.service.TaskService;
  *  </br>最后修改人 无
  */
 @Service
-public class CrawlerTaskService {
+public class TaskCrawlerService {
 	
 	@Autowired
 	TaskService taskService;
@@ -31,19 +27,20 @@ public class CrawlerTaskService {
 	@Autowired
 	CrawlerService crawlerService;
 	
-	public List<CrawlerAndTask> getCrawlerAndTask() {
-		List<Task> tasks = taskService.getTasks(0, 0);
-		List<CrawlerAndTask> results = new ArrayList<>();
+	public List<TaskCrawler> getTaskCrawlers() {
+		/*List<Task> tasks = taskService.getTasks(0, 0);
+		List<TaskCrawler> results = new ArrayList<>();
 		for (Task task : tasks) {
 			String crawlerId = task.getTaskId();
 			Crawler crawler = new Crawler();
-			crawler.setHistories(crawlerService.getCrawlerHistroy(crawlerId));
-			CrawlerAndTask composer = new CrawlerAndTask();
+			//crawler.setHistories(crawlerService.getCrawlerHistroy(crawlerId));
+			TaskCrawler composer = new TaskCrawler();
 			composer.setCrawler(crawler);
 			composer.setTask(task);
 			results.add(composer);
 		}
-		return results;
+		return results;*/
+		return null;
 	}
 
 }

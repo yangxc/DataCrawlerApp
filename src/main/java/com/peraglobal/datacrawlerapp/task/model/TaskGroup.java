@@ -1,6 +1,7 @@
 package com.peraglobal.datacrawlerapp.task.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,38 +16,82 @@ import java.util.List;
  */
 public class TaskGroup {
 
+	/**
+	 * @category 组 ID
+	 */
 	private String groupId;
-	private String parentId;
-	private String groupName;
-	private List<TaskGroup> children = new ArrayList<>();
 	
+	/**
+	 * @category 组名称
+	 */
+	private String groupName;
+	
+	/**
+	 * @category 父节点 ID
+	 */
+	private String parentId;
+	
+	/**
+	 * @category 是否是叶子节点
+	 */
+	private String ifLeaf;
+
+	/**
+	 * @category 创建时间
+	 */
+	private Date createTime;
+	
+	/**
+	 * @category 更新时间
+	 */
+	private Date updateTime;
+
 	public String getGroupId() {
 		return groupId;
 	}
+
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
-	public String getParentId() {
-		return parentId;
-	}
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+
 	public String getGroupName() {
 		return groupName;
 	}
+
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	public List<TaskGroup> getChildren() {
-		return children;
+
+	public String getParentId() {
+		return parentId;
 	}
-	public void setChildren(List<TaskGroup> children) {
-		this.children = children;
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
-	
-	public void addChild(TaskGroup taskGroup) {
-		this.children.add(taskGroup);
+
+	public String getIfLeaf() {
+		return ifLeaf;
+	}
+
+	public void setIfLeaf(String ifLeaf) {
+		this.ifLeaf = ifLeaf;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 }

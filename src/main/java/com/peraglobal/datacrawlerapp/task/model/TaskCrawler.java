@@ -1,7 +1,6 @@
-package com.peraglobal.datacrawlerapp.model;
+package com.peraglobal.datacrawlerapp.task.model;
 
 import com.peraglobal.datacrawlerapp.crawler.model.Crawler;
-import com.peraglobal.datacrawlerapp.task.model.Task;
 
 /**
  *  <code>CrawlerAndTask.java</code>
@@ -13,7 +12,7 @@ import com.peraglobal.datacrawlerapp.task.model.Task;
  *  @see 2016-12-15
  *  </br>最后修改人 无
  */
-public class CrawlerAndTask {
+public class TaskCrawler {
 	
 	private Crawler crawler;
 	private Task task;
