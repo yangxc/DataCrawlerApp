@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peraglobal.datacrawlerapp.task.model.Task;
 import com.peraglobal.datacrawlerapp.task.model.TaskGroup;
@@ -38,15 +40,16 @@ public class TaskGroupController {
 	 */
 	@RequestMapping(value="/taskgroups", method=RequestMethod.GET)
 	public String getGroups(Model model, @RequestParam(value="groupId") String groupId) {
+		
 		List<TaskGroup> taskGroups = taskGroupService.getTaskGroupsByParentId(groupId);
 		List<Task> tasks = taskService.getTasksByGroupId(groupId);
 		// 当前组信息
 		model.addAttribute("group", taskGroupService.getGroup(groupId));
-		
-		
-		model.addAttribute("groups", taskGroups);
+		model.addAttribute("groups", taskGroupService.getGroups());
 		model.addAttribute("groupId", groupId);
+		model.addAttribute("taskGroups", taskGroups);
 		model.addAttribute("groupNum", taskGroups == null ? 0 : taskGroups.size());
+		model.addAttribute("taskNum", tasks == null ? 0 : tasks.size());
 		// 获取任务状态和对应的任务数
 		List<String> statuses = taskService.getTaskStatuses();
 		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
@@ -78,21 +81,22 @@ public class TaskGroupController {
 	}
 	
 	/**
-	 * 删除对应的任务分组
-	 * @return
+	 * 移除组
+	 * @param groupId 组 ID
+	 * @return 
+	 * @return 状态码
+	 * @since 1.0
 	 */
-	@RequestMapping(value="/modifyTaskGroup", method=RequestMethod.POST, params={"deleteGroup"})
-	public String deleteGroup(HttpServletRequest request, Model model, @RequestParam(value="groupId") String groupId) {
-		String[] groupIds = request.getParameterValues("childId");
-		for (String id : groupIds) {
-			taskGroupService.deleteTaskGroup(id);
+	@RequestMapping(value = "/removeTaskGroup", method = RequestMethod.POST)
+	public @ResponseBody String removeTaskGroup(@RequestBody String groupId) {
+		try {
+			taskGroupService.removeTaskGroup(groupId);
+		} catch (Exception e) {
+			return "error";
 		}
-		model.addAttribute("childIds", groupIds);
-		model.addAttribute("groups", taskGroupService.getGroups());
-		model.addAttribute("group", taskGroupService.getGroup(groupId));
-		model.addAttribute("groupId", groupId);
-		return "/task/taskGroups";
+		return "success";
 	}
+	
 	
 	/**
 	 * 显示任务分组重命名页面
@@ -100,10 +104,9 @@ public class TaskGroupController {
 	 * @param childId 对应要修改的任务分组的id
 	 * @return
 	 */
-	@RequestMapping("renameGroupPage")
-	public String renameGroupPage(HttpServletRequest request, Model model, 
-			@RequestParam(value="groupId") String groupId, @RequestParam(value="childId") String childId) {
-		return "renameTaskGroupName";
+	@RequestMapping(value = "/renameGroupPage", method = RequestMethod.GET)
+	public String renameGroupPage(Model model, @RequestParam(value="groupId") String groupId) {
+		return "/task/renameTaskGroupName";
 	}
 	
 	/**

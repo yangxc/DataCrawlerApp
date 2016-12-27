@@ -48,7 +48,7 @@ public class TaskService {
 	 * @return
 	 */
 	public List<Task> getTasksByTaskStatus(String status) {
-		String url = taskServiceURL + "task/getTasksByState/" + status;
+		String url = taskServiceURL + "/task/getTasksByState/" + status;
 		return restTemplate.getForEntity(url, List.class).getBody();
 	}
 	
@@ -72,7 +72,7 @@ public class TaskService {
 	}
 	
 	public boolean startTask(String taskIds) {
-		String url = taskServiceURL + "task/start";
+		String url = taskServiceURL + "/task/start";
 		String[] ids = taskIds.split(",");
 		for (String string : ids) {
 			if (string != null && !"".equals(string)) {

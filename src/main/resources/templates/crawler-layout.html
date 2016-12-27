@@ -20,10 +20,9 @@
 						taskIds += $(this).val() + ',';
 					});
 					if (taskIds == '') {
-						alert('请选择数据！');
+						alert("Error:no one selected.");
 					} else {
-						
-						
+						// 开始任务
 						$.ajax({
 							url : "task/startTask",
 							type : "POST",
@@ -41,20 +40,6 @@
 								;//after success or error
 							}
 						});
-		
-						/* $.ajax({
-							url : "task/startTask",
-							data : {
-								'taskIds' : taskIds
-							},
-							contentType : "application/json; charset=utf-8",
-							type : "post",
-							dataType : "json",
-							success : function(text) {
-								alert(text);
-							}
-						}); */
-		
 					}
 				});
 		

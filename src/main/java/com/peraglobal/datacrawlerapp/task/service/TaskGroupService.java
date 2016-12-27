@@ -59,14 +59,6 @@ public class TaskGroupService {
 	}
 	
 	/**
-	 * 删除任务分组
-	 * @param groupId
-	 */
-	public void deleteTaskGroup(String groupId) {
-		
-	}
-	
-	/**
 	 * 对任务分组进行重命名
 	 * @param taskGroup
 	 */
@@ -78,6 +70,23 @@ public class TaskGroupService {
 	 * 创建采集任务分组
 	 */
 	public void createGroup(TaskGroup taskGroup) {}
+
+	/**
+	 * 删除任务分组
+	 * @param groupId 组 ID
+	 */
+	public void removeTaskGroup(String groupId) {
+		
+		String[] groupIds = groupId.split(",");
+		for (int i = 0; i < groupIds.length; i++) {
+			if (groupIds[i] != null) {
+				String url = taskServiceURL + "/group/removeTaskGroup/" + groupIds[i];
+				restTemplate.delete(url);
+			}
+		}
+		
+		
+	}
 	
 	
 }

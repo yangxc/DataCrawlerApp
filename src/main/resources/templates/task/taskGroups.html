@@ -14,26 +14,33 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		$(document).ready(function () {
-			function getSelectedCheckBoxes() {
-				var chkValues = [];
-				$('input[name="childId"]:checked').each(function(){ 
-					chkValues.push($(this).val()); 
-					}); 
-				return chkValues;
-			}
 			$("#deleteGroup").click(function () {
-				chks = getSelectedCheckBoxes();
-				if (chks.length == 0) {
+				var groupIds = '';
+				$("input[name='checkbox']:checkbox:checked").each(function() {
+					groupIds += $(this).val() + ',';
+				});
+				if (groupIds == '') {
 					alert("Error:no one selected.");
-					return false;
+				} else {
+					// 开始任务
+					$.ajax({
+						url : "/taskgroup/removeTaskGroup",
+						type : "POST",
+						dataType : "json",
+						contentType : "application/json; charset=utf-8",
+						data : groupIds,
+						success : function(msg) {
+							
+						},
+						error : function(msg) {
+							//200的响应也有可能被认定为error，responseText中没有Message部分
+						}
+					});
+					alert('删除成功！');
+					$("#groupForm").submit();
 				}
-				for (var i = 0; i < chks.length; i++) {
-					var my_input = $('<input type=\"checkbox\" name=\"childId\" checked=true/>');
-				    my_input.attr('value', chks[i]); 
-				    $("#modifyTaskGroup").append(my_input);
-				} 
+				
 			});
-			$("#renameGroup").click(function () {});
 		});
 		/*]]>*/
 	</script>
@@ -60,45 +67,39 @@
 					<p class="navbar-text" style="color: black;"><span th:text="${group.groupName}"></span></p>
 					<form class="navbar-form navbar-right" role="search">
 						<span class="navbar-text"><span th:text="${groupNum}"></span>个文件夹，
-						<span><span th:text="${taskNum}"></span>个任务</span>
+						<span><span th:text="${taskNum}"></span></span>个任务</span>
 					</form>
 				</div>
 			</nav>
-
+			<!-- 任务组操作 -->
 			<nav class="navbar navbar-default" role="navigation"
 				style="margin-bottom: 0; height: 30px;">
 				<div>
-					<form id="modifyTaskGroup" class="navbar-form navbar-left" role="search" th:action="@{/taskgroup/modifyTaskGroup}" method="post">
+					<form id="groupForm" class="navbar-form navbar-left" role="search" th:action="@{/taskgroup/taskgroups(groupId=${groupId})}">
 						<input type="hidden" name="groupId" th:value="${groupId}"/>
-						<button type="submit" value="deleteGroup" name="deleteGroup" id="deleteGroup" class="btn btn-default btn-sm">删除</button>
-						&nbsp; &nbsp;
-						<a th:href="@{/taskgroup/renameGroupPage}" class="btn btn-default btn-sm" data-toggle="modal" data-target="#theModal">重命名
-						</a>
-						<button type="submit" name="renameGroup" id="renameGroup" class="btn btn-default btn-sm">重命名
-						</button>
+						<button type="button" id="deleteGroup" class="btn btn-default btn-sm">删除</button>
+						<a th:href="@{/taskgroup/renameGroupPage(groupId=${groupId})}" class="btn btn-default btn-sm" >重命名</a>
 					</form>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<form class="navbar-form navbar-right" method="get"
-						style="margin-top: -12px; margin-right: 0px; padding-left: 700px;"
-						role="search">
+					<form class="navbar-form navbar-right" method="get" style="margin-top: -12px; margin-right: 0px; padding-left: 700px;" role="search">
 						<a th:href="@{/taskgroup/creategroup(groupId=${groupId})}" class="btn btn-primary" data-toggle="modal"
 							data-target="#theModal" style="width: 120px;">新建分组</a>
 					</form>
 				</div>
 			</nav>
-
+			<!-- 任务组操作 -->
+			<!-- 任务组列表 -->
 			<div class="row" style="padding-left: 0; padding-right: 0; height: 200px;">
 				<div class="col-md-12" style="padding-left: 40px;">
 					<table class="table">
 						<tbody>
-							<tr th:unless="${#lists.isEmpty(group.children)}">
-								<td th:each=" child : ${group.children}" width="200">
-									<input type="checkbox" th:name="childId" th:value="${child.groupId}" 
-										th:checked="${(not #arrays.isEmpty(childIds))?#arrays.contains(childIds, child.groupId):false}"/> &nbsp;
-									<span th:class="${#lists.isEmpty(child.children)}?'glyphicon glyphicon-folder-close':'glyphicon glyphicon-folder-open'">
-									</span>
-									<a th:href="@{/taskgroup/taskgroups(groupId=${child.groupId})}">
-										<span th:text="${child.groupName}"></span>
+							<tr th:unless="${#lists.isEmpty(taskGroups)}">
+								<td th:each=" taskGroup : ${taskGroups}" width="200">
+									<input name="checkbox" type="checkbox" th:value="${taskGroup.groupId}"/>
+									 &nbsp;
+									<span th:class="${taskGroup.ifLeaf == '1'}?'glyphicon glyphicon-folder-close':'glyphicon glyphicon-folder-open'"></span>
+									<a th:href="@{/taskgroup/taskgroups(groupId=${taskGroup.groupId})}">
+										<span th:text="${taskGroup.groupName}"></span>
 									</a>
 								</td>
 							</tr>
@@ -106,6 +107,7 @@
 					</table>
 				</div>
 			</div>
+			<!-- 任务组列表 -->
 			<!-- 右侧头部导航2 -->
 			<nav class="navbar navbar-default" role="navigation"
 				style="margin-bottom: 0; height: 50px;">
