@@ -17,9 +17,8 @@
 		// 保存功能
 		$("#saveTask").click(function () {
 			var groupId = $("#groupId").val();
-			var groupName = $("#groupName").val();
+			var groupName = $("#groupId").find("option:selected").text();
 			var taskName = $("#taskName").val();
-			alert(taskName + groupId);
 			// 获得创建任务的类型：1.web；2.db
 			var crawlerType = $("input[name=crawlerType]:checked").val();
 			if (crawlerType == '1') {
@@ -67,8 +66,7 @@
 									'fieldText': 'https://github\\.com/(\\w+)/.*'
 								}
 							]
-						},
-					
+						}
 					}),
 					success : function(msg) {
 					},
@@ -76,12 +74,14 @@
 					}
 				}); 
 				alert('添加成功！');
-				
-				
-				
-				
 			}else {
 				// db 采集任务创建
+				var db_type = $("#db_type").val();
+				var db_url = $("#db_url").val();
+				var db_user = $("#db_user").val();
+				var db_password = $("#db_password").val();
+				var db_tables = $("#db_tables").val();
+				
 				
 				// 开始任务
 				$.ajax({
@@ -96,29 +96,24 @@
 						'groupId': groupId,
 						'groupName': groupName,
 						'dbConnection':{
-							'type': web_url,
-							'url': '222',
-							'user': '222',
-							'password': '222',
-							
+							'type': db_type,
+							'url': db_url,
+							'user': db_user,
+							'password': db_password,
 							'tables': {
-								'name': '222',
-								'query': '222',
-								'pk': '222',
+								'name': db_tables,
+								'query': 'select * from ' + db_tables,
+								'pk': 'crawlerId',
 								'fields': [
 									{
-										'name': '222',
-										'type': '222',
-										'as': '222',
-										'filetype': '222',
-										'filename': '222'
+										'name': 'crawlerId',
+										'type': '12',
+										'as': 'crawlerId'
 									},
 									{
-										'name': '222',
-										'type': '222',
-										'as': '222',
-										'filetype': '222',
-										'filename': '222'
+										'name': 'crawlerName',
+										'type': '12',
+										'as': 'crawlerName'
 									}
 								]
 							}
@@ -130,8 +125,6 @@
 					}
 				}); 
 				alert('添加成功！');
-				
-				
 			}
 		});
 	});
@@ -160,8 +153,7 @@
 		<div class="form-group">
 			<label for="lastname" class="col-sm-2 control-label">任务分组</label>
 			<div class="col-sm-10">
-				<select class="form-control" id="groupId">
-					<option>==请选择分组==</option>
+				<select id="groupId" name="groupId" class="form-control">
 					<option th:each="taskGroup : ${groups}"
                         th:value="${taskGroup.groupId}" th:text="${taskGroup.groupName}">Credit card</option>
 				</select>
@@ -173,17 +165,19 @@
 		<div class="form-group">
 			<label for="lastname" class="col-sm-2 control-label">采集类型</label>
 			<div class="col-sm-10">
-				<label class="checkbox-inline" id=""> 
-					<input type="radio" name="crawlerType" id="web_radio" value="1" checked="checked" /> WEB采集
+				<label class="checkbox-inline"> 
+					<input type="radio" id="web_radio" name="crawlerType" value="1" checked="checked" /> WEB采集
 				</label> 
 				<label class="checkbox-inline"> 
-					<input type="radio" name="crawlerType" id="db_radio" value="2" /> 数据库采集
+					<input type="radio"  id="db_radio" name="crawlerType" value="2" /> 数据库采集
 				</label>
 			</div>
 		</div>
 		<!-- 采集类型 -->
 		
-		<div><hr /></div>
+		<div>
+			<hr />
+		</div>
 		
 		<!-- web 采集部分 -->
 		<div id="web_div">
@@ -261,10 +255,10 @@
 					<div class="form-group">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="fieldKey" />
+							<input type="text" id="web_field_key" name="web_field_key" class="form-control" />
 						</div>
 						<div class="col-sm-4" style="padding-left: 0;">
-							<input type="text" style="width: 210px;" class="form-control" placeholder="请输规则内容" id="fieldText" />
+							<input type="text" id="web_field_text" name="web_field_text" style="width: 210px;" class="form-control" placeholder="请输规则内容" />
 						</div>
 						<div class="col-sm-2">
 							<select class="form-control" style="width: 100px; padding-left: 0;">
@@ -425,10 +419,10 @@
 					<div class="form-group">
 						<label for="lastname" class="col-sm-2 control-label" style="font-size: 12px; color: #808080; padding-left: 0;">数据库类型：</label>
 						<div class="col-sm-10">
-							<select class="form-control" style="width: 200px;" id="db.driverName">
-								<option value="2">Mysql</option>
-								<option value="1">Oracle</option>
-								<option value="3">SQL Server</option>
+							<select id="db_type" name="db_type" class="form-control" style="width: 200px;">
+								<option value="mysql">Mysql</option>
+								<option value="oracle">Oracle</option>
+								<option value="sqlserver">SQL Server</option>
 							</select>
 						</div>
 					</div>
@@ -438,7 +432,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">数据库链接：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" class="form-control" id="db.url" placeholder="请输入数据库链接" />
+								<input type="text" id="db_url" name="db_url" class="form-control" placeholder="请输入数据库链接" 
+									value="jdbc:mysql://127.0.0.1:3306/test" />
 							</div>
 						</div>
 					</div>
@@ -448,7 +443,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">用户名：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" class="form-control" id="db.name" placeholder="请输入用户名" />
+								<input type="text" id="db_user" name="db_user" class="form-control" placeholder="请输入用户名" 
+									value="root" />
 							</div>
 						</div>
 					</div>
@@ -458,7 +454,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">密码：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" class="form-control" id="db.password" placeholder="请输入密码" />
+								<input type="text" id="db_password" name="db_password" class="form-control" placeholder="请输入密码"
+									value="root" />
 							</div>
 						</div>
 					</div>
@@ -468,7 +465,7 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;"></label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<button type="button" id="db.connection" class="btn btn-default">连接</button>
+								<button type="button" id="btn_connection" name="btn_connection" class="btn btn-default">连接</button>
 							</div>
 						</div>
 					</div>
@@ -478,8 +475,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">选择表/视图：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<select class="form-control" style="width: 200px;">
-									<option>GECKO_TASK</option>
+								<select id="db_tables" name="db_tables" class="form-control" style="width: 200px;">
+									<option value="crawler">crawler</option>
 								</select>
 							</div>
 						</div>
@@ -501,10 +498,10 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><input type="checkbox" /></td>
-											<td><input type="text" class="form-control" /></td>
+											<td><input type="checkbox" id="db_field_name" name="db_field_name" /></td>
+											<td><input type="text" id="db_field_as" name="db_field_as" class="form-control" /></td>
 											<td>ID</td>
-											<td>VARCHAR</td>
+											<td><label id="db_field_type" name="db_field_type">VARCHAR</label></td>
 										</tr>
 									</tbody>
 								</table>

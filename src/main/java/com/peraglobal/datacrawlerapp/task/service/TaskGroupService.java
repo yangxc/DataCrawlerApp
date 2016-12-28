@@ -15,14 +15,10 @@ public class TaskGroupService {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	private final String dbServiceURL;
-	private final String webServiceURL;
 	private final String taskServiceURL;
     
     @Autowired
     public TaskGroupService(WebServiceProperties webServiceProperty) {
-    	dbServiceURL = webServiceProperty.getDbService();
-    	webServiceURL = webServiceProperty.getWebService();
     	taskServiceURL = webServiceProperty.getTaskService();
     }
 

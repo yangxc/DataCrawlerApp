@@ -87,7 +87,20 @@ public class TaskService {
 	 */
 	public void createWebCrawler(WebCrawler webCrawler) {
 		String url = webServiceURL + "/createWeb/";
+		webCrawler.setCrawlerId(java.util.UUID.randomUUID().toString());
+		// 保存web爬虫对象
 		restTemplate.postForEntity(url, webCrawler, String.class);
+		
+		// 保存任务对象
+		Task task = new Task();
+		task.setTaskId(webCrawler.getCrawlerId());
+		task.setTaskName(webCrawler.getCrawlerName());
+		task.setGroupId(webCrawler.getGroupId());
+		task.setGroupName(webCrawler.getGroupName());
+		task.setStartCommand(webServiceURL + "/start");
+		task.setStopCommand(webServiceURL + "/stop");
+		url = taskServiceURL + "/task/createTask/";
+		restTemplate.postForEntity(url, task, String.class);
 	}
 
 	/**
@@ -96,7 +109,20 @@ public class TaskService {
 	 */
 	public void createDbCrawler(DbCrawler dbCrawler) {
 		String url = dbServiceURL + "/createCrawler/";
+		dbCrawler.setCrawlerId(java.util.UUID.randomUUID().toString());
+		// 保存web爬虫对象
 		restTemplate.postForEntity(url, dbCrawler, String.class);
+		
+		// 保存任务对象
+		Task task = new Task();
+		task.setTaskId(dbCrawler.getCrawlerId());
+		task.setTaskName(dbCrawler.getCrawlerName());
+		task.setGroupId(dbCrawler.getGroupId());
+		task.setGroupName(dbCrawler.getGroupName());
+		task.setStartCommand(dbServiceURL + "/start");
+		task.setStopCommand(dbServiceURL + "/stop");
+		url = taskServiceURL + "/task/createTask/";
+		restTemplate.postForEntity(url, task, String.class);
 	}
 	
 	/**

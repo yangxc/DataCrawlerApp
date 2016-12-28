@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
 import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
-import com.peraglobal.datacrawlerapp.task.model.Task;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 import com.peraglobal.datacrawlerapp.task.service.TaskService;
 
