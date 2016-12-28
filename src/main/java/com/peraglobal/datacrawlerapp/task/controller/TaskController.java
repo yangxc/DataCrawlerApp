@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 import com.peraglobal.datacrawlerapp.task.service.TaskService;
@@ -44,6 +45,7 @@ public class TaskController {
 			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
 		}
 		model.addAttribute("taskStatus", statuses);
+		model.addAttribute("statusName", statusName);
 		model.addAttribute("statusAdnCount", statusAndCount);
 		return "index";
 	}
@@ -60,12 +62,47 @@ public class TaskController {
 	}
 	
 	/**
+	 * 删除任务
+	 * @return
+	 */
+	@RequestMapping(value="/removeTask", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String removeTask(@RequestBody String taskIds) {
+		try {
+			taskService.removeTask(taskIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return "success";
+	}
+	
+	/**
 	 * 开始任务
 	 * @return
 	 */
 	@RequestMapping(value="/startTask", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void startTask(@RequestBody String taskIds) {
-		// 开始任务功能
-		taskService.startTask(taskIds);
+	public @ResponseBody String startTask(@RequestBody String taskIds) {
+		try {
+			taskService.startTask(taskIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return "success";
+	}
+	
+	/**
+	 * 停止任务
+	 * @return
+	 */
+	@RequestMapping(value="/stopTask", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String stopTask(@RequestBody String taskIds) {
+		try {
+			taskService.stopTask(taskIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return "success";
 	}
 }

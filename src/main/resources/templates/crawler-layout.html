@@ -42,24 +42,52 @@
 				$("#btn_stop").click(function() {
 					var taskIds = '';
 					$("input[name='checkbox']:checkbox:checked").each(function() {
-						taskIds += $(this).val();
+						taskIds += $(this).val() + ',';
 					});
 					if (taskIds == '') {
-						alert('请选择数据！');
+						alert("Error:no one selected.");
+					} else {
+						// 停止任务
+						$.ajax({
+							url : "/task/stopTask",
+							type : "POST",
+							dataType : "json",
+							contentType : "application/json; charset=utf-8",
+							data : taskIds,
+							success : function(data) {
+								alert(data);
+							},
+							error : function(data) {
+							}
+						});
 					}
-					alert(taskIds);
 				});
 		
 				// 删除功能
 				$("#btn_delete").click(function() {
+					
 					var taskIds = '';
 					$("input[name='checkbox']:checkbox:checked").each(function() {
-						taskIds += $(this).val();
+						taskIds += $(this).val() + ',';
 					});
 					if (taskIds == '') {
-						alert('请选择数据！');
+						alert("Error:no one selected.");
+					} else {
+						$.ajax({
+							url : "/task/removeTask",
+							type : "POST",
+							dataType : "json",
+							contentType : "application/json; charset=utf-8",
+							data : taskIds,
+							success : function(data) {
+								alert(data);
+							},
+							error : function(data) {
+							}
+						});
+						alert('删除成功！');
+						$("#taskForm").submit();
 					}
-					alert(taskIds);
 				});
 		
 			});
@@ -118,7 +146,8 @@
 				<p class="navbar-text">采集任务</p>
 			</div>
 			<div>
-				<form class="navbar-form navbar-right" role="search" th:action="@{/}" method="get">
+				<form id="taskForm" name="taskForm" class="navbar-form navbar-left" role="search" th:action="@{/}">
+					<input type="hidden" name="statusName" th:value="${statusName}"/>
 					<div class="form-group">
 						<select class="form-control input-sm" style="width: 120px;">
 							<option value="">全部</option>

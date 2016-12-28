@@ -66,25 +66,66 @@ public class TaskService {
 		return restTemplate.getForEntity(url, List.class).getBody();
 	}
 
+	/**
+	 * 根据组 Id 查询任务列表
+	 * @param groupId
+	 * @return
+	 */
 	public List<Task> getTasksByGroupId(String groupId) {
 		String url = taskServiceURL + "/task/getTaskList/" + groupId;
 		return restTemplate.getForEntity(url, List.class).getBody();
 	}
 	
+	/**
+	 * 删除任务
+	 * @param taskIds
+	 * @return
+	 */
+	public void removeTask(String taskIds) {
+		String[] ids = taskIds.split(",");
+		for (String taskId : ids) {
+			if (taskId != null && !"".equals(taskId)) {
+				String url = taskServiceURL + "/task/removeTask/" + taskId;
+				restTemplate.delete(url);
+			}
+		}
+	}
+	
+	/**
+	 * 开始任务
+	 * @param taskIds
+	 * @return
+	 */
 	public boolean startTask(String taskIds) {
 		String url = taskServiceURL + "/task/start";
 		String[] ids = taskIds.split(",");
-		for (String string : ids) {
-			if (string != null && !"".equals(string)) {
+		for (String taskId : ids) {
+			if (taskId != null && !"".equals(taskId)) {
 				Task task = new Task();
-				task.setTaskId(string);
-				restTemplate.put(url, String.class, task);
+				task.setTaskId(taskId);
+				restTemplate.put(url, task);
 			}
 		}
 		return true;
 	}
 
-
+	/**
+	 * 停止任务
+	 * @param taskIds
+	 * @return
+	 */
+	public boolean stopTask(String taskIds) {
+		String url = taskServiceURL + "/task/stop";
+		String[] ids = taskIds.split(",");
+		for (String taskId : ids) {
+			if (taskId != null && !"".equals(taskId)) {
+				Task task = new Task();
+				task.setTaskId(taskId);
+				restTemplate.put(url, task);
+			}
+		}
+		return true;
+	}
 	
 	
 	/*public boolean createTask(Task task) {
