@@ -3,7 +3,7 @@ package com.peraglobal.datacrawlerapp.crawler.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class WebRule1 implements Serializable {
+public class WebRule implements Serializable {
 
 	private static final long serialVersionUID = -8606521947569860193L;
 	
@@ -35,7 +35,7 @@ public class WebRule1 implements Serializable {
 	/**
 	 * @category 规则对象
 	 */
-	private List<WebRuleField1> webRuleFields;
+	private List<WebRuleField> webRuleFields;
 	
 
 	public String getCoding() {
@@ -78,11 +78,11 @@ public class WebRule1 implements Serializable {
 		this.url = url;
 	}
 	
-	public List<WebRuleField1> getWebRuleFields() {
+	public List<WebRuleField> getWebRuleFields() {
 		return webRuleFields;
 	}
 
-	public void setWebRuleFields(List<WebRuleField1> webRuleFields) {
+	public void setWebRuleFields(List<WebRuleField> webRuleFields) {
 		this.webRuleFields = webRuleFields;
 	}
 	

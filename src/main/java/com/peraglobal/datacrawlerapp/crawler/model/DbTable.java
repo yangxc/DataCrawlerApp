@@ -3,7 +3,7 @@ package com.peraglobal.datacrawlerapp.crawler.model;
 
 import java.util.List;
 
-public class DbTable1 {
+public class DbTable {
 	private String name;
 	private String query;
 	private String pk;

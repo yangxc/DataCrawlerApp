@@ -2,7 +2,7 @@ package com.peraglobal.datacrawlerapp.crawler.model;
 
 import java.io.Serializable;
 
-public class WebRuleField1 implements Serializable {
+public class WebRuleField implements Serializable {
 
 	private static final long serialVersionUID = -1156028056553870021L;
 	

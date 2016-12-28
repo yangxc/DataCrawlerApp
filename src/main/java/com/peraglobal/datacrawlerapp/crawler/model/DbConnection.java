@@ -10,12 +10,12 @@ public class DbConnection {
 	private String password;
 	private String type;
 	
-	private DbTable1 tables;
+	private DbTable tables;
 	
-	public DbTable1 getTables() {
+	public DbTable getTables() {
 		return tables;
 	}
-	public void setTables(DbTable1 tables) {
+	public void setTables(DbTable tables) {
 		this.tables = tables;
 	}
 	public String getName() {
