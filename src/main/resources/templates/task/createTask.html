@@ -17,6 +17,7 @@
 		// 保存功能
 		$("#saveTask").click(function () {
 			var groupId = $("#groupId").val();
+			var groupName = $("#groupName").val();
 			var taskName = $("#taskName").val();
 			alert(taskName + groupId);
 			// 获得创建任务的类型：1.web；2.db
@@ -34,13 +35,41 @@
 				
 				// 开始任务
 				$.ajax({
-					url : "/task/createTask",
+					url : "/task/createWebCrawler",
 					cache: false,
 					async: false,
 					type : "POST",
 					dataType : "json",
 					contentType : "application/json; charset=utf-8",
-					data: JSON.stringify({ 'parentId': parentId, 'groupName': groupName }),
+					data: JSON.stringify({ 
+						'crawlerName': taskName, 
+						'groupId': groupId,
+						'groupName': groupName,
+						'webRule':{
+							'url': web_url,
+							'webRuleFields': [
+								{
+									'type': 'add',
+									'fieldKey': '',
+									'fieldType': web_list_url_type,
+									'fieldText': web_list_url
+								},
+								{
+									'type': 'add',
+									'fieldKey': '',
+									'fieldType': db_detail_url_type,
+									'fieldText': db_detail_url
+								},
+								{
+									'type': 'put',
+									'fieldKey': 'author',
+									'fieldType': '',
+									'fieldText': 'https://github\\.com/(\\w+)/.*'
+								}
+							]
+						},
+					
+					}),
 					success : function(msg) {
 					},
 					error : function(msg) {
@@ -53,6 +82,56 @@
 				
 			}else {
 				// db 采集任务创建
+				
+				// 开始任务
+				$.ajax({
+					url : "/task/createDbCrawler",
+					cache: false,
+					async: false,
+					type : "POST",
+					dataType : "json",
+					contentType : "application/json; charset=utf-8",
+					data: JSON.stringify({ 
+						'crawlerName': taskName, 
+						'groupId': groupId,
+						'groupName': groupName,
+						'dbConnection':{
+							'type': web_url,
+							'url': '222',
+							'user': '222',
+							'password': '222',
+							
+							'tables': {
+								'name': '222',
+								'query': '222',
+								'pk': '222',
+								'fields': [
+									{
+										'name': '222',
+										'type': '222',
+										'as': '222',
+										'filetype': '222',
+										'filename': '222'
+									},
+									{
+										'name': '222',
+										'type': '222',
+										'as': '222',
+										'filetype': '222',
+										'filename': '222'
+									}
+								]
+							}
+						}
+					}),
+					success : function(msg) {
+					},
+					error : function(msg) {
+					}
+				}); 
+				alert('添加成功！');
+				
+				
 			}
 		});
 	});
@@ -144,9 +223,9 @@
 						</div>
 						<div class="col-sm-3">
 							<select id="web_list_url_type" name="web_list_url_type" class="form-control" style="width: 110px; padding-left: 0;">
-								<option value="">XPATH</option>
-								<option value="">正则表达式</option>
-								<option value="">CSS</option>
+								<option value="xpath">XPATH</option>
+								<option value="regex">正则表达式</option>
+								<option value="css">CSS</option>
 							</select>
 						</div>
 					</div>
@@ -161,9 +240,9 @@
 						</div>
 						<div class="col-sm-3">
 							<select id="db_detail_url_type" name="db_detail_url_type" class="form-control" style="width: 110px; padding-left: 0;">
-								<option>XPATH</option>
-								<option>正则表达式</option>
-								<option>CSS</option>
+								<option value="xpath">XPATH</option>
+								<option value="regex">正则表达式</option>
+								<option value="css">CSS</option>
 							</select>
 						</div>
 					</div>
@@ -189,9 +268,9 @@
 						</div>
 						<div class="col-sm-2">
 							<select class="form-control" style="width: 100px; padding-left: 0;">
-								<option>XPATH</option>
-								<option>正则表达式</option>
-								<option>CSS</option>
+								<option value="xpath">XPATH</option>
+								<option value="regex">正则表达式</option>
+								<option value="css">CSS</option>
 							</select>
 						</div>
 						<div class="col-sm-2" style="padding-left: 20px;">

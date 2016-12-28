@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
+import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
+import com.peraglobal.datacrawlerapp.task.model.Task;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 import com.peraglobal.datacrawlerapp.task.service.TaskService;
 
@@ -59,6 +62,36 @@ public class TaskController {
 		model.addAttribute("groupId", groupId);
 		model.addAttribute("groups", taskGroupService.getGroups());
 		return "/task/createTask";
+	}
+	
+	/**
+	 * 创建web采集任务
+	 * @return
+	 */
+	@RequestMapping(value="/createWebCrawler", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String createWebCrawler(@RequestBody WebCrawler webCrawler) {
+		try {
+			taskService.createWebCrawler(webCrawler);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return "success";
+	}
+	
+	/**
+	 * 创建web采集任务
+	 * @return
+	 */
+	@RequestMapping(value="/createDbCrawler", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String createDbCrawler(@RequestBody DbCrawler dbCrawler) {
+		try {
+			taskService.createDbCrawler(dbCrawler);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return "success";
 	}
 	
 	/**
