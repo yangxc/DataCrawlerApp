@@ -66,10 +66,15 @@ public class TaskGroupController {
 	 */
 	@RequestMapping(value = "/createTaskGroupPage", method = RequestMethod.GET)
 	public String createTaskGroupPage(Model model, @RequestParam(value="groupId") String groupId) {
-		model.addAttribute("group", taskGroupService.getGroup(groupId));
+		if (groupId != "" && !"".equals(groupId)) {
+			model.addAttribute("group", taskGroupService.getGroup(groupId));
+		} else {
+			TaskGroup group = new TaskGroup();
+			group.setParentId("0");
+			model.addAttribute("group", group);
+		}
 		return "/task/createTaskGroup";
 	}
-	
 	
 	/**
 	 * 保存任务分组

@@ -52,9 +52,11 @@ public class TaskController {
 	 * 返回任务分组创建页面
 	 * @return
 	 */
-	@RequestMapping(value="/createCrawlerTask", method=RequestMethod.GET)
-	public String createCrawlerTask(Model model, @RequestParam(value="groupId") String groupId) {
-		return "/task/createCrawlerTask";
+	@RequestMapping(value="/createTaskPage", method=RequestMethod.GET)
+	public String createTaskCrawler(Model model, @RequestParam(value="groupId") String groupId) {
+		model.addAttribute("groupId", groupId);
+		model.addAttribute("groups", taskGroupService.getGroups());
+		return "/task/createTask";
 	}
 	
 	/**

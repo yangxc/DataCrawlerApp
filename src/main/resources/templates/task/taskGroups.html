@@ -80,7 +80,7 @@
 					<form id="groupForm" class="navbar-form navbar-left" role="search" th:action="@{/taskgroup/taskgroups(groupId=${groupId})}">
 						<input type="hidden" name="groupId" th:value="${groupId}"/>
 						<button type="button" id="deleteGroup" class="btn btn-default btn-sm">删除</button>
-						<a th:href="@{/taskgroup/renameGroupPage(groupId=${groupId})}" class="btn btn-default btn-sm" data-toggle="modal"
+						<a th:href="@{/taskgroup/renameGroupPage/(groupId=${groupId})}" class="btn btn-default btn-sm" data-toggle="modal"
 							data-target="#theModal" style="width: 120px;">重命名</a>
 						
 					</form>
@@ -147,8 +147,8 @@
 							</select>
 						</div>
 						&nbsp; &nbsp; &nbsp; &nbsp;
-						<button type="submit" class="btn btn-success" data-toggle="modal"
-							data-target="#myModal" style="width: 120px;">新建采集</button>
+						<a th:href="@{/task/createTaskPage(groupId=${groupId})}" class="btn btn-success" 
+					data-toggle="modal" data-target="#theModal" style="width: 120px;">新建采集</a>
 						&nbsp; &nbsp;
 					</form>
 				</div>

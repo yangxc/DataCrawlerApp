@@ -1,6 +1,62 @@
 <!-- 创建采集任务 -->
 <!-- js 部分 -->
-
+<script th:inline="javascript">
+	$(document).ready(function () {
+		// 控制web页面显示
+		$("#web_radio").click(function () {
+			$("#web_div").show();
+			$("#db_div").hide();
+		});
+		
+		// 控制db页面显示
+		$("#db_radio").click(function () {
+			$("#web_div").hide();
+			$("#db_div").show();
+		});
+		
+		// 保存功能
+		$("#saveTask").click(function () {
+			var groupId = $("#groupId").val();
+			var taskName = $("#taskName").val();
+			alert(taskName + groupId);
+			// 获得创建任务的类型：1.web；2.db
+			var crawlerType = $("input[name=crawlerType]:checked").val();
+			if (crawlerType == '1') {
+				
+				// web 采集任务创建
+				var web_url = $("#web_url").val();
+				
+				var web_list_url = $("#web_list_url").val();
+				var web_list_url_type = $("#web_list_url_type").val();
+				
+				var db_detail_url = $("#db_detail_url").val();
+				var db_detail_url_type = $("#db_detail_url_type").val();
+				
+				// 开始任务
+				$.ajax({
+					url : "/task/createTask",
+					cache: false,
+					async: false,
+					type : "POST",
+					dataType : "json",
+					contentType : "application/json; charset=utf-8",
+					data: JSON.stringify({ 'parentId': parentId, 'groupName': groupName }),
+					success : function(msg) {
+					},
+					error : function(msg) {
+					}
+				}); 
+				alert('添加成功！');
+				
+				
+				
+				
+			}else {
+				// db 采集任务创建
+			}
+		});
+	});
+</script>
 <!-- js 部分 -->
 
 <div class="modal-header">
@@ -16,7 +72,7 @@
 		<div class="form-group">
 			<label for="firstname" class="col-sm-2 control-label">任务名称</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="taskName" placeholder="请输入任务名称" />
+				<input type="text" class="form-control" id="taskName" name="taskName" placeholder="请输入任务名称" />
 			</div>
 		</div>
 		<!-- 任务名称 -->
@@ -25,8 +81,10 @@
 		<div class="form-group">
 			<label for="lastname" class="col-sm-2 control-label">任务分组</label>
 			<div class="col-sm-10">
-				<select class="form-control" id="groupName">
+				<select class="form-control" id="groupId">
 					<option>==请选择分组==</option>
+					<option th:each="taskGroup : ${groups}"
+                        th:value="${taskGroup.groupId}" th:text="${taskGroup.groupName}">Credit card</option>
 				</select>
 			</div>
 		</div>
@@ -36,11 +94,11 @@
 		<div class="form-group">
 			<label for="lastname" class="col-sm-2 control-label">采集类型</label>
 			<div class="col-sm-10">
-				<label class="checkbox-inline"> 
-					<input type="radio" name="crawlerType" id="web.crawler" value="1" checked="checked" /> WEB采集
+				<label class="checkbox-inline" id=""> 
+					<input type="radio" name="crawlerType" id="web_radio" value="1" checked="checked" /> WEB采集
 				</label> 
 				<label class="checkbox-inline"> 
-					<input type="radio" name="crawlerType" id="db.crawler" value="2" /> 数据库采集
+					<input type="radio" name="crawlerType" id="db_radio" value="2" /> 数据库采集
 				</label>
 			</div>
 		</div>
@@ -68,7 +126,8 @@
 						<label for="lastname" class="col-sm-2 control-label"
 							style="font-size: 12px; color: #808080">起始网址：</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="url" placeholder="请输入网址规则" style="width: 340px;" />
+							<input type="text" id="web_url" name="web_url" class="form-control" placeholder="请输入网址规则" style="width: 340px;"
+								value="https://github.com/code4craft" />
 						</div>
 					</div>
 					<!-- 起始网址 -->
@@ -79,14 +138,15 @@
 							style="font-size: 12px; color: #808080; padding-left: 0; padding-right: 0;">列表网址规则：</label>
 						<div class="col-sm-7">
 							<div class="col-sm-7" style="padding-left: 0;">
-								<input type="text" class="form-control" id="list_url" placeholder="请输入网址规则" style="width: 340px;" />
+								<input type="text" id="web_list_url" name="web_list_url" class="form-control" placeholder="请输入网址规则" style="width: 340px;"
+									value="(https://github\\.com/[\\w\\-]+/[\\w\\-]+)" />
 							</div>
 						</div>
 						<div class="col-sm-3">
-							<select class="form-control" style="width: 110px; padding-left: 0;">
-								<option>XPATH</option>
-								<option>正则表达式</option>
-								<option>CSS</option>
+							<select id="web_list_url_type" name="web_list_url_type" class="form-control" style="width: 110px; padding-left: 0;">
+								<option value="">XPATH</option>
+								<option value="">正则表达式</option>
+								<option value="">CSS</option>
 							</select>
 						</div>
 					</div>
@@ -96,12 +156,11 @@
 							style="font-size: 12px; color: #808080; padding-left: 0; padding-right: 0;">详情网址规则：</label>
 						<div class="col-sm-7">
 							<div class="col-sm-7" style="padding-left: 0;">
-								<input type="text" class="form-control" id="list_detail" placeholder="请输入详情网址规则" style="width: 340px;" />
+								<input type="text" id="db_detail_url" name="db_detail_url" class="form-control" placeholder="请输入详情网址规则" style="width: 340px;" />
 							</div>
 						</div>
 						<div class="col-sm-3">
-							<select class="form-control"
-								style="width: 110px; padding-left: 0;">
+							<select id="db_detail_url_type" name="db_detail_url_type" class="form-control" style="width: 110px; padding-left: 0;">
 								<option>XPATH</option>
 								<option>正则表达式</option>
 								<option>CSS</option>
@@ -451,7 +510,7 @@
 	
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-			<button type="submit" class="btn btn-primary" name="saveGroup">保存</button>
+			<button type="button" class="btn btn-primary" id="saveTask" name="saveTask">保存</button>
 		</div>
 
 	</form>

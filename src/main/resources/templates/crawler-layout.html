@@ -24,7 +24,7 @@
 					} else {
 						// 开始任务
 						$.ajax({
-							url : "task/startTask",
+							url : "/task/startTask",
 							type : "POST",
 							dataType : "json",
 							contentType : "application/json; charset=utf-8",
@@ -33,11 +33,6 @@
 								alert(data);
 							},
 							error : function(data) {
-								//200的响应也有可能被认定为error，responseText中没有Message部分
-								alert($.parseJSON(data.responseText).Message);
-							},
-							complete : function(data) {
-								;//after success or error
 							}
 						});
 					}
@@ -100,9 +95,12 @@
 				<h4 class="navbar-text">
 					<span class="glyphicon glyphicon-folder-close "></span> 采集分组
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="/taskgroup/creategroup" class="dropdown-toggle" data-toggle="modal" data-target="#theModal"> 
+					
+					<a th:href="@{/taskgroup/createTaskGroupPage(groupId=${groupId})}" class="dropdown-toggle" data-toggle="modal"
+							data-target="#theModal"> 
 						<span class="glyphicon glyphicon-plus"></span>
 					</a>
+					
 				</h4>
 			</div>
 			<div style="margin-top: 50px;">
@@ -139,29 +137,24 @@
 		<div layout:fragment="righttopsecondmenu">
 			<!--向左对齐-->
 			<form class="navbar-form navbar-left" role="search">
-				<button id="btn_strat" type="button" class="btn btn-default btn-sm">
+				<button type="button" id="btn_strat" class="btn btn-default btn-sm">
 					<span class="glyphicon glyphicon-play"></span> 开始
 				</button>&nbsp; &nbsp;
-				<button id="btn_stop" type="button" class="btn btn-default btn-sm">
+				<button type="button" id="btn_stop" class="btn btn-default btn-sm">
 					<span class="glyphicon glyphicon-stop"></span> 停止
 				</button>&nbsp; &nbsp;
-				<button id="btn_delete" type="button" class="btn btn-default btn-sm">
+				<button type="button" id="btn_delete" class="btn btn-default btn-sm">
 					<span class="glyphicon glyphicon-remove"></span> 删除
 				</button>
 			</form>
 			<!--向右对齐-->
 			<form class="navbar-form navbar-right" role="search">
-				<a th:href="@{/task/createCrawlerTask(groupId=${groupId})}" class="btn btn-success" data-toggle="modal" data-target="#theModal" style="width: 120px;">新建采集</a>
+				<a th:href="@{/task/createTaskPage(groupId=${groupId})}" class="btn btn-success" 
+					data-toggle="modal" data-target="#theModal" style="width: 120px;">新建采集</a>
 				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 			</form>
 		</div>
 		
-		<!-- 显示模态对话框 -->
-		<div class="modal fade" id="theModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content"></div>
-			</div>
-		</div>
 	</body>
 </html>

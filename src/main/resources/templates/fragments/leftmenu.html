@@ -33,7 +33,7 @@
 		<h4 class="navbar-text">
 			<span class="glyphicon glyphicon-folder-close "></span> 采集分组
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="@{/taskgroup/creategroup(groupId=${taskGroup.groupId})}" class="dropdown-toggle" data-toggle="modal" data-target="#theModal"> 
+			<a th:href="@{/taskgroup/createTaskGroupPage(groupId=${groupId})}" class="dropdown-toggle" data-toggle="modal" data-target="#theModal"> 
 				<span class="glyphicon glyphicon-plus"></span>
 			</a>
 		</h4>

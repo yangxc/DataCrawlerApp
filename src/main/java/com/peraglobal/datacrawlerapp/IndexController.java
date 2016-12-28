@@ -51,6 +51,7 @@ public class IndexController {
 		}
 		model.addAttribute("taskStatus", statuses);
 		model.addAttribute("statusAndCount", statusAndCount);
+		model.addAttribute("groupId", null);
 		return "index";
 	}
 	
