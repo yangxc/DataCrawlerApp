@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,21 +61,29 @@ public class TaskGroupController {
 	
 	/**
 	 * 返回任务分组创建页面
+	 * @param groupId 对应要修改的任务分组的父任务分组id
 	 * @return
 	 */
-	@RequestMapping(value="/creategroup", method=RequestMethod.GET)
-	public String createGroup() {
+	@RequestMapping(value = "/createTaskGroupPage", method = RequestMethod.GET)
+	public String createTaskGroupPage(Model model, @RequestParam(value="groupId") String groupId) {
+		model.addAttribute("group", taskGroupService.getGroup(groupId));
 		return "/task/createTaskGroup";
 	}
+	
 	
 	/**
 	 * 保存任务分组
 	 * @return
 	 */
-	@RequestMapping(value="/savegroup", method=RequestMethod.POST)
-	public String saveGroup() {
-		taskGroupService.createGroup(null);
-		return "redirect:/";
+	@RequestMapping(value="/createTaskGroup", method=RequestMethod.POST)
+	public @ResponseBody String createTaskGroup(@RequestBody TaskGroup taskGroup) {
+		try {
+			taskGroupService.createTaskGroup(taskGroup);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return "success";
 	}
 	
 	/**
@@ -97,15 +103,14 @@ public class TaskGroupController {
 		return "success";
 	}
 	
-	
 	/**
 	 * 显示任务分组重命名页面
 	 * @param groupId 对应要修改的任务分组的父任务分组id
-	 * @param childId 对应要修改的任务分组的id
 	 * @return
 	 */
 	@RequestMapping(value = "/renameGroupPage", method = RequestMethod.GET)
 	public String renameGroupPage(Model model, @RequestParam(value="groupId") String groupId) {
+		model.addAttribute("group", taskGroupService.getGroup(groupId));
 		return "/task/renameTaskGroupName";
 	}
 	
@@ -113,9 +118,18 @@ public class TaskGroupController {
 	 * 重命名对应的任务分组
 	 * @return
 	 */
-	@RequestMapping(value="/modifyTaskGroup", method=RequestMethod.POST, params={"renameGroup"})
-	public String renameGroup() {
-		taskGroupService.renameTaskGroup(null);
-		return "/task/taskGroups";
+	@RequestMapping(value = "/modifyTaskGroup", method = RequestMethod.POST)
+	public @ResponseBody String modifyTaskGroup(@RequestBody TaskGroup taskGroup) {
+		try {
+			taskGroupService.modifyTaskGroup(taskGroup);
+		} catch (Exception e) {
+			return "error";
+		}
+		return "success";
 	}
+	
+	
+	
+	
+	
 }

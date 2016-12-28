@@ -1,8 +1,6 @@
 package com.peraglobal.datacrawlerapp.task.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  *  <code>TaskGroup.java</code>

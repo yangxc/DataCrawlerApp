@@ -62,14 +62,19 @@ public class TaskGroupService {
 	 * 对任务分组进行重命名
 	 * @param taskGroup
 	 */
-	public void renameTaskGroup(TaskGroup taskGroup) {
+	public void modifyTaskGroup(TaskGroup taskGroup) {
+		String url = taskServiceURL + "/group/editTaskGroup/";
+		restTemplate.put(url, taskGroup);
 		
 	}
 	
 	/**
 	 * 创建采集任务分组
 	 */
-	public void createGroup(TaskGroup taskGroup) {}
+	public void createTaskGroup(TaskGroup taskGroup) {
+		String url = taskServiceURL + "/group/createTaskGroup/";
+		restTemplate.postForEntity(url, taskGroup, String.class);
+	}
 
 	/**
 	 * 删除任务分组

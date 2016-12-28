@@ -25,12 +25,13 @@
 					// 开始任务
 					$.ajax({
 						url : "/taskgroup/removeTaskGroup",
+						cache: false,
+						async: false,
 						type : "POST",
 						dataType : "json",
 						contentType : "application/json; charset=utf-8",
 						data : groupIds,
 						success : function(msg) {
-							
 						},
 						error : function(msg) {
 							//200的响应也有可能被认定为error，responseText中没有Message部分
@@ -41,6 +42,7 @@
 				}
 				
 			});
+
 		});
 		/*]]>*/
 	</script>
@@ -78,11 +80,13 @@
 					<form id="groupForm" class="navbar-form navbar-left" role="search" th:action="@{/taskgroup/taskgroups(groupId=${groupId})}">
 						<input type="hidden" name="groupId" th:value="${groupId}"/>
 						<button type="button" id="deleteGroup" class="btn btn-default btn-sm">删除</button>
-						<a th:href="@{/taskgroup/renameGroupPage(groupId=${groupId})}" class="btn btn-default btn-sm" >重命名</a>
+						<a th:href="@{/taskgroup/renameGroupPage(groupId=${groupId})}" class="btn btn-default btn-sm" data-toggle="modal"
+							data-target="#theModal" style="width: 120px;">重命名</a>
+						
 					</form>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<form class="navbar-form navbar-right" method="get" style="margin-top: -12px; margin-right: 0px; padding-left: 700px;" role="search">
-						<a th:href="@{/taskgroup/creategroup(groupId=${groupId})}" class="btn btn-primary" data-toggle="modal"
+						<a th:href="@{/taskgroup/createTaskGroupPage(groupId=${groupId})}" class="btn btn-primary" data-toggle="modal"
 							data-target="#theModal" style="width: 120px;">新建分组</a>
 					</form>
 				</div>
