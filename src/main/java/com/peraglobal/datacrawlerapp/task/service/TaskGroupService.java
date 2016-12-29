@@ -69,6 +69,9 @@ public class TaskGroupService {
 	 */
 	public void createTaskGroup(TaskGroup taskGroup) {
 		String url = taskServiceURL + "/group/createTaskGroup/";
+		if (null == taskGroup.getParentId()) {
+			taskGroup.setParentId("0");
+		}
 		restTemplate.postForEntity(url, taskGroup, String.class);
 	}
 
