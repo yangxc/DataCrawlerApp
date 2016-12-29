@@ -100,9 +100,10 @@
 							'url': db_url,
 							'user': db_user,
 							'password': db_password,
+							'driver': 'com.mysql.jdbc.Driver',
 							'tables': {
 								'name': db_tables,
-								'query': 'select * from ' + db_tables,
+								'query': 'select * from crawler ',
 								'pk': 'crawlerId',
 								'fields': [
 									{
@@ -126,6 +127,7 @@
 				}); 
 				alert('添加成功！');
 			}
+			$("#taskForm").submit();
 		});
 	});
 </script>

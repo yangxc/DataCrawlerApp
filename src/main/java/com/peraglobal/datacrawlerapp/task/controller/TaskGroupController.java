@@ -26,10 +26,10 @@ import com.peraglobal.datacrawlerapp.task.service.TaskService;
 public class TaskGroupController {
 	
 	@Autowired
-	TaskService taskService;
+	private TaskService taskService;
 	
 	@Autowired
-	TaskGroupService taskGroupService;
+	private TaskGroupService taskGroupService;
 	
 	
 	/**
@@ -132,9 +132,5 @@ public class TaskGroupController {
 		}
 		return "success";
 	}
-	
-	
-	
-	
 	
 }
