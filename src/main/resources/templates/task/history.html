@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="history-layout">
+<body>
+	<div layout:fragment="content">
+		<table class="table table-hover">
+			<tbody>
+				<tr th:each="task : ${tasks}">
+					<td width="35">
+						<input name="checkbox" type="checkbox" th:value="${task.taskId}"/>
+					</td>
+					<td>
+						<a th:href="@{/task/history(taskId=${task.taskId})}" class="dropdown-toggle">
+							<p th:text="${task.taskName}"></p>
+						</a>
+						<span style="font-size: 12px; color: #808080">所属分组:</span>
+						<span style="font-size: 12px;" th:text="${task.groupName}"></span>
+					</td>
+					<td>
+						<span style="font-size: 12px; color: #808080">任务状态:</span>
+						<span style="font-size: 12px;" th:text="${task.taskState}"></span>
+					</td>
+					<td>
+						<span style="font-size: 12px; color: #808080">创建时间:</span>
+						<span style="font-size: 12px;" th:text="${#calendars.format(task.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
+					</td>
+					<td>
+						<div class="panel panel-default" style="width: 100px; height: 50px;">
+							<div class="panel-heading" style="height: 25px; padding: 5px 23px;">
+								<span style="font-size: 12px;">采集数量</span>
+							</div>
+							<div class="panel-body" style="height: 25px; padding: 5px 27px;">3,102</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="height: 50px; margin-top: -20px;">
+			<ul class="pagination" style="padding-left: 30%">
+				<li><a href="#">&laquo;</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+				<li><a href="#">&raquo;</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

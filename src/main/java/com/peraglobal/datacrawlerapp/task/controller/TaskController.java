@@ -35,7 +35,7 @@ public class TaskController {
 	
 
 	@RequestMapping("/status/{statusName}")
-	public String getTaskListByStatus(@PathVariable String statusName, Model model) {
+	public String getTaskListByStatus(Model model, @PathVariable String statusName) {
 		// 获取任务分组列表
 		model.addAttribute("groups", taskGroupService.getGroups());
 		// 获取任务列表
@@ -51,6 +51,30 @@ public class TaskController {
 		model.addAttribute("statusAdnCount", statusAndCount);
 		return "index";
 	}
+	
+	/**
+	 * 程序入口
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/history")
+	public String history(Model model,  @RequestParam(value="taskId") String taskId) {
+		// 获取任务分组列表
+		model.addAttribute("groups", taskGroupService.getGroups());
+		// 获取任务列表
+		model.addAttribute("tasks", taskService.getTasks(0, 50));
+		// 获取任务状态和对应的任务数
+		List<String> statuses = taskService.getTaskStatuses();
+		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
+		for (String status : statuses) {
+			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
+		}
+		model.addAttribute("taskStatus", statuses);
+		model.addAttribute("statusAndCount", statusAndCount);
+		model.addAttribute("groupId", null);
+		return "/task/history";
+	}
+	
 	
 	/**
 	 * 返回任务分组创建页面

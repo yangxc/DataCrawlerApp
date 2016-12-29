@@ -11,7 +11,9 @@
 						<input name="checkbox" type="checkbox" th:value="${task.taskId}"/>
 					</td>
 					<td>
-						<p th:text="${task.taskName}"></p>
+						<a th:href="@{/task/history(taskId=${task.taskId})}" class="dropdown-toggle">
+							<p th:text="${task.taskName}"></p>
+						</a>
 						<span style="font-size: 12px; color: #808080">所属分组:</span>
 						<span style="font-size: 12px;" th:text="${task.groupName}"></span>
 					</td>

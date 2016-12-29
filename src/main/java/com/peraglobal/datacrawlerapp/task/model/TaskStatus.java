@@ -11,10 +11,10 @@ package com.peraglobal.datacrawlerapp.task.model;
  */
 public class TaskStatus {
 
-	public final static TaskStatus READY = new TaskStatus("就绪");
-	public final static TaskStatus RUNNING = new TaskStatus("运行");
-	public final static TaskStatus STOP = new TaskStatus("停止");
-	public final static TaskStatus FORBIDDEN = new TaskStatus("禁用");
+	public final static TaskStatus READY = new TaskStatus("READY");
+	public final static TaskStatus RUNNING = new TaskStatus("RUNNING");
+	public final static TaskStatus STOP = new TaskStatus("STOP");
+	public final static TaskStatus FORBIDDEN = new TaskStatus("FORBIDDEN");
 	
 	private String status;
 	
