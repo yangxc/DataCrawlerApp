@@ -1,5 +1,6 @@
 package com.peraglobal.datacrawlerapp.task.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,23 +40,30 @@ public class TaskGroupController {
 	@RequestMapping(value="/taskgroups", method=RequestMethod.GET)
 	public String getGroups(Model model, @RequestParam(value="groupId") String groupId) {
 		
-		List<TaskGroup> taskGroups = taskGroupService.getTaskGroupsByParentId(groupId);
-		List<Task> tasks = taskService.getTasksByGroupId(groupId);
-		// 当前组信息
-		model.addAttribute("group", taskGroupService.getGroup(groupId));
-		model.addAttribute("groups", taskGroupService.getGroups());
-		model.addAttribute("groupId", groupId);
-		model.addAttribute("taskGroups", taskGroups);
-		model.addAttribute("groupNum", taskGroups == null ? 0 : taskGroups.size());
-		model.addAttribute("taskNum", tasks == null ? 0 : tasks.size());
-		// 获取任务状态和对应的任务数
-		List<String> statuses = taskService.getTaskStatuses();
+		// 左侧任务部分
+		List<String> taskStatus = new ArrayList<String>();
+		Map<String, String> statuses = taskService.getTaskStatuses();
 		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
-		for (String status : statuses) {
+		for (String status : statuses.keySet()) {  
+			taskStatus.add(status);
 			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
 		}
-		model.addAttribute("taskStatus", statuses);
-		model.addAttribute("statusAdnCount", statusAndCount);
+		model.addAttribute("taskStatus", taskStatus);
+		model.addAttribute("statusAndCount", statusAndCount);
+		
+		// 左侧任务分组部分
+		model.addAttribute("groups", taskGroupService.getGroups());
+		
+		// 右侧任务分组信息
+		model.addAttribute("group", taskGroupService.getGroup(groupId));
+		model.addAttribute("groupId", groupId);
+		List<TaskGroup> taskGroups = taskGroupService.getTaskGroupsByParentId(groupId);
+		model.addAttribute("taskGroups", taskGroups);
+		model.addAttribute("groupNum", taskGroups == null ? 0 : taskGroups.size());
+		
+		// 右侧任务信息
+		List<Task> tasks = taskService.getTasksByGroupId(groupId);
+		model.addAttribute("taskNum", tasks == null ? 0 : tasks.size());
 		return "/task/taskGroups";
 	}
 	

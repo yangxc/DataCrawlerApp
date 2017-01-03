@@ -2,14 +2,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
+	<title>知识工程</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<!-- Bootstrap -->
-
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-	
 	<link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" media="screen"/>
-	<title>知识工程</title>
+	<script th:src="@{/js/jquery.js}" type="text/javascript"></script>
+	<script th:src="@{/js/bootstrap.js}" type="text/javascript"></script>
 </head>
 
 <body>
@@ -22,7 +21,8 @@
 	<div class="row" style="padding-left: 0; padding-right: 0;">
 		<div class="col-md-2" style="padding-left: 0; padding-right: 0; margin-bottom: 0;">
 			<!-- 左侧导航 -->
-			<nav class="navbar navbar-default" role="navigation" style="height: 600px; margin-bottom: 0;">
+			<nav class="navbar navbar-default" role="navigation" style="height: 600px; margin-bottom: 0;" 
+				th:include="fragments/leftmenu :: #leftmenu">
 			<div layout:fragment="left-menu">
 				左侧导航
 			</div>

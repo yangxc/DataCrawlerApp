@@ -23,7 +23,7 @@
 		<ul class="nav nav-pills nav-stacked">
 			<li style="padding-left: 30px;" th:each="key : ${taskStatus}">
 				<a th:href="@{/task/status/{key}}">
-					<span class="badge pull-right" th:text="${statusAdnCount[key]}">2</span>
+					<span class="badge pull-right" th:text="${statusAndCount[key]}">2</span>
 					<span th:text="${key}"></span>
 				</a>
 			</li>

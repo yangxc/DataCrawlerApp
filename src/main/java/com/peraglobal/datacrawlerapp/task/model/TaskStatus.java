@@ -11,19 +11,14 @@ package com.peraglobal.datacrawlerapp.task.model;
  */
 public class TaskStatus {
 
-	public final static TaskStatus READY = new TaskStatus("READY");
-	public final static TaskStatus RUNNING = new TaskStatus("RUNNING");
-	public final static TaskStatus STOP = new TaskStatus("STOP");
-	public final static TaskStatus FORBIDDEN = new TaskStatus("FORBIDDEN");
+	public final static String READY = "0";
+	public final static String RUNNING = "1";
+	public final static String STOP = "2";
+	public final static String FORBIDDEN = "3";
 	
-	private String status;
+	public final static String READY_TO = "就绪";
+	public final static String RUNNING_TO = "运行";
+	public final static String STOP_TO = "停止";
+	public final static String FORBIDDEN_TO = "禁用";
 	
-	private TaskStatus(String status) {
-		this.status = status;
-	}
-	
-	@Override
-	public String toString() {
-		return this.status;
-	}
 }

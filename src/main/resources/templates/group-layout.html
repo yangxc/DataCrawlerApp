@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="layout">
+<head>
+	<title>首页</title>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		$(document).ready(function() {
+	
+			// 开始功能
+			$("#btn_strat").click(function() {
+				var taskIds = '';
+				$("input[name='checkbox']:checkbox:checked").each(function() {
+					taskIds += $(this).val() + ',';
+				});
+				if (taskIds == '') {
+					alert("Error:no one selected.");
+				} else {
+					// 开始任务
+					$.ajax({
+						url : "/task/startTask",
+						type : "POST",
+						dataType : "json",
+						contentType : "application/json; charset=utf-8",
+						data : taskIds,
+						success : function(data) {
+							alert(data);
+						},
+						error : function(data) {
+						}
+					});
+				}
+			});
+	
+			// 停止功能
+			$("#btn_stop").click(function() {
+				var taskIds = '';
+				$("input[name='checkbox']:checkbox:checked").each(function() {
+					taskIds += $(this).val() + ',';
+				});
+				if (taskIds == '') {
+					alert("Error:no one selected.");
+				} else {
+					// 停止任务
+					$.ajax({
+						url : "/task/stopTask",
+						type : "POST",
+						dataType : "json",
+						contentType : "application/json; charset=utf-8",
+						data : taskIds,
+						success : function(data) {
+							alert(data);
+						},
+						error : function(data) {
+						}
+					});
+				}
+			});
+	
+			// 删除功能
+			$("#btn_delete").click(function() {
+				
+				var taskIds = '';
+				$("input[name='checkbox']:checkbox:checked").each(function() {
+					taskIds += $(this).val() + ',';
+				});
+				if (taskIds == '') {
+					alert("Error:no one selected.");
+				} else {
+					$.ajax({
+						url : "/task/removeTask",
+						type : "POST",
+						dataType : "json",
+						contentType : "application/json; charset=utf-8",
+						data : taskIds,
+						success : function(data) {
+							alert(data);
+						},
+						error : function(data) {
+						}
+					});
+					alert('删除成功！');
+					$("#taskForm").submit();
+				}
+			});
+	
+		});
+		/*]]>*/
+	</script>
+</head>
+<body>
+	<div layout:fragment="righttopfirstmenu">
+		<div>
+			<p class="navbar-text">采集任务</p>
+		</div>
+		<div>
+			<!-- 右侧头部导航1 -->
+			<nav class="navbar navbar-default" role="navigation"
+				style="margin-bottom: 0; height: 30px;">
+				<div>
+					<p class="navbar-text" style="color: black;"><span th:text="${group.groupName}"></span></p>
+					<form class="navbar-form navbar-right" role="search">
+						<span class="navbar-text"><span th:text="${groupNum}"></span>个文件夹，
+						<span><span th:text="${taskNum}"></span></span>个任务</span>
+					</form>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div layout:fragment="righttopsecondmenu">
+		<!--向左对齐-->
+		<form class="navbar-form navbar-left" role="search">
+			<button type="button" id="btn_strat" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-play"></span> 开始
+			</button>&nbsp; &nbsp;
+			<button type="button" id="btn_stop" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-stop"></span> 停止
+			</button>&nbsp; &nbsp;
+			<button type="button" id="btn_delete" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-remove"></span> 删除
+			</button>
+		</form>
+		<!--向右对齐-->
+		<form class="navbar-form navbar-right" role="search">
+			<a th:href="@{/task/createTaskPage(groupId=${groupId})}" class="btn btn-success" 
+				data-toggle="modal" data-target="#theModal" style="width: 120px;">新建采集</a>
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+		</form>
+	</div>
+	<div layout:fragment="content">
+		<table class="table table-hover">
+			<tbody>
+				<tr th:each="task : ${tasks}">
+					<td width="35">
+						<input name="checkbox" type="checkbox" th:value="${task.taskId}"/>
+					</td>
+					<td>
+						<a th:href="@{/task/history(taskId=${task.taskId})}" class="dropdown-toggle">
+							<p th:text="${task.taskName}"></p>
+						</a>
+						<span style="font-size: 12px; color: #808080">所属分组:</span>
+						<span style="font-size: 12px;" th:text="${task.groupName}"></span>
+					</td>
+					<td>
+						<span style="font-size: 12px; color: #808080">任务状态:</span>
+						<span style="font-size: 12px;" th:text="${task.taskState}"></span>
+					</td>
+					<td>
+						<span style="font-size: 12px; color: #808080">创建时间:</span>
+						<span style="font-size: 12px;" th:text="${#calendars.format(task.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
+					</td>
+					<td>
+						<div class="panel panel-default" style="width: 100px; height: 50px;">
+							<div class="panel-heading" style="height: 25px; padding: 5px 23px;">
+								<span style="font-size: 12px;">采集数量</span>
+							</div>
+							<div class="panel-body" style="height: 25px; padding: 5px 27px;">3,102</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="height: 50px; margin-top: -20px;">
+			<ul class="pagination" style="padding-left: 30%">
+				<li><a href="#">&laquo;</a></li>
+				<li><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+				<li><a href="#">&raquo;</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

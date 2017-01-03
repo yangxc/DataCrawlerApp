@@ -1,5 +1,6 @@
 package com.peraglobal.datacrawlerapp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,20 +40,25 @@ public class IndexController {
 	 */
 	@RequestMapping("/")
 	public String index(Model model) {
-		// 获取任务分组列表
-		model.addAttribute("groups", taskGroupService.getGroups());
-		// 获取任务列表
-		model.addAttribute("tasks", taskService.getTasks(0, 50));
-		// 获取任务状态和对应的任务数
-		List<String> statuses = taskService.getTaskStatuses();
+		// 左侧任务部分
+		List<String> taskStatus = new ArrayList<String>();
+		Map<String, String> statuses = taskService.getTaskStatuses();
 		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
-		for (String status : statuses) {
+		for (String status : statuses.keySet()) {  
+			taskStatus.add(status);
 			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
 		}
-		model.addAttribute("taskStatus", statuses);
+		model.addAttribute("taskStatus", taskStatus);
 		model.addAttribute("statusAndCount", statusAndCount);
+		
+		// 左侧任务分组部分
+		model.addAttribute("groups", taskGroupService.getGroups());
+		
+		// 右侧任务列表
+		model.addAttribute("tasks", taskService.getTasks(0, 50));
+		
 		model.addAttribute("groupId", null);
-		return "index";
+		return "crawler-layout";
 	}
 	
 }

@@ -1,7 +1,9 @@
 package com.peraglobal.datacrawlerapp.task.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,12 +37,12 @@ public class TaskService {
 	 * 获取支持的任务状态
 	 * @return
 	 */
-	public List<String> getTaskStatuses() {
-		List<String> statuses = new ArrayList<>();
-		statuses.add(TaskStatus.FORBIDDEN.toString());
-		statuses.add(TaskStatus.READY.toString());
-		statuses.add(TaskStatus.RUNNING.toString());
-		statuses.add(TaskStatus.STOP.toString());
+	public Map<String, String> getTaskStatuses() {
+		Map<String, String> statuses = new HashMap<String, String>();
+		statuses.put(TaskStatus.READY, TaskStatus.READY_TO);
+		statuses.put(TaskStatus.RUNNING, TaskStatus.RUNNING_TO);
+		statuses.put(TaskStatus.STOP, TaskStatus.STOP_TO);
+		statuses.put(TaskStatus.FORBIDDEN, TaskStatus.FORBIDDEN_TO);
 		return statuses;
 	}
 	

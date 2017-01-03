@@ -1,5 +1,6 @@
 package com.peraglobal.datacrawlerapp.task.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,19 +37,23 @@ public class TaskController {
 
 	@RequestMapping("/status/{statusName}")
 	public String getTaskListByStatus(Model model, @PathVariable String statusName) {
-		// 获取任务分组列表
-		model.addAttribute("groups", taskGroupService.getGroups());
-		// 获取任务列表
-		model.addAttribute("tasks", taskService.getTasksByTaskStatus(statusName));
-		// 获取任务状态和对应的任务数
-		List<String> statuses = taskService.getTaskStatuses();
+		
+		// 左侧任务部分
+		List<String> taskStatus = new ArrayList<String>();
+		Map<String, String> statuses = taskService.getTaskStatuses();
 		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
-		for (String status : statuses) {
+		for (String status : statuses.keySet()) {  
+			taskStatus.add(status);
 			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
 		}
-		model.addAttribute("taskStatus", statuses);
-		model.addAttribute("statusName", statusName);
-		model.addAttribute("statusAdnCount", statusAndCount);
+		model.addAttribute("taskStatus", taskStatus);
+		model.addAttribute("statusAndCount", statusAndCount);
+		
+		// 左侧任务分组部分
+		model.addAttribute("groups", taskGroupService.getGroups());
+		
+		// 右侧任务列表
+		model.addAttribute("tasks", taskService.getTasksByTaskStatus(statusName));
 		return "index";
 	}
 	
@@ -59,19 +64,20 @@ public class TaskController {
 	 */
 	@RequestMapping("/history")
 	public String history(Model model,  @RequestParam(value="taskId") String taskId) {
-		// 获取任务分组列表
-		model.addAttribute("groups", taskGroupService.getGroups());
-		// 获取任务列表
-		model.addAttribute("tasks", taskService.getTasks(0, 50));
-		// 获取任务状态和对应的任务数
-		List<String> statuses = taskService.getTaskStatuses();
+		// 左侧任务部分
+		List<String> taskStatus = new ArrayList<String>();
+		Map<String, String> statuses = taskService.getTaskStatuses();
 		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
-		for (String status : statuses) {
+		for (String status : statuses.keySet()) {  
+			taskStatus.add(status);
 			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
 		}
-		model.addAttribute("taskStatus", statuses);
+		model.addAttribute("taskStatus", taskStatus);
 		model.addAttribute("statusAndCount", statusAndCount);
-		model.addAttribute("groupId", null);
+		
+		// 左侧任务分组部分
+		model.addAttribute("groups", taskGroupService.getGroups());
+		
 		return "/task/history";
 	}
 	
