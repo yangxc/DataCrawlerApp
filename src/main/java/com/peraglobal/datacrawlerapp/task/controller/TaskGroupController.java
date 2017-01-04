@@ -54,6 +54,7 @@ public class TaskGroupController {
 		
 		// 右侧任务信息
 		List<Task> tasks = taskService.getTasksByGroupId(groupId);
+		model.addAttribute("tasks", tasks);
 		model.addAttribute("taskNum", tasks == null ? 0 : tasks.size());
 		return "group-layout";
 	}
@@ -69,7 +70,7 @@ public class TaskGroupController {
 			model.addAttribute("group", taskGroupService.getGroup(groupId));
 		} else {
 			TaskGroup group = new TaskGroup();
-			group.setParentId("0");
+			group.setGroupId("0");
 			model.addAttribute("group", group);
 		}
 		return "/task/createTaskGroup";

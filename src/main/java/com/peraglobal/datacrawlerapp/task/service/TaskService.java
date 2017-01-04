@@ -1,6 +1,7 @@
 package com.peraglobal.datacrawlerapp.task.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.peraglobal.datacrawlerapp.WebServiceProperties;
 import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
+import com.peraglobal.datacrawlerapp.crawler.model.History;
 import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
 import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.model.Task;
@@ -196,6 +198,42 @@ public class TaskService {
 			}
 		}
 		return true;
+	}
+
+
+	public List<History> getHistoryByTaskId(String taskId) {
+		/*
+		String url = dbServiceURL + "/getHistoryByTaskId/" + taskId;
+		List histroy = restTemplate.getForEntity(url, List.class).getBody();
+		if(histroy == null) {
+			url = webServiceURL + "/getHistoryByTaskId/" + taskId;
+			histroy = restTemplate.getForEntity(url, List.class).getBody();
+		}
+		*/
+		List<History> histroys = new ArrayList<History>();
+		History h1 = new History();
+		h1.setCrawlerId(taskId);
+		h1.setStartDate(new Date());
+		h1.setStopDate(new Date());
+		h1.setVersion(1);
+		h1.setPageCrawledCount(100);
+		histroys.add(h1);
+		History h11 = new History();
+		h11.setCrawlerId(taskId);
+		h11.setStartDate(new Date());
+		h11.setStopDate(new Date());
+		h11.setVersion(1);
+		h11.setPageCrawledCount(105);
+		histroys.add(h11);
+		History h111 = new History();
+		h111.setCrawlerId(taskId);
+		h111.setStartDate(new Date());
+		h111.setStopDate(new Date());
+		h111.setVersion(1);
+		h111.setPageCrawledCount(109);
+		histroys.add(h111);
+		
+		return histroys;
 	}
 
 }

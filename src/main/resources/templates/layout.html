@@ -18,8 +18,8 @@
 		头部导航
 	</nav>
 	<!-- 2 10布局 -->
-	<div class="row" style="padding-left: 0; padding-right: 0;">
-		<div class="col-md-2" style="padding-left: 0; padding-right: 0; margin-bottom: 0;">
+	<div class="row" style="padding: 0;margin:0" >
+		<div class="col-md-2" style="padding: 0;margin:0">
 			<!-- 左侧导航 -->
 			<nav class="navbar navbar-default" role="navigation" style="height: 600px; margin-bottom: 0;" 
 				th:include="fragments/leftmenu :: #leftmenu">
@@ -28,28 +28,25 @@
 			</div>
 			</nav>
 		</div>
-		<div class="col-md-10" style="padding-left: 0" >
+		<div class="col-md-10" style="padding: 0;margin:0" >
 			<!-- 右侧头部导航1 -->
 			<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0; height: 30px;">
 				<div  layout:fragment="righttopfirstmenu">
-					右侧头部导航1
 				</div>
 			</nav>
 			<!-- 右侧头部导航2 -->
 			<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0; height: 50px;">
 				<div layout:fragment="righttopsecondmenu">
-					头部右侧导航2
 				</div>
 			</nav>
 			<!-- 右侧表单  -->
 			<div layout:fragment="content">
-				网页主体内容
 			</div>
 		</div>
 	</div>
 
-	<div class="row" style="padding-left: 0; padding-right: 0;">
-		<div class="col-md-12" style="padding-left: 0">
+	<div class="row" style="padding: 0;margin:0;">
+		<div class="col-md-12" style="padding: 0;margin:0;">
 			<nav class="navbar navbar-default" role="navigation"
 				style="margin-bottom: 0; height: 50px; text-align: center;" th:include="fragments/footer :: #footer">
 				注脚
@@ -60,12 +57,18 @@
 	<!-- 显示模态对话框 -->
 	<div class="modal fade" id="theModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog">
-		    <div class="modal-content">
-		    </div>
+		    <div class="modal-content"></div>
 	  	</div>
     </div>
 	<script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
 	<script th:src="@{/js/bootstrap.js}" type="text/javascript"></script>
 	<script type="text/javascript" th:src="@{/js/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+	<script th:inline="javascript">
+		$(function () { 
+			$('#theModal').on('hide.bs.modal', function (){
+	      		window.location.reload();
+	      	})
+	    });
+	</script>
 </body>
 </html>

@@ -62,7 +62,9 @@ public class TaskController {
 		// 左侧任务分组部分
 		model.addAttribute("groups", taskGroupService.getGroups());
 		
-		return "/task/history";
+		// 右侧历史记录列表
+		model.addAttribute("historys", taskService.getHistoryByTaskId(taskId));
+		return "history-layout";
 	}
 	
 	
