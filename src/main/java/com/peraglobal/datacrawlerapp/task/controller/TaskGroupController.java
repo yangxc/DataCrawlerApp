@@ -1,9 +1,6 @@
 package com.peraglobal.datacrawlerapp.task.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.model.Task;
 import com.peraglobal.datacrawlerapp.task.model.TaskGroup;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
@@ -41,15 +39,8 @@ public class TaskGroupController {
 	public String getGroups(Model model, @RequestParam(value="groupId") String groupId) {
 		
 		// 左侧任务部分
-		List<String> taskStatus = new ArrayList<String>();
-		Map<String, String> statuses = taskService.getTaskStatuses();
-		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
-		for (String status : statuses.keySet()) {  
-			taskStatus.add(status);
-			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
-		}
-		model.addAttribute("taskStatus", taskStatus);
-		model.addAttribute("statusAndCount", statusAndCount);
+		List<Status> statuses = taskService.getTaskStatuses();
+		model.addAttribute("statuses", statuses);
 		
 		// 左侧任务分组部分
 		model.addAttribute("groups", taskGroupService.getGroups());
@@ -64,7 +55,7 @@ public class TaskGroupController {
 		// 右侧任务信息
 		List<Task> tasks = taskService.getTasksByGroupId(groupId);
 		model.addAttribute("taskNum", tasks == null ? 0 : tasks.size());
-		return "/task/taskGroups";
+		return "group-layout";
 	}
 	
 	/**
@@ -74,7 +65,7 @@ public class TaskGroupController {
 	 */
 	@RequestMapping(value = "/createTaskGroupPage", method = RequestMethod.GET)
 	public String createTaskGroupPage(Model model, @RequestParam(value="groupId") String groupId) {
-		if (groupId != "" && !"".equals(groupId)) {
+		if (!"0".equals(groupId)) {
 			model.addAttribute("group", taskGroupService.getGroup(groupId));
 		} else {
 			TaskGroup group = new TaskGroup();

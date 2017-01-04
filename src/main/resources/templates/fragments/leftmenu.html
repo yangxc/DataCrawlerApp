@@ -21,10 +21,10 @@
 	<!-- 显示任务状态和对应的任务数 -->
 	<div style="margin-top: 50px;">
 		<ul class="nav nav-pills nav-stacked">
-			<li style="padding-left: 30px;" th:each="key : ${taskStatus}">
-				<a th:href="@{/task/status/{key}}">
-					<span class="badge pull-right" th:text="${statusAndCount[key]}">2</span>
-					<span th:text="${key}"></span>
+			<li style="padding-left: 30px;" th:each="status:${statuses}">
+				<a th:href="@{/task/status/{status.key}}">
+					<span class="badge pull-right" th:text="${status.count}">2</span>
+					<span th:text="${status.value}"></span>
 				</a>
 			</li>
 		</ul>
@@ -33,7 +33,7 @@
 		<h4 class="navbar-text">
 			<span class="glyphicon glyphicon-folder-close "></span> 采集分组
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a th:href="@{/taskgroup/createTaskGroupPage(groupId=${groupId})}" class="dropdown-toggle" data-toggle="modal" data-target="#theModal"> 
+			<a th:href="@{/taskgroup/createTaskGroupPage(groupId=0)}" class="dropdown-toggle" data-toggle="modal" data-target="#theModal"> 
 				<span class="glyphicon glyphicon-plus"></span>
 			</a>
 		</h4>

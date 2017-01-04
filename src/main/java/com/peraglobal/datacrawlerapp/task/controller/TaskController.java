@@ -1,9 +1,6 @@
 package com.peraglobal.datacrawlerapp.task.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
 import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
+import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 import com.peraglobal.datacrawlerapp.task.service.TaskService;
 
@@ -39,15 +37,8 @@ public class TaskController {
 	public String getTaskListByStatus(Model model, @PathVariable String statusName) {
 		
 		// 左侧任务部分
-		List<String> taskStatus = new ArrayList<String>();
-		Map<String, String> statuses = taskService.getTaskStatuses();
-		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
-		for (String status : statuses.keySet()) {  
-			taskStatus.add(status);
-			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
-		}
-		model.addAttribute("taskStatus", taskStatus);
-		model.addAttribute("statusAndCount", statusAndCount);
+		List<Status> statuses = taskService.getTaskStatuses();
+		model.addAttribute("statuses", statuses);
 		
 		// 左侧任务分组部分
 		model.addAttribute("groups", taskGroupService.getGroups());
@@ -65,15 +56,8 @@ public class TaskController {
 	@RequestMapping("/history")
 	public String history(Model model,  @RequestParam(value="taskId") String taskId) {
 		// 左侧任务部分
-		List<String> taskStatus = new ArrayList<String>();
-		Map<String, String> statuses = taskService.getTaskStatuses();
-		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
-		for (String status : statuses.keySet()) {  
-			taskStatus.add(status);
-			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
-		}
-		model.addAttribute("taskStatus", taskStatus);
-		model.addAttribute("statusAndCount", statusAndCount);
+		List<Status> statuses = taskService.getTaskStatuses();
+		model.addAttribute("statuses", statuses);
 		
 		// 左侧任务分组部分
 		model.addAttribute("groups", taskGroupService.getGroups());

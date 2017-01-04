@@ -1,9 +1,7 @@
 package com.peraglobal.datacrawlerapp.task.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import com.peraglobal.datacrawlerapp.WebServiceProperties;
 import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
 import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
+import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.model.Task;
 import com.peraglobal.datacrawlerapp.task.model.TaskStatus;
 
@@ -37,12 +36,33 @@ public class TaskService {
 	 * 获取支持的任务状态
 	 * @return
 	 */
-	public Map<String, String> getTaskStatuses() {
-		Map<String, String> statuses = new HashMap<String, String>();
-		statuses.put(TaskStatus.READY, TaskStatus.READY_TO);
-		statuses.put(TaskStatus.RUNNING, TaskStatus.RUNNING_TO);
-		statuses.put(TaskStatus.STOP, TaskStatus.STOP_TO);
-		statuses.put(TaskStatus.FORBIDDEN, TaskStatus.FORBIDDEN_TO);
+	public List<Status> getTaskStatuses() {
+		List<Status> statuses = new ArrayList<Status>();
+		
+		Status ready = new Status();
+		ready.setKey(TaskStatus.READY);
+		ready.setValue(TaskStatus.READY_TO);
+		ready.setCount(getTasksByTaskStatus(TaskStatus.READY).size());
+		
+		Status running = new Status();
+		running.setKey(TaskStatus.RUNNING);
+		running.setValue(TaskStatus.RUNNING_TO);
+		running.setCount(getTasksByTaskStatus(TaskStatus.RUNNING).size());
+		
+		Status stop = new Status();
+		stop.setKey(TaskStatus.STOP);
+		stop.setValue(TaskStatus.STOP_TO.toString());
+		stop.setCount(getTasksByTaskStatus(TaskStatus.STOP).size());
+		
+		Status forbidden = new Status();
+		forbidden.setKey(TaskStatus.FORBIDDEN);
+		forbidden.setValue(TaskStatus.FORBIDDEN_TO);
+		forbidden.setCount(getTasksByTaskStatus(TaskStatus.FORBIDDEN).size());
+		
+		statuses.add(ready);
+		statuses.add(running);
+		statuses.add(stop);
+		statuses.add(forbidden);
 		return statuses;
 	}
 	

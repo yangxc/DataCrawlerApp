@@ -1,15 +1,13 @@
 package com.peraglobal.datacrawlerapp;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
 import com.peraglobal.datacrawlerapp.task.service.TaskService;
 
@@ -41,23 +39,16 @@ public class IndexController {
 	@RequestMapping("/")
 	public String index(Model model) {
 		// 左侧任务部分
-		List<String> taskStatus = new ArrayList<String>();
-		Map<String, String> statuses = taskService.getTaskStatuses();
-		Map<String, Integer> statusAndCount = new HashMap<String, Integer>();
-		for (String status : statuses.keySet()) {  
-			taskStatus.add(status);
-			statusAndCount.put(status, taskService.getTasksByTaskStatus(status).size());
-		}
-		model.addAttribute("taskStatus", taskStatus);
-		model.addAttribute("statusAndCount", statusAndCount);
+		List<Status> statuses = taskService.getTaskStatuses();
+		model.addAttribute("statuses", statuses);
 		
 		// 左侧任务分组部分
 		model.addAttribute("groups", taskGroupService.getGroups());
 		
 		// 右侧任务列表
+		model.addAttribute("groupId", "0");
 		model.addAttribute("tasks", taskService.getTasks(0, 50));
 		
-		model.addAttribute("groupId", null);
 		return "crawler-layout";
 	}
 	
