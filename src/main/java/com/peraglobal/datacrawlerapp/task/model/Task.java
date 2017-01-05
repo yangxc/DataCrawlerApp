@@ -62,11 +62,6 @@ public class Task implements Serializable {
 	 */
 	private Date updateTime;
 	
-	/**
-	 * @category 采集数量
-	 */
-	private int count;
-	
 
 	public String getTaskId() {
 		return taskId;
@@ -140,11 +135,4 @@ public class Task implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
 }

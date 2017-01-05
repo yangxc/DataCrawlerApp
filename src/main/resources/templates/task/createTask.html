@@ -1,6 +1,7 @@
 <!-- 创建采集任务 -->
 <!-- js 部分 -->
 <script th:inline="javascript">
+/*<![CDATA[*/
 	$(document).ready(function () {
 		// 控制web页面显示
 		$("#web_radio").click(function () {
@@ -12,6 +13,94 @@
 		$("#db_radio").click(function () {
 			$("#web_div").hide();
 			$("#db_div").show();
+		});
+		
+		// 数据库连接
+		$("#btn_connection").click(function () {
+			// db 采集任务创建
+			var db_type = $("#db_type").val();
+			var db_id = $("#db_id").val();
+			var db_name = $("#db_name").val();
+			var db_port = $("#db_port").val();
+			var db_user = $("#db_user").val();
+			var db_password = $("#db_password").val();
+			
+			// 开始任务
+			$.ajax({
+				url : "/task/getTables",
+				cache: false,
+				async: false,
+				type : "POST",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8",
+				data: JSON.stringify({ 
+					'type': db_type,
+					'url': 'jdbc:mysql://'+ db_id + ':' + db_port + '/' + db_name,
+					'user': db_user,
+					'password': db_password,
+					'driver': 'com.mysql.jdbc.Driver'
+				}),
+				success : function(msg) {
+					if (msg != null) {
+						for (var i=0;i<msg.length;i++) {
+							$("#db_tables").append("<option value='"+msg[i]+"'>"+msg[i]+"</option>");
+						}
+					}
+				},
+				error : function(msg) {
+					alert('连接失败！');
+				}
+			}); 
+			
+		});
+		
+		// 表选择加载列属性
+		$("#db_tables").change(function () {
+			// db 采集任务创建
+			var db_type = $("#db_type").val();
+			var db_id = $("#db_id").val();
+			var db_name = $("#db_name").val();
+			var db_port = $("#db_port").val();
+			var db_user = $("#db_user").val();
+			var db_password = $("#db_password").val();
+			var db_tables = $("#db_tables").val();
+			// 开始任务
+			$.ajax({
+				url : "/task/getFields",
+				cache: false,
+				async: false,
+				type : "POST",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8",
+				data: JSON.stringify({ 
+					'type': db_type,
+					'url': 'jdbc:mysql://'+ db_id + ':' + db_port + '/' + db_name,
+					'user': db_user,
+					'password': db_password,
+					'driver': 'com.mysql.jdbc.Driver',
+					'tables': {
+						'name': db_tables
+					}
+					
+				}),
+				success : function(msg) {
+					if (msg != null) {
+						$("input[name='db_checkbox']").attr("checked","true"); 
+						for (var i=0;i<msg.length;i++) {
+							var tr = "<tr>"
+								+"<td><input type='checkbox' name='db_field_name' checked='checked' /></td>"
+								+"<td><input type='text' name='db_field_as' class='form-control' value='"+msg[i]+"' /></td>"
+								+"<td>"+msg[i]+"</td>"
+								+"</tr>"
+							$("#db_tbody_add").append(tr);
+						}
+					}
+				},
+				error : function(msg) {
+					alert('连接失败！');
+				}
+			}); 
+			
 		});
 		
 		// 保存功能
@@ -77,7 +166,9 @@
 			}else {
 				// db 采集任务创建
 				var db_type = $("#db_type").val();
-				var db_url = $("#db_url").val();
+				var db_id = $("#db_id").val();
+				var db_name = $("#db_name").val();
+				var db_port = $("#db_port").val();
 				var db_user = $("#db_user").val();
 				var db_password = $("#db_password").val();
 				var db_tables = $("#db_tables").val();
@@ -97,26 +188,12 @@
 						'groupName': groupName,
 						'dbConnection':{
 							'type': db_type,
-							'url': db_url,
+							'url': 'jdbc:mysql://'+ db_id + ':' + db_port + '/' + db_name,
 							'user': db_user,
 							'password': db_password,
 							'driver': 'com.mysql.jdbc.Driver',
 							'tables': {
-								'name': db_tables,
-								'query': 'select * from crawler ',
-								'pk': 'crawlerId',
-								'fields': [
-									{
-										'name': 'crawlerId',
-										'type': '12',
-										'as': 'crawlerId'
-									},
-									{
-										'name': 'crawlerName',
-										'type': '12',
-										'as': 'crawlerName'
-									}
-								]
+								'name': db_tables
 							}
 						}
 					}),
@@ -129,7 +206,36 @@
 			}
 			window.location.reload();
 		});
+		
+		// 增加一行
+		$("#web_but_add_row").click(function() {
+		    var row = 
+		    	"<div class='col-sm-2'></div>"
+				+"<div class='col-sm-2'>"
+				+"<input type='text' name='web_field_key' class='form-control' />"
+				+"</div>"
+				+"<div class='col-sm-4' style='padding-left: 0;'>"
+				+"<input type='text' name='web_field_text' style='width: 210px;' class='form-control' placeholder='请输规则内容' />"
+				+"</div>"
+				+"<div class='col-sm-2'>"
+				+"<select class='form-control' style='width: 100px; padding-left: 0;'>"
+				+"<option value='xpath'>XPATH</option>"
+				+"<option value='regex'>正则表达式</option>"
+				+"<option value='css'>CSS</option>"
+				+"</select>"
+				+"</div>"
+				+"<div class='col-sm-2' style='padding-left: 20px;'>"
+				+"<button type='button' name='web_but_del_row' class='btn btn-default'>删除</button>"
+				+"</div>";
+			$("#web_div_add").append(row);
+		});
+		
+		// 删除一行，后续完善
+		$("[name='web_but_del_row']").click(function() {
+		});
+		
 	});
+	/*]]>*/
 </script>
 <!-- js 部分 -->
 
@@ -181,6 +287,7 @@
 			<hr />
 		</div>
 		
+		
 		<!-- web 采集部分 -->
 		<div id="web_div">
 			<ul id="myTab" class="nav nav-tabs">
@@ -231,7 +338,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0; padding-right: 0;">详情网址规则：</label>
 						<div class="col-sm-7">
 							<div class="col-sm-7" style="padding-left: 0;">
-								<input type="text" id="db_detail_url" name="db_detail_url" class="form-control" placeholder="请输入详情网址规则" style="width: 340px;" />
+								<input type="text" id="db_detail_url" name="db_detail_url" class="form-control" placeholder="请输入详情网址规则" style="width: 340px;"
+									value="(https://github\\.com/[\\w\\-]+/[\\w\\-]+)" />
 							</div>
 						</div>
 						<div class="col-sm-3">
@@ -249,18 +357,20 @@
 					<div class="form-group">
 						<label for="lastname" class="col-sm-2 control-label">内容规则</label>
 						<div class="col-sm-2">
-							<button type="button" class="btn btn-default">增加一行</button>
+							<button type="button" id="web_but_add_row" class="btn btn-default">增加一行</button>
 						</div>
 						<div class="col-sm-8"></div>
 					</div>
 					<!-- 内容规则 -->
-					<div class="form-group">
+					<div class="form-group" id="web_div_add">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-2">
-							<input type="text" id="web_field_key" name="web_field_key" class="form-control" />
+							<input type="text" name="web_field_key" class="form-control"
+								value="title" />
 						</div>
 						<div class="col-sm-4" style="padding-left: 0;">
-							<input type="text" id="web_field_text" name="web_field_text" style="width: 210px;" class="form-control" placeholder="请输规则内容" />
+							<input type="text" name="web_field_text" style="width: 210px;" class="form-control" placeholder="请输规则内容"
+								value="https://github\\.com/(\\w+)/.*" />
 						</div>
 						<div class="col-sm-2">
 							<select class="form-control" style="width: 100px; padding-left: 0;">
@@ -270,7 +380,29 @@
 							</select>
 						</div>
 						<div class="col-sm-2" style="padding-left: 20px;">
-							<button type="button" class="btn btn-default">删除</button>
+							<button type="button" name="web_but_del_row" class="btn btn-default">删除</button>
+						</div>
+					</div>
+					
+					<div class="form-group" id="web_div_add">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-2">
+							<input type="text" name="web_field_key" class="form-control"
+								value="author" />
+						</div>
+						<div class="col-sm-4" style="padding-left: 0;">
+							<input type="text" name="web_field_text" style="width: 210px;" class="form-control" placeholder="请输规则内容"
+								value="https://github\\.com/(\\w+)/.*" />
+						</div>
+						<div class="col-sm-2">
+							<select class="form-control" style="width: 100px; padding-left: 0;">
+								<option value="xpath">XPATH</option>
+								<option value="regex">正则表达式</option>
+								<option value="css">CSS</option>
+							</select>
+						</div>
+						<div class="col-sm-2" style="padding-left: 20px;">
+							<button type="button" name="web_but_del_row" class="btn btn-default">删除</button>
 						</div>
 					</div>
 					<!-- 内容规则 -->
@@ -431,11 +563,33 @@
 
 					<div class="form-group">
 						<label for="lastname" class="col-sm-2 control-label"
-							style="font-size: 12px; color: #808080; padding-left: 0;">数据库链接：</label>
+							style="font-size: 12px; color: #808080; padding-left: 0;">服务器地址：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" id="db_url" name="db_url" class="form-control" placeholder="请输入数据库链接" 
-									value="jdbc:mysql://127.0.0.1:3306/test" />
+								<input type="text" id="db_id" name="db_id" class="form-control" placeholder="请输入数据库链接" 
+									value="127.0.0.1" />
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0;">数据库名称：</label>
+						<div class="col-sm-10">
+							<div class="col-sm-10" style="padding-left: 0;">
+								<input type="text" id="db_name" name="db_name" class="form-control" placeholder="请输入数据库链接" 
+									value="test" />
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label"
+							style="font-size: 12px; color: #808080; padding-left: 0;">端口号：</label>
+						<div class="col-sm-10">
+							<div class="col-sm-10" style="padding-left: 0;">
+								<input type="text" id="db_port" name="db_port" class="form-control" placeholder="请输入数据库链接" 
+									value="3306" />
 							</div>
 						</div>
 					</div>
@@ -478,7 +632,7 @@
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
 								<select id="db_tables" name="db_tables" class="form-control" style="width: 200px;">
-									<option value="crawler">crawler</option>
+									<option value="">请选择</option>
 								</select>
 							</div>
 						</div>
@@ -492,19 +646,13 @@
 								<table class="table table-bordered">
 									<thead>
 										<tr>
-											<th><input type="checkbox" /></th>
+											<th><input type="checkbox" name="db_checkbox" /></th>
 											<th>别名</th>
 											<th>列表名</th>
-											<th>列类型</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td><input type="checkbox" id="db_field_name" name="db_field_name" /></td>
-											<td><input type="text" id="db_field_as" name="db_field_as" class="form-control" /></td>
-											<td>ID</td>
-											<td><label id="db_field_type" name="db_field_type">VARCHAR</label></td>
-										</tr>
+									<tbody id="db_tbody_add">
+									
 									</tbody>
 								</table>
 							</div>

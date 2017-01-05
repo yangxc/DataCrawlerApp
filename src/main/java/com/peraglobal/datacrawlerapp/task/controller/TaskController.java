@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.peraglobal.datacrawlerapp.crawler.model.DbConnection;
 import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
+import com.peraglobal.datacrawlerapp.crawler.model.DbTable;
 import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
 import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
@@ -33,8 +35,8 @@ public class TaskController {
 	TaskGroupService taskGroupService;
 	
 
-	@RequestMapping("/status/{statusName}")
-	public String getTaskListByStatus(Model model, @PathVariable String statusName) {
+	@RequestMapping(value="/getTaskByStatus", method=RequestMethod.GET)
+	public String getTaskByStatus(Model model, @RequestParam(value="status") String status) {
 		
 		// 左侧任务部分
 		List<Status> statuses = taskService.getTaskStatuses();
@@ -44,8 +46,8 @@ public class TaskController {
 		model.addAttribute("groups", taskGroupService.getGroups());
 		
 		// 右侧任务列表
-		model.addAttribute("tasks", taskService.getTasksByTaskStatus(statusName));
-		return "index";
+		model.addAttribute("tasks", taskService.getTasksByTaskStatus(status));
+		return "crawler-layout";
 	}
 	
 	/**
@@ -172,4 +174,33 @@ public class TaskController {
 		}
 		return "success";
 	}
+	
+	/**
+	 * 创建web采集任务
+	 * @return
+	 */
+	@RequestMapping(value="/getTables", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List getTables(@RequestBody DbConnection dbConnection) {
+		try {
+			return taskService.getTables(dbConnection);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 创建web采集任务
+	 * @return
+	 */
+	@RequestMapping(value="/getFields", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List getFields(@RequestBody DbConnection dbConnection) {
+		try {
+			return taskService.getFields(dbConnection);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }
