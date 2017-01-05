@@ -4,8 +4,6 @@ import java.util.Date;
 
 /**
  *  <code>Crawler.java</code>
- *  <p>功能:定义顶层爬虫对象（包括运行履历和爬虫规则）
- *  
  *  <p>Copyright 安世亚太 2016 All right reserved.
  *  @author xiaochen.yang	
  *  @version 1.0
