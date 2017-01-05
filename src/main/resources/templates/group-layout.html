@@ -150,11 +150,15 @@
 						<span style="font-size: 12px;" th:text="${#calendars.format(task.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
 					<td>
+						<span style="font-size: 12px; color: #808080">修改时间:</span>
+						<span style="font-size: 12px;" th:text="${#calendars.format(task.updateTime,'yyyy-MM-dd hh:MM:ss')}"></span>
+					</td>
+					<td>
 						<div class="panel panel-default" style="width: 100px; height: 50px;">
 							<div class="panel-heading" style="height: 25px; padding: 5px 23px;">
 								<span style="font-size: 12px;">采集数量</span>
 							</div>
-							<div class="panel-body" style="height: 25px; padding: 5px 27px;">3,102</div>
+							<div class="panel-body" style="height: 25px; padding: 5px 27px;" th:text="${task.count}">0</div>
 						</div>
 					</td>
 				</tr>

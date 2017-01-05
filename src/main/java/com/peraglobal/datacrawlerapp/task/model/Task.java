@@ -1,5 +1,6 @@
 package com.peraglobal.datacrawlerapp.task.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Date;
  *  @see 2016-12-2
  *  </br>最后修改人 无
  */
-public class Task {
+public class Task implements Serializable {
+
+	private static final long serialVersionUID = 6168105894984785881L;
 
 	/**
 	 * @category 任务 ID
@@ -34,16 +37,6 @@ public class Task {
 	 */
 	private String groupName;
 
-	/**
-	 * @category 开始时间表达式
-	 */
-	private String startExpress;
-	
-	/**
-	 * @category 停止时间表达式
-	 */
-	private String stopExpress;
-	
 	/**
 	 * @category 开始命令
 	 */
@@ -68,6 +61,12 @@ public class Task {
 	 * @category 更新时间
 	 */
 	private Date updateTime;
+	
+	/**
+	 * @category 采集数量
+	 */
+	private int count;
+	
 
 	public String getTaskId() {
 		return taskId;
@@ -99,22 +98,6 @@ public class Task {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
-	}
-
-	public String getStartExpress() {
-		return startExpress;
-	}
-
-	public void setStartExpress(String startExpress) {
-		this.startExpress = startExpress;
-	}
-
-	public String getStopExpress() {
-		return stopExpress;
-	}
-
-	public void setStopExpress(String stopExpress) {
-		this.stopExpress = stopExpress;
 	}
 
 	public String getStartCommand() {
@@ -157,4 +140,11 @@ public class Task {
 		this.updateTime = updateTime;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 }

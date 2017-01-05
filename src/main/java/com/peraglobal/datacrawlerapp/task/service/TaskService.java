@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import com.peraglobal.datacrawlerapp.WebServiceProperties;
 import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
 import com.peraglobal.datacrawlerapp.crawler.model.History;
+import com.peraglobal.datacrawlerapp.crawler.model.Metadata;
 import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
 import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.model.Task;
@@ -76,7 +77,9 @@ public class TaskService {
 	@SuppressWarnings("unchecked")
 	public List<Task> getTasksByTaskStatus(String status) {
 		String url = taskServiceURL + "/task/getTasksByState/" + status;
-		return restTemplate.getForEntity(url, List.class).getBody();
+		List<Task> tasks = restTemplate.getForEntity(url, List.class).getBody();
+		this.setTasksStatusAndCount(tasks);
+		return tasks;
 	}
 	
 	
@@ -91,7 +94,9 @@ public class TaskService {
 	@SuppressWarnings("unchecked")
 	public List<Task> getTasks(int pageNo, int pageNum) {
 		String url = taskServiceURL + "/task/getTasks/" + pageNo + 1;
-		return restTemplate.getForEntity(url, List.class).getBody();
+		List<Task> tasks = restTemplate.getForEntity(url, List.class).getBody();
+		this.setTasksStatusAndCount(tasks);
+		return tasks;
 	}
 
 	/**
@@ -102,7 +107,9 @@ public class TaskService {
 	@SuppressWarnings("unchecked")
 	public List<Task> getTasksByGroupId(String groupId) {
 		String url = taskServiceURL + "/task/getTaskList/" + groupId;
-		return restTemplate.getForEntity(url, List.class).getBody();
+		List<Task> tasks = restTemplate.getForEntity(url, List.class).getBody();
+		this.setTasksStatusAndCount(tasks);
+		return tasks;
 	}
 	
 	/**
@@ -203,10 +210,10 @@ public class TaskService {
 
 	public List<History> getHistoryByTaskId(String taskId) {
 		/*
-		String url = dbServiceURL + "/getHistoryByTaskId/" + taskId;
+		String url = dbServiceURL + "/getHistoryByCrawlerId/" + taskId;
 		List histroy = restTemplate.getForEntity(url, List.class).getBody();
 		if(histroy == null) {
-			url = webServiceURL + "/getHistoryByTaskId/" + taskId;
+			url = webServiceURL + "/getHistoryByCrawlerId/" + taskId;
 			histroy = restTemplate.getForEntity(url, List.class).getBody();
 		}
 		*/
@@ -236,4 +243,45 @@ public class TaskService {
 		return histroys;
 	}
 
+	/**
+	 * 设置任务状态和采集数量
+	 */
+	private void setTasksStatusAndCount(List<Task> tasks) {
+		for (Task task : tasks) {
+			// 设置任务状态
+			switch (task.getTaskState()) {
+			case TaskStatus.READY:
+				task.setTaskState(TaskStatus.READY_TO);
+				break;
+			case TaskStatus.RUNNING:
+				task.setTaskState(TaskStatus.RUNNING_TO);
+				break;
+			case TaskStatus.STOP:
+				task.setTaskState(TaskStatus.STOP_TO);
+				break;
+			default:
+				task.setTaskState(TaskStatus.FORBIDDEN_TO);
+				break;
+			}
+			
+			// 设置任务采集数量
+			String url = dbServiceURL + "/getCountByCrawlerId/" + task.getTaskId();
+			int count = restTemplate.getForEntity(url, Integer.class).getBody();
+			if(count == 0) {
+				url = webServiceURL + "/getCountByCrawlerId/" + task.getTaskId();
+				count = restTemplate.getForEntity(url, Integer.class).getBody();
+			}
+			task.setCount(count);
+		}
+	}
+
+	public List<Metadata> getMetadataByTaskId(String taskId) {
+		String url = dbServiceURL + "/getMetadataByCrawlerId/" + taskId;
+		List metadatas = restTemplate.getForEntity(url, List.class).getBody();
+		if(metadatas == null) {
+			url = webServiceURL + "/getMetadataByCrawlerId/" + taskId;
+			metadatas = restTemplate.getForEntity(url, List.class).getBody();
+		}
+		return metadatas;
+	}
 }

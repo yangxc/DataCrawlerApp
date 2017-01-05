@@ -49,8 +49,8 @@ public class TaskController {
 	}
 	
 	/**
-	 * 程序入口
-	 * @param model
+	 * 查看历史记录
+	 * @param taskId
 	 * @return
 	 */
 	@RequestMapping("/history")
@@ -65,6 +65,25 @@ public class TaskController {
 		// 右侧历史记录列表
 		model.addAttribute("historys", taskService.getHistoryByTaskId(taskId));
 		return "history-layout";
+	}
+	
+	/**
+	 * 查看元数据
+	 * @param taskId
+	 * @return
+	 */
+	@RequestMapping("/metadata")
+	public String metadata(Model model,  @RequestParam(value="taskId") String taskId) {
+		// 左侧任务部分
+		List<Status> statuses = taskService.getTaskStatuses();
+		model.addAttribute("statuses", statuses);
+		
+		// 左侧任务分组部分
+		model.addAttribute("groups", taskGroupService.getGroups());
+		
+		// 右侧元数据列表
+		model.addAttribute("metadatas", taskService.getMetadataByTaskId(taskId));
+		return "metadata-layout";
 	}
 	
 	

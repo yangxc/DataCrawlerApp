@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+    layout:decorator="layout">
+<head>
+	<title>历史记录</title>
+</head>
+<body>
+	<div layout:fragment="righttopfirstmenu" >
+		<div >
+			<p class="navbar-text">元数据</p>
+		</div>
+		<div>
+			<form id="metadataForm" name="metadataForm" class="navbar-form navbar-left" role="search" th:action="@{/}">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="请输入任务名称"/>
+				</div>
+				<button type="submit" class="btn btn-default">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</form>
+		</div>
+	</div>
+	<div layout:fragment="righttopsecondmenu">
+		<!--向左对齐-->
+		<form class="navbar-form navbar-left" role="search">
+			<button type="button" id="btn_delete" class="btn btn-default btn-sm">
+				<span class="glyphicon glyphicon-remove"></span> 删除
+			</button>
+		</form>
+	</div>
+	<div layout:fragment="content">
+		<!-- 右侧表单  -->
+		<table class="table table-hover">
+			<tbody>
+				<tr>
+					<td>
+						<span style="font-size: 12px; color: #808080">元数据</span>
+					</td>
+					<td>
+						<span style="font-size: 12px; color: #808080">采集时间</span>
+					</td>
+				</tr>
+				<tr th:each="metadata : ${metadatas}">
+					<td>
+						<span style="font-size: 12px;" th:text="${metadata.metadata}"></span>
+					</td>
+					<td>
+						<span style="font-size: 12px;" th:text="${#calendars.format(metadata.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
