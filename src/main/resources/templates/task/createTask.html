@@ -115,11 +115,19 @@
 				// web 采集任务创建
 				var web_url = $("#web_url").val();
 				
+				// 列表
 				var web_list_url = $("#web_list_url").val();
 				var web_list_url_type = $("#web_list_url_type").val();
 				
-				var db_detail_url = $("#db_detail_url").val();
-				var db_detail_url_type = $("#db_detail_url_type").val();
+				// 详情
+				var web_detail_url = $("#web_detail_url").val();
+				var web_detail_url_type = $("#web_detail_url_type").val();
+				
+				// 属性
+				var web_field_key = $("#web_field_key").val();
+				var web_field_text = $("#web_field_text").val();
+				var web_field_type = $("#web_field_type").val();
+				
 				
 				// 开始任务
 				$.ajax({
@@ -135,24 +143,15 @@
 						'groupName': groupName,
 						'webRule':{
 							'url': web_url,
+							'listUrl':web_list_url,
+							'listUrlType':web_list_url_type,
+							'detailUrl':web_detail_url,
+							'detailUrlType':web_detail_url_type,
 							'webRuleFields': [
 								{
-									'type': 'add',
-									'fieldKey': '',
-									'fieldType': web_list_url_type,
-									'fieldText': web_list_url
-								},
-								{
-									'type': 'add',
-									'fieldKey': '',
-									'fieldType': db_detail_url_type,
-									'fieldText': db_detail_url
-								},
-								{
-									'type': 'put',
-									'fieldKey': 'author',
-									'fieldType': '',
-									'fieldText': 'https://github\\.com/(\\w+)/.*'
+									'fieldKey': web_field_key,
+									'fieldType': web_field_type,
+									'fieldText': web_field_text
 								}
 							]
 						}
@@ -230,10 +229,6 @@
 			$("#web_div_add").append(row);
 		});
 		
-		// 删除一行，后续完善
-		$("[name='web_but_del_row']").click(function() {
-		});
-		
 	});
 	/*]]>*/
 </script>
@@ -309,7 +304,7 @@
 							style="font-size: 12px; color: #808080">起始网址：</label>
 						<div class="col-sm-10">
 							<input type="text" id="web_url" name="web_url" class="form-control" placeholder="请输入网址规则" style="width: 340px;"
-								value="https://github.com/code4craft" />
+								value="http://www.syzcgy.cn/oa/oaml.aspx" />
 						</div>
 					</div>
 					<!-- 起始网址 -->
@@ -321,7 +316,7 @@
 						<div class="col-sm-7">
 							<div class="col-sm-7" style="padding-left: 0;">
 								<input type="text" id="web_list_url" name="web_list_url" class="form-control" placeholder="请输入网址规则" style="width: 340px;"
-									value="(https://github\\.com/[\\w\\-]+/[\\w\\-]+)" />
+									value="//div[@class='periodical']/dl//a" />
 							</div>
 						</div>
 						<div class="col-sm-3">
@@ -338,12 +333,12 @@
 							style="font-size: 12px; color: #808080; padding-left: 0; padding-right: 0;">详情网址规则：</label>
 						<div class="col-sm-7">
 							<div class="col-sm-7" style="padding-left: 0;">
-								<input type="text" id="db_detail_url" name="db_detail_url" class="form-control" placeholder="请输入详情网址规则" style="width: 340px;"
-									value="(https://github\\.com/[\\w\\-]+/[\\w\\-]+)" />
+								<input type="text" id="web_detail_url" name="web_detail_url" class="form-control" placeholder="请输入详情网址规则" style="width: 340px;"
+									value="//*[@id='ctl00_cphContect_Dglist']/tbody/tr[1]/td/table/tbody/tr/td[2]/b/a" />
 							</div>
 						</div>
 						<div class="col-sm-3">
-							<select id="db_detail_url_type" name="db_detail_url_type" class="form-control" style="width: 110px; padding-left: 0;">
+							<select id="web_detail_url_type" name="web_detail_url_type" class="form-control" style="width: 110px; padding-left: 0;">
 								<option value="xpath">XPATH</option>
 								<option value="regex">正则表达式</option>
 								<option value="css">CSS</option>
@@ -365,37 +360,15 @@
 					<div class="form-group" id="web_div_add">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-2">
-							<input type="text" name="web_field_key" class="form-control"
-								value="title" />
+							<input type="text" id="web_field_key" name="web_field_key" class="form-control"
+								value="Title" />
 						</div>
 						<div class="col-sm-4" style="padding-left: 0;">
-							<input type="text" name="web_field_text" style="width: 210px;" class="form-control" placeholder="请输规则内容"
-								value="https://github\\.com/(\\w+)/.*" />
+							<input type="text" id="web_field_text" name="web_field_text" style="width: 210px;" class="form-control" placeholder="请输规则内容"
+								value="//*[@id='LbZY']" />
 						</div>
 						<div class="col-sm-2">
-							<select class="form-control" style="width: 100px; padding-left: 0;">
-								<option value="xpath">XPATH</option>
-								<option value="regex">正则表达式</option>
-								<option value="css">CSS</option>
-							</select>
-						</div>
-						<div class="col-sm-2" style="padding-left: 20px;">
-							<button type="button" name="web_but_del_row" class="btn btn-default">删除</button>
-						</div>
-					</div>
-					
-					<div class="form-group" id="web_div_add">
-						<div class="col-sm-2"></div>
-						<div class="col-sm-2">
-							<input type="text" name="web_field_key" class="form-control"
-								value="author" />
-						</div>
-						<div class="col-sm-4" style="padding-left: 0;">
-							<input type="text" name="web_field_text" style="width: 210px;" class="form-control" placeholder="请输规则内容"
-								value="https://github\\.com/(\\w+)/.*" />
-						</div>
-						<div class="col-sm-2">
-							<select class="form-control" style="width: 100px; padding-left: 0;">
+							<select id="web_field_type" name="web_field_type" class="form-control" style="width: 100px; padding-left: 0;">
 								<option value="xpath">XPATH</option>
 								<option value="regex">正则表达式</option>
 								<option value="css">CSS</option>

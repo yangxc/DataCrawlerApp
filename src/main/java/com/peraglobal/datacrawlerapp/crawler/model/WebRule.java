@@ -33,10 +33,29 @@ public class WebRule implements Serializable {
 	private String url;
 	
 	/**
+	 * @category list URL
+	 */
+	private String listUrl;
+	
+	/**
+	 * @category list URL 类型
+	 */
+	private String listUrlType;
+	
+	/**
+	 * @category detail URL
+	 */
+	private String detailUrl;
+	
+	/**
+	 * @category detail URL 类型
+	 */
+	private String detailUrlType;
+	
+	/**
 	 * @category 规则对象
 	 */
 	private List<WebRuleField> webRuleFields;
-	
 
 	public String getCoding() {
 		return coding;
@@ -77,7 +96,39 @@ public class WebRule implements Serializable {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
+	public String getListUrl() {
+		return listUrl;
+	}
+
+	public void setListUrl(String listUrl) {
+		this.listUrl = listUrl;
+	}
+
+	public String getListUrlType() {
+		return listUrlType;
+	}
+
+	public void setListUrlType(String listUrlType) {
+		this.listUrlType = listUrlType;
+	}
+
+	public String getDetailUrl() {
+		return detailUrl;
+	}
+
+	public void setDetailUrl(String detailUrl) {
+		this.detailUrl = detailUrl;
+	}
+
+	public String getDetailUrlType() {
+		return detailUrlType;
+	}
+
+	public void setDetailUrlType(String detailUrlType) {
+		this.detailUrlType = detailUrlType;
+	}
+
 	public List<WebRuleField> getWebRuleFields() {
 		return webRuleFields;
 	}

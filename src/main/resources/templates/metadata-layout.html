@@ -33,19 +33,13 @@
 		<!-- 右侧表单  -->
 		<table class="table table-hover">
 			<tbody>
-				<tr>
-					<td>
-						<span style="font-size: 12px; color: #808080">元数据</span>
-					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">采集时间</span>
-					</td>
-				</tr>
 				<tr th:each="metadata : ${metadatas}">
 					<td>
+						<span style="font-size: 12px; color: #808080">元数据:</span>
 						<span style="font-size: 12px;" th:text="${metadata.metadata}"></span>
 					</td>
-					<td>
+					<td style="width: 200px;">
+						<span style="font-size: 12px; color: #808080">采集时间:</span>
 						<span style="font-size: 12px;" th:text="${#calendars.format(metadata.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
 				</tr>

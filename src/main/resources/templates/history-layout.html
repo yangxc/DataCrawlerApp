@@ -33,46 +33,33 @@
 		<!-- 右侧表单  -->
 		<table class="table table-hover">
 			<tbody>
-				<tr>
-					<td>
-						<span style="font-size: 12px; color: #808080">版本号</span>
-					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">数据数量</span>
-					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">是否异常</span>
-					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">异常信息</span>
-					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">启动时间</span>
-					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">停止时间</span>
-					</td>
-				</tr>
 				<tr th:each="history : ${historys}">
 					<td>
+						<span style="font-size: 12px; color: #808080">版本号：</span>
 						<span style="font-size: 12px;" th:text="${history.version}"></span>
 					</td>
 					<td>
+						<span style="font-size: 12px; color: #808080">数据数量：</span>
 						<span style="font-size: 12px;" th:text="${history.pageCrawledCount}"></span>
 					</td>
 					<td>
+						<span style="font-size: 12px; color: #808080">是否异常：</span>
 						<span style="font-size: 12px;" th:text="${history.hasException == '0'}?'是':'否'"></span>
 					</td>
 					<td>
+						<span style="font-size: 12px; color: #808080">异常信息：</span>
 						<span style="font-size: 12px;" th:text="${history.exceptionMessage}"></span>
 					</td>
 					<td>
+						<span style="font-size: 12px; color: #808080">启动时间：</span>
 						<span style="font-size: 12px;" th:text="${#calendars.format(history.startDate,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
 					<td>
+						<span style="font-size: 12px; color: #808080">停止时间：</span>
 						<span style="font-size: 12px;" th:text="${#calendars.format(history.stopDate,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
 				</tr>
+				
 			</tbody>
 		</table>
 	</div>

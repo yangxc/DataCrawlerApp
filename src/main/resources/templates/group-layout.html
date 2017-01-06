@@ -123,6 +123,29 @@
 	});
 	/*]]>*/
 	</script>
+	<style type="text/css">
+	.btntl {
+		display: inline-block;
+		padding: 6px 2px;
+		margin-bottom: 0;
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 1.42857143;
+		text-align: center;
+		white-space: nowrap;
+		vertical-align: middle;
+		-ms-touch-action: manipulation;
+		touch-action: manipulation;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		background-image: none;
+		border: 1px solid transparent;
+		border-radius: 4px
+	}
+	</style>
 </head>
 <body>
 	<div layout:fragment="righttopfirstmenu">
@@ -229,14 +252,14 @@
 						<span style="font-size: 12px; color: #808080">修改时间:</span>
 						<span style="font-size: 12px;" th:text="${#calendars.format(task.updateTime,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
-					
-					<td>
-						<a th:href="@{/task/history(taskId=${task.taskId})}" class="dropdown-toggle">
-							<p>版本记录</p>
-						</a>
-						<a th:href="@{/task/metadata(taskId=${task.taskId})}" class="dropdown-toggle">
-							<p>数据列表</p>
-						</a>
+					<td style="text-align: right;">
+						<a th:href="@{/task/history(taskId=${task.taskId})}"  class="btntl btn-primary">
+							历史查看
+						</a>&nbsp;&nbsp;
+						<p></p>
+						<a th:href="@{/task/metadata(taskId=${task.taskId})}"  class="btntl btn-primary">
+							数据查看
+						</a>&nbsp;&nbsp;
 					</td>
 				</tr>
 			</tbody>
