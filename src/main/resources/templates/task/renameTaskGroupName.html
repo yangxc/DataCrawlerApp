@@ -9,21 +9,26 @@
 			if (groupName == '') {
 				alert("Error:no one selected.");
 			} else {
-				// 开始任务
+				
 				$.ajax({
-					url : "/taskgroup/modifyTaskGroup",
+					url: "/taskgroup/modifyTaskGroup",
 					cache: false,
 					async: false,
 					type : "POST",
 					dataType : "json",
 					contentType : "application/json; charset=utf-8",
-					data: JSON.stringify({ 'groupId': groupId, 'groupName': groupName }),
+					data: JSON.stringify({ 
+						"groupId": groupId, "groupName": groupName
+					}),
 					success : function(msg) {
+						if (msg != null) {
+							alert(msg);
+						}
 					},
 					error : function(msg) {
-						//200的响应也有可能被认定为error，responseText中没有Message部分
+						alert('连接失败！');
 					}
-				}); 
+				});
 				alert('修改成功！');
 				window.location.reload();
 			} 
@@ -39,7 +44,7 @@
 	<h4 class="modal-title" id="myModalLabel">重命名采集分组</h4>
 </div>
 <form class="form-horizontal" role="form" th:action="@{/taskgroup/modifyTaskGroup}" method="post">
-	<input type="hidden" name="groupId" id="groupId" th:value="${groupId}"/>
+	<input type="hidden" name="groupId" id="groupId" th:value="${group.groupId}"/>
 	<div class="modal-body">
 		<div class="form-group">
 			<label for="firstname" class="col-sm-2 control-label">组名称</label>

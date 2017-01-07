@@ -1,7 +1,6 @@
 package com.peraglobal.datacrawlerapp.task.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,6 @@ import com.peraglobal.datacrawlerapp.WebServiceProperties;
 import com.peraglobal.datacrawlerapp.crawler.model.Crawler;
 import com.peraglobal.datacrawlerapp.crawler.model.DbConnection;
 import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
-import com.peraglobal.datacrawlerapp.crawler.model.DbTable;
-import com.peraglobal.datacrawlerapp.crawler.model.History;
-import com.peraglobal.datacrawlerapp.crawler.model.Metadata;
 import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
 import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.model.Task;
@@ -167,7 +163,16 @@ public class TaskService {
 		String[] ids = taskIds.split(",");
 		for (String taskId : ids) {
 			if (taskId != null && !"".equals(taskId)) {
+				// 删除任务
 				String url = taskServiceURL + "/task/removeTask/" + taskId;
+				restTemplate.delete(url);
+				
+				// 删除 db
+				url = dbServiceURL + "/db/removeCrawler/" + taskId;
+				restTemplate.delete(url);
+				
+				// 删除 web
+				url = webServiceURL + "/web/removeWeb/" + taskId;
 				restTemplate.delete(url);
 			}
 		}
@@ -209,7 +214,7 @@ public class TaskService {
 		return true;
 	}
 
-
+	@SuppressWarnings("rawtypes")
 	public List getHistoryByTaskId(String taskId) {
 		
 		String url = dbServiceURL + "/getCrawler/" + taskId;
@@ -222,33 +227,9 @@ public class TaskService {
 			url = webServiceURL + "/getHistoryByCrawlerId/" + taskId;
 			return restTemplate.getForEntity(url, List.class).getBody();
 		}
-		
-		/*
-		List<History> histroys = new ArrayList<History>();
-		History h1 = new History();
-		h1.setCrawlerId(taskId);
-		h1.setStartDate(new Date());
-		h1.setStopDate(new Date());
-		h1.setVersion(1);
-		h1.setPageCrawledCount(100);
-		histroys.add(h1);
-		History h11 = new History();
-		h11.setCrawlerId(taskId);
-		h11.setStartDate(new Date());
-		h11.setStopDate(new Date());
-		h11.setVersion(1);
-		h11.setPageCrawledCount(105);
-		histroys.add(h11);
-		History h111 = new History();
-		h111.setCrawlerId(taskId);
-		h111.setStartDate(new Date());
-		h111.setStopDate(new Date());
-		h111.setVersion(1);
-		h111.setPageCrawledCount(109);
-		histroys.add(h111);
-		*/
 	}
 
+	@SuppressWarnings("rawtypes")
 	public List getMetadataByTaskId(String taskId) {
 		String url = dbServiceURL + "/getCrawler/" + taskId;
 		Crawler crawler = (Crawler)restTemplate.getForEntity(url, Crawler.class).getBody();
@@ -261,13 +242,14 @@ public class TaskService {
 		}
 	}
 
-
+	@SuppressWarnings("rawtypes")
 	public List getTables(DbConnection dbConnection) {
 		String url = dbServiceURL + "/getTables/";
 		return (List)restTemplate.postForObject(url, dbConnection, List.class);
 	}
 
 
+	@SuppressWarnings("rawtypes")
 	public List getFields(DbConnection dbConnection) {
 		String url = dbServiceURL + "/getFields/";
 		return (List)restTemplate.postForObject(url, dbConnection, List.class);

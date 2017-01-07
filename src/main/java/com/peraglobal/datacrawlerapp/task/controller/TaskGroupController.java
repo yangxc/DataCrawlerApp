@@ -3,6 +3,7 @@ package com.peraglobal.datacrawlerapp.task.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -123,7 +124,7 @@ public class TaskGroupController {
 	 * 重命名对应的任务分组
 	 * @return
 	 */
-	@RequestMapping(value = "/modifyTaskGroup", method = RequestMethod.POST)
+	@RequestMapping(value="/modifyTaskGroup", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String modifyTaskGroup(@RequestBody TaskGroup taskGroup) {
 		try {
 			taskGroupService.modifyTaskGroup(taskGroup);

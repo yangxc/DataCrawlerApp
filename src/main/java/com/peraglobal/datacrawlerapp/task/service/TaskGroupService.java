@@ -43,6 +43,12 @@ public class TaskGroupService {
 		return restTemplate.getForEntity(url, TaskGroup.class).getBody();
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public List getTaskGroupList() {
+		String url = taskServiceURL + "/group/getTaskGroupList/";
+		return restTemplate.getForEntity(url, List.class).getBody();
+	}
+	
 	/**
 	 * 得到任务分组列表
 	 * @return
@@ -91,6 +97,7 @@ public class TaskGroupService {
 		
 		
 	}
+
 	
 	
 }

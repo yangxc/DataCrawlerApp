@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peraglobal.datacrawlerapp.crawler.model.DbConnection;
 import com.peraglobal.datacrawlerapp.crawler.model.DbCrawler;
-import com.peraglobal.datacrawlerapp.crawler.model.DbTable;
 import com.peraglobal.datacrawlerapp.crawler.model.WebCrawler;
 import com.peraglobal.datacrawlerapp.task.model.Status;
 import com.peraglobal.datacrawlerapp.task.service.TaskGroupService;
@@ -95,7 +94,7 @@ public class TaskController {
 	@RequestMapping(value="/createTaskPage", method=RequestMethod.GET)
 	public String createTaskCrawler(Model model, @RequestParam(value="groupId") String groupId) {
 		model.addAttribute("groupId", groupId);
-		model.addAttribute("groups", taskGroupService.getGroups());
+		model.addAttribute("groups", taskGroupService.getTaskGroupList());
 		return "/task/createTask";
 	}
 	
@@ -178,6 +177,7 @@ public class TaskController {
 	 * 创建web采集任务
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/getTables", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List getTables(@RequestBody DbConnection dbConnection) {
 		try {
@@ -192,6 +192,7 @@ public class TaskController {
 	 * 创建web采集任务
 	 * @return
 	 */
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/getFields", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List getFields(@RequestBody DbConnection dbConnection) {
 		try {
