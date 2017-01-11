@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-    layout:decorator="layout">
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout">
 <head>
-	<title>任务分组</title>
-	<script th:inline="javascript">
+<title>任务分组</title>
+<script th:inline="javascript">
 	/*<![CDATA[*/
 	$(document).ready(function () {
 		
@@ -123,39 +123,42 @@
 	});
 	/*]]>*/
 	</script>
-	<style type="text/css">
-	.btntl {
-		display: inline-block;
-		padding: 6px 2px;
-		margin-bottom: 0;
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 1.42857143;
-		text-align: center;
-		white-space: nowrap;
-		vertical-align: middle;
-		-ms-touch-action: manipulation;
-		touch-action: manipulation;
-		cursor: pointer;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		background-image: none;
-		border: 1px solid transparent;
-		border-radius: 4px
-	}
-	</style>
+<style type="text/css">
+.btntl {
+	display: inline-block;
+	padding: 6px 2px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px
+}
+</style>
 </head>
 <body>
 	<div layout:fragment="righttopfirstmenu">
 		<!-- 右侧头部导航1 -->
 		<nav class="navbar navbar-default" role="navigation">
 			<div>
-				<p class="navbar-text" style="color: black;"><span th:text="${group.groupName}"></span></p>
-				<form class="navbar-form navbar-right" role="search" style="margin-right: 0;">
+				<p class="navbar-text" style="color: black;">
+					<span th:text="${group.groupName}"></span>
+				</p>
+				<form class="navbar-form navbar-right" role="search"
+					style="margin-right: 0;">
 					<span class="navbar-text"><span th:text="${groupNum}"></span>个文件夹，
-					<span><span th:text="${taskNum}"></span></span>个任务</span>
+						<span><span th:text="${taskNum}"></span></span>个任务</span>
 				</form>
 			</div>
 		</nav>
@@ -164,16 +167,22 @@
 		<!-- 任务组操作 -->
 		<nav class="navbar navbar-default" role="navigation">
 			<div>
-				<form id="groupForm" class="navbar-form navbar-left" role="search" th:action="@{/taskgroup/taskgroups(groupId=${groupId})}">
-					<input type="hidden" name="groupId" th:value="${groupId}"/>
-					<button type="button" id="deleteGroup" class="btn btn-default btn-sm">删除</button>
-					<a th:href="@{/taskgroup/renameGroupPage/(groupId=${groupId})}" class="btn btn-default btn-sm" data-toggle="modal"
+				<form id="groupForm" class="navbar-form navbar-left" role="search"
+					th:action="@{/taskgroup/taskgroups(groupId=${groupId})}">
+					<input type="hidden" name="groupId" th:value="${groupId}" />
+					<button type="button" id="deleteGroup"
+						class="btn btn-default btn-sm">删除</button>
+					<a th:href="@{/taskgroup/renameGroupPage/(groupId=${groupId})}"
+						class="btn btn-default btn-sm" data-toggle="modal"
 						data-target="#theModal" style="width: 120px;">重命名</a>
-					
+
 				</form>
 				&nbsp;
-				<form class="navbar-form navbar-right" method="get" style="margin-top: -12px; margin-right: 0px; padding-left: 700px;" role="search">
-					<a th:href="@{/taskgroup/createTaskGroupPage(groupId=${groupId})}" class="btn btn-primary" data-toggle="modal"
+				<form class="navbar-form navbar-right" method="get"
+					style="margin-top: -12px; margin-right: 0px; padding-left: 700px;"
+					role="search">
+					<a th:href="@{/taskgroup/createTaskGroupPage(groupId=${groupId})}"
+						class="btn btn-primary" data-toggle="modal"
 						data-target="#theModal" style="width: 120px;">新建分组</a>
 				</form>
 			</div>
@@ -182,26 +191,26 @@
 	</div>
 	<div layout:fragment="content">
 		<!-- 任务组列表 -->
-		<div class="row" style="margin:0;padding:0; height: 200px;">
+		<div class="row" style="margin: 0; padding: 0; height: 200px;">
 			<div class="col-md-12" style="padding-left: 40px;">
 				<table class="table">
 					<tbody>
 						<tr th:unless="${#lists.isEmpty(taskGroups)}">
-							<td th:each=" taskGroup : ${taskGroups}" width="200">
-								<input name="checkbox" type="checkbox" th:value="${taskGroup.groupId}"/>
-								 &nbsp;
-								<span th:class="${taskGroup.ifLeaf == '1'}?'glyphicon glyphicon-folder-close':'glyphicon glyphicon-folder-open'"></span>
-								<a th:href="@{/taskgroup/taskgroups(groupId=${taskGroup.groupId})}">
+							<td th:each=" taskGroup : ${taskGroups}" width="200"><input
+								name="checkbox" type="checkbox" th:value="${taskGroup.groupId}" />
+								&nbsp; <span
+								th:class="${taskGroup.ifLeaf == '1'}?'glyphicon glyphicon-folder-close':'glyphicon glyphicon-folder-open'"></span>
+								<a
+								th:href="@{/taskgroup/taskgroups(groupId=${taskGroup.groupId})}">
 									<span th:text="${taskGroup.groupName}"></span>
-								</a>
-							</td>
+							</a></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 		<!-- 任务组列表 -->
-		
+
 		<!-- 右侧头部导航2 -->
 		<nav class="navbar navbar-default" role="navigation"
 			style="margin-bottom: 0; height: 50px;">
@@ -211,20 +220,22 @@
 					<button type="button" id="btn_strat" class="btn btn-default btn-sm">
 						<span class="glyphicon glyphicon-play"></span> 开始
 					</button>
-				
+
 					<button type="button" id="btn_stop" class="btn btn-default btn-sm">
 						<span class="glyphicon glyphicon-stop"></span> 停止
 					</button>
-					
-					<button type="button" id="btn_delete" class="btn btn-default btn-sm">
+
+					<button type="button" id="btn_delete"
+						class="btn btn-default btn-sm">
 						<span class="glyphicon glyphicon-remove"></span> 删除
 					</button>
 				</form>
 				<!--向右对齐-->
-				<form class="navbar-form navbar-right" role="search" style="margin-right:0;">
-					&nbsp;
-					<a th:href="@{/task/createTaskPage(groupId=${groupId})}" class="btn btn-success" 
-						data-toggle="modal" data-target="#theModal" style="width: 120px;">新建采集</a>
+				<form class="navbar-form navbar-right" role="search"
+					style="margin-right: 0;">
+					&nbsp; <a th:href="@{/task/createTaskPage(groupId=${groupId})}"
+						class="btn btn-success" data-toggle="modal"
+						data-target="#theModal" style="width: 120px;">新建采集</a>
 				</form>
 			</div>
 		</nav>
@@ -232,35 +243,29 @@
 		<table class="table table-hover">
 			<tbody>
 				<tr th:each="task : ${tasks}">
-					<td width="35">
-						<input name="checkbox" type="checkbox" th:value="${task.taskId}"/>
-					</td>
+					<td width="35"><input name="checkbox" type="checkbox"
+						th:value="${task.taskId}" /></td>
 					<td>
-						<p th:text="${task.taskName}"></p>
-						<span style="font-size: 12px; color: #808080">所属分组:</span>
-						<span style="font-size: 12px;" th:text="${task.groupName}"></span>
+						<p th:text="${task.taskName}"></p> <span
+						style="font-size: 12px; color: #808080">所属分组:</span> <span
+						style="font-size: 12px;" th:text="${task.groupName}"></span>
 					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">任务状态:</span>
+					<td><span style="font-size: 12px; color: #808080">任务状态:</span>
 						<span style="font-size: 12px;" th:text="${task.taskState}"></span>
 					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">创建时间:</span>
-						<span style="font-size: 12px;" th:text="${#calendars.format(task.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
+					<td><span style="font-size: 12px; color: #808080">创建时间:</span>
+						<span style="font-size: 12px;"
+						th:text="${#calendars.format(task.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">修改时间:</span>
-						<span style="font-size: 12px;" th:text="${#calendars.format(task.updateTime,'yyyy-MM-dd hh:MM:ss')}"></span>
+					<td><span style="font-size: 12px; color: #808080">修改时间:</span>
+						<span style="font-size: 12px;"
+						th:text="${#calendars.format(task.updateTime,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
-					<td style="text-align: right;">
-						<a th:href="@{/task/history(taskId=${task.taskId})}"  class="btntl btn-primary">
-							历史查看
-						</a>&nbsp;&nbsp;
-						<p></p>
-						<a th:href="@{/task/metadata(taskId=${task.taskId})}"  class="btntl btn-primary">
-							数据查看
-						</a>&nbsp;&nbsp;
-					</td>
+					<td style="text-align: right;"><a
+						th:href="@{/task/history(taskId=${task.taskId})}"
+						class="btntl btn-primary"> 历史查看 </a>&nbsp;&nbsp;
+						<p></p> <a th:href="@{/task/metadata(taskId=${task.taskId})}"
+						class="btntl btn-primary"> 数据查看 </a>&nbsp;&nbsp;</td>
 				</tr>
 			</tbody>
 		</table>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-    layout:decorator="layout">
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorator="layout">
 <head>
-	<title>首页</title>
-	<script th:inline="javascript">
+<title>首页</title>
+<script th:inline="javascript">
 		/*<![CDATA[*/
 		$(document).ready(function() {
 	
@@ -101,29 +101,29 @@
 		});
 		/*]]>*/
 	</script>
-	<style type="text/css">
-	.btntl {
-		display: inline-block;
-		padding: 6px 2px;
-		margin-bottom: 0;
-		font-size: 14px;
-		font-weight: 400;
-		line-height: 1.42857143;
-		text-align: center;
-		white-space: nowrap;
-		vertical-align: middle;
-		-ms-touch-action: manipulation;
-		touch-action: manipulation;
-		cursor: pointer;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-		background-image: none;
-		border: 1px solid transparent;
-		border-radius: 4px
-	}
-	</style>
+<style type="text/css">
+.btntl {
+	display: inline-block;
+	padding: 6px 2px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px
+}
+</style>
 </head>
 <body>
 	<div layout:fragment="righttopfirstmenu">
@@ -131,16 +131,20 @@
 			<p class="navbar-text">采集任务</p>
 		</div>
 		<div>
-			<form id="taskForm" name="taskForm" class="navbar-form navbar-left" role="search" th:action="@{/}">
-				<input type="hidden" name="status" th:value="${status}"/>
+			<form id="taskForm" name="taskForm" class="navbar-form navbar-left"
+				role="search" th:action="@{/}">
+				<input type="hidden" name="status" th:value="${status}" />
 				<div class="form-group">
-					<select id="opt_status" class="form-control input-sm" style="width: 120px;">
+					<select id="opt_status" class="form-control input-sm"
+						style="width: 120px;">
 						<option value="all">全部</option>
-						<option th:each="status:${statuses}" th:value="${status.key}"><div th:text="${status.value}"/></option>
+						<option th:each="status:${statuses}" th:value="${status.key}"><div
+								th:text="${status.value}" />
+						</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="请输入任务名称"/>
+					<input type="text" class="form-control" placeholder="请输入任务名称" />
 				</div>
 				<button type="submit" class="btn btn-default">
 					<span class="glyphicon glyphicon-search"></span>
@@ -162,44 +166,40 @@
 			</button>
 		</form>
 		<!--向右对齐-->
-		<form class="navbar-form navbar-right" role="search" style="margin-right:0;">
-			<a th:href="@{/task/createTaskPage(groupId=${groupId})}" class="btn btn-success" 
-				data-toggle="modal" data-target="#theModal" style="width: 120px;">新建采集</a>
-			&nbsp; &nbsp;
+		<form class="navbar-form navbar-right" role="search"
+			style="margin-right: 0;">
+			<a th:href="@{/task/createTaskPage(groupId=${groupId})}"
+				class="btn btn-success" data-toggle="modal" data-target="#theModal"
+				style="width: 120px;">新建采集</a> &nbsp; &nbsp;
 		</form>
 	</div>
 	<div layout:fragment="content">
 		<table class="table table-hover">
 			<tbody>
 				<tr th:each="task : ${tasks}">
-					<td width="35">
-						<input name="checkbox" type="checkbox" th:value="${task.taskId}"/>
-					</td>
+					<td width="35"><input name="checkbox" type="checkbox"
+						th:value="${task.taskId}" /></td>
 					<td>
-						<p th:text="${task.taskName}"></p>
-						<span style="font-size: 12px; color: #808080">所属分组:</span>
-						<span style="font-size: 12px;" th:text="${task.groupName}"></span>
+						<p th:text="${task.taskName}"></p> <span
+						style="font-size: 12px; color: #808080">所属分组:</span> <span
+						style="font-size: 12px;" th:text="${task.groupName}"></span>
 					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">任务状态:</span>
+					<td><span style="font-size: 12px; color: #808080">任务状态:</span>
 						<span style="font-size: 12px;" th:text="${task.taskState}"></span>
 					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">创建时间:</span>
-						<span style="font-size: 12px;" th:text="${#calendars.format(task.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
+					<td><span style="font-size: 12px; color: #808080">创建时间:</span>
+						<span style="font-size: 12px;"
+						th:text="${#calendars.format(task.createTime,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
-					<td>
-						<span style="font-size: 12px; color: #808080">修改时间:</span>
-						<span style="font-size: 12px;" th:text="${#calendars.format(task.updateTime,'yyyy-MM-dd hh:MM:ss')}"></span>
+					<td><span style="font-size: 12px; color: #808080">修改时间:</span>
+						<span style="font-size: 12px;"
+						th:text="${#calendars.format(task.updateTime,'yyyy-MM-dd hh:MM:ss')}"></span>
 					</td>
-					<td style="text-align: right;">
-						<a th:href="@{/task/history(taskId=${task.taskId})}"  class="btntl btn-primary">
-							历史查看
-						</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<p></p>
-						<a th:href="@{/task/metadata(taskId=${task.taskId})}"  class="btntl btn-primary">
-							数据查看
-						</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<td style="text-align: right;"><a
+						th:href="@{/task/history(taskId=${task.taskId})}"
+						class="btntl btn-primary"> 历史查看 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<p></p> <a th:href="@{/task/metadata(taskId=${task.taskId})}"
+						class="btntl btn-primary"> 数据查看 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</td>
 				</tr>
 			</tbody>

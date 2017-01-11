@@ -1,51 +1,51 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 </head>
 <body>
-<!-- 头部导航 -->
-<nav class="navbar navbar-default" role="navigation"
-			style="height: 600px; margin-bottom: 0;" id="leftmenu">
-	<div>
-		<ul class="nav nav-pills nav-stacked">
-			<li class="active"><a href="#"><span
-					class="glyphicon glyphicon-list"></span> 采集</a></li>
-		</ul>
-	</div>
-	<div class="navbar-header" style="width: 100%;">
-		<h4 class="navbar-text">
-			<span class="glyphicon glyphicon-folder-open"></span> 采集任务
-		</h4>
-	</div>
-	<!-- 显示任务状态和对应的任务数 -->
-	<div style="margin-top: 50px;">
-		<ul class="nav nav-pills nav-stacked">
-			<li style="padding-left: 30px;" th:each="status:${statuses}">
-				<a th:href="@{/task/getTaskByStatus(status=${status.key})}">
-					<span class="badge pull-right" th:text="${status.count}">2</span>
-					<span th:text="${status.value}"></span>
+	<!-- 头部导航 -->
+	<nav class="navbar navbar-default" role="navigation"
+		style="height: 600px; margin-bottom: 0;" id="leftmenu">
+		<div>
+			<ul class="nav nav-pills nav-stacked">
+				<li class="active"><a href="#"><span
+						class="glyphicon glyphicon-list"></span> 采集</a></li>
+			</ul>
+		</div>
+		<div class="navbar-header" style="width: 100%;">
+			<h4 class="navbar-text">
+				<span class="glyphicon glyphicon-folder-open"></span> 采集任务
+			</h4>
+		</div>
+		<!-- 显示任务状态和对应的任务数 -->
+		<div style="margin-top: 50px;">
+			<ul class="nav nav-pills nav-stacked">
+				<li style="padding-left: 30px;" th:each="status:${statuses}"><a
+					th:href="@{/task/getTaskByStatus(status=${status.key})}"> <span
+						class="badge pull-right" th:text="${status.count}">2</span> <span
+						th:text="${status.value}"></span>
+				</a></li>
+			</ul>
+		</div>
+		<div class="navbar-header" style="width: 100%;">
+			<h4 class="navbar-text" style="width: 86%;">
+				<span class="glyphicon glyphicon-folder-close ">采集分组</span> <a
+					th:href="@{/taskgroup/createTaskGroupPage(groupId=0)}"
+					class="dropdown-toggle" data-toggle="modal" data-target="#theModal"
+					style="float: right;"> <span class="glyphicon glyphicon-plus"></span>
 				</a>
-			</li>
-		</ul>
-	</div>
-	<div class="navbar-header" style="width: 100%;">
-		<h4 class="navbar-text" style="width: 86%;">
-			<span class="glyphicon glyphicon-folder-close ">采集分组</span> 
-			<a th:href="@{/taskgroup/createTaskGroupPage(groupId=0)}" class="dropdown-toggle" data-toggle="modal" data-target="#theModal" style="float:right;"> 
-				<span class="glyphicon glyphicon-plus"></span>
-			</a>
-		</h4>
-	</div>
-	<div style="margin-top: 50px;">
-		<ul class="nav nav-pills nav-stacked">
-			<li th:each="taskGroup:${groups}">
-				<a th:href="@{/taskgroup/taskgroups(groupId=${taskGroup.groupId})}">
-					<span class="badge pull-left">组</span> &nbsp;&nbsp;<span th:text="${taskGroup.groupName}"></span>
-				</a>
-			</li>
-		</ul>
-	</div>
-</nav>
+			</h4>
+		</div>
+		<div style="margin-top: 50px;">
+			<ul class="nav nav-pills nav-stacked">
+				<li th:each="taskGroup:${groups}"><a
+					th:href="@{/taskgroup/taskgroups(groupId=${taskGroup.groupId})}">
+						<span class="badge pull-left">组</span> &nbsp;&nbsp;<span
+						th:text="${taskGroup.groupName}"></span>
+				</a></li>
+			</ul>
+		</div>
+	</nav>
 </body>
 </html>

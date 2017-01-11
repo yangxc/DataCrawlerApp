@@ -1,68 +1,69 @@
 <!-- 系统模版 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
-	<title>知识工程</title>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-	<link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" media="screen"/>
-	<script th:src="@{/js/jquery.js}" type="text/javascript"></script>
-	<script th:src="@{/js/bootstrap.js}" type="text/javascript"></script>
+<title>知识工程</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap-datetimepicker.min.css}"
+	rel="stylesheet" media="screen" />
+<script th:src="@{/js/jquery.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.js}" type="text/javascript"></script>
 </head>
 
 <body>
 	<!-- 头部导航 -->
-	<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0; height: 60px" 
-		th:include="fragments/header :: #header">
-		头部导航
-	</nav>
+	<nav class="navbar navbar-default" role="navigation"
+		style="margin-bottom: 0; height: 60px"
+		th:include="fragments/header :: #header">头部导航</nav>
 	<!-- 2 10布局 -->
-	<div class="row" style="padding: 0;margin:0" >
-		<div class="col-md-2" style="padding: 0;margin:0">
+	<div class="row" style="padding: 0; margin: 0">
+		<div class="col-md-2" style="padding: 0; margin: 0">
 			<!-- 左侧导航 -->
-			<nav class="navbar navbar-default" role="navigation" style="height: 600px; margin-bottom: 0;" 
+			<nav class="navbar navbar-default" role="navigation"
+				style="height: 600px; margin-bottom: 0;"
 				th:include="fragments/leftmenu :: #leftmenu">
-			<div layout:fragment="left-menu">
-				左侧导航
-			</div>
+				<div layout:fragment="left-menu">左侧导航</div>
 			</nav>
 		</div>
-		<div class="col-md-10" style="padding: 0;margin:0" >
+		<div class="col-md-10" style="padding: 0; margin: 0">
 			<!-- 右侧头部导航1 -->
-			<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0; height: 30px;">
-				<div  layout:fragment="righttopfirstmenu">
-				</div>
+			<nav class="navbar navbar-default" role="navigation"
+				style="margin-bottom: 0; height: 30px;">
+				<div layout:fragment="righttopfirstmenu"></div>
 			</nav>
 			<!-- 右侧头部导航2 -->
-			<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0; height: 50px;">
-				<div layout:fragment="righttopsecondmenu">
-				</div>
+			<nav class="navbar navbar-default" role="navigation"
+				style="margin-bottom: 0; height: 50px;">
+				<div layout:fragment="righttopsecondmenu"></div>
 			</nav>
 			<!-- 右侧表单  -->
-			<div layout:fragment="content">
-			</div>
+			<div layout:fragment="content"></div>
 		</div>
 	</div>
 
-	<div class="row" style="padding: 0;margin:0;">
-		<div class="col-md-12" style="padding: 0;margin:0;">
+	<div class="row" style="padding: 0; margin: 0;">
+		<div class="col-md-12" style="padding: 0; margin: 0;">
 			<nav class="navbar navbar-default" role="navigation"
-				style="margin-bottom: 0; height: 50px; text-align: center;" th:include="fragments/footer :: #footer">
-				注脚
-			</nav>
+				style="margin-bottom: 0; height: 50px; text-align: center;"
+				th:include="fragments/footer :: #footer">注脚</nav>
 		</div>
 	</div>
-	
+
 	<!-- 显示模态对话框 -->
-	<div class="modal fade" id="theModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-		    <div class="modal-content"></div>
-	  	</div>
-    </div>
+	<div class="modal fade" id="theModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content"></div>
+		</div>
+	</div>
 	<script th:src="@{/js/jquery.min.js}" type="text/javascript"></script>
 	<script th:src="@{/js/bootstrap.js}" type="text/javascript"></script>
-	<script type="text/javascript" th:src="@{/js/locales/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+	<script type="text/javascript"
+		th:src="@{/js/locales/bootstrap-datetimepicker.zh-CN.js}"
+		charset="UTF-8"></script>
 	<script th:inline="javascript">
 		$(function () { 
 			$('#theModal').on('hide.bs.modal', function (){

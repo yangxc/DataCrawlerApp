@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 头部导航 -->
-	<nav class="navbar navbar-default" role="navigation" style="margin-bottom: 0; height: 60px" id="header">
+	<!-- 头部导航 -->
+	<nav class="navbar navbar-default" role="navigation"
+		style="margin-bottom: 0; height: 60px" id="header">
 		<div class="navbar-header" style="width: 220px;">
 			<h3 class="navbar-text">
 				SKM<small style="font-size: 12px;">知识工程2.0采集系统</small>
@@ -17,12 +18,12 @@
 				<li><a th:href="@{/}">采集</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-avatar pull-right">
-				<li>
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-						<img class="img-circle" alt="Admin" src="../image/admin.png" style="width: 30px; height: 30px"/> 
-						<span class="thumb-small avatar inline"></span> 
-						<span class="hidden-sm-only">Admin</span>
-					 	<b class="caret hidden-sm-only"></b>
+				<li><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						<img class="img-circle" alt="Admin" src="../image/admin.png"
+						style="width: 30px; height: 30px" /> <span
+						class="thumb-small avatar inline"></span> <span
+						class="hidden-sm-only">Admin</span> <b
+						class="caret hidden-sm-only"></b>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="#">Settings</a></li>
@@ -42,7 +43,8 @@
 						<li><a href="#" data-toggle="modal" data-target="#myModal">新建采集</a></li>
 						<li><a href="#" data-toggle="modal" data-target="#myModal3">新建转换</a></li>
 						<li><a href="#" data-toggle="modal" data-target="#myModal4">新建传输</a></li>
-						<li><a href="/createGroup" data-toggle="modal" data-target="#theModal">新建分组</a></li>
+						<li><a href="/createGroup" data-toggle="modal"
+							data-target="#theModal">新建分组</a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <span
