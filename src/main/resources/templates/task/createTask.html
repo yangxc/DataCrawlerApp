@@ -134,16 +134,26 @@
 				buffer += "\"detailUrl\":\"" + $("#webDetailUrl").val() + "\",";
 				buffer += "\"detailUrlType\":\"" + $("#webDetailUrlType").val() + "\",";
 				buffer += "\"webRuleFields\":[";
+				
 				// 页面元素规则
-				// 属性
-				//var webFieldKey = $("#webFieldKey").val();
-				//var webFieldText = $("#webFieldText").val();
-				//var webFieldType = $("#webFieldType").val();
+				var leng = $("input[name='webFieldKey']").length;
+				for (var i = 0; i < leng; i ++) {
+					if (i == 0) {
+						buffer += "{";
+					} else {
+						buffer += ",{";
+					}
+					
+					// 添加属性规则
+					buffer += "\"fieldKey\":\"" + $("input[name='webFieldKey']")[i].value + "\",";
+					buffer += "\"fieldText\":\"" + $("input[name='webFieldText']")[i].value + "\",";
+					buffer += "\"fieldType\":\"" + $("select[name='webFieldType']")[i].value + "\"";
+					buffer += "}";
+				}
 				
 				buffer += "]";
 				buffer += "}";
 				buffer += "}";
-				
 				// 开始任务
 				$.ajax({
 					url : "/task/createWebCrawler",
@@ -164,7 +174,7 @@
 					error : function(data) {
 						alert('网络通讯异常！');
 					}
-				}); 
+				});
 			}else {
 				// db 采集任务创建
 				var dbType = $("#dbType").val();
