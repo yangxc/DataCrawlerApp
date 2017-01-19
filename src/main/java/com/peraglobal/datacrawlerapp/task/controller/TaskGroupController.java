@@ -1,6 +1,8 @@
 package com.peraglobal.datacrawlerapp.task.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -82,14 +84,16 @@ public class TaskGroupController {
 	 * @return
 	 */
 	@RequestMapping(value="/createTaskGroup", method=RequestMethod.POST)
-	public @ResponseBody String createTaskGroup(@RequestBody TaskGroup taskGroup) {
+	public @ResponseBody Map<String, Object> createTaskGroup(@RequestBody TaskGroup taskGroup) {
+		Map<String, Object> reulst = new HashMap<String, Object>();
 		try {
 			taskGroupService.createTaskGroup(taskGroup);
+			reulst.put("success", "true");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			reulst.put("success", "false");
 		}
-		return "success";
+		return reulst;
 	}
 	
 	/**
@@ -100,13 +104,16 @@ public class TaskGroupController {
 	 * @since 1.0
 	 */
 	@RequestMapping(value = "/removeTaskGroup", method = RequestMethod.POST)
-	public @ResponseBody String removeTaskGroup(@RequestBody String groupId) {
+	public @ResponseBody Map<String, Object> removeTaskGroup(@RequestBody String groupId) {
+		Map<String, Object> reulst = new HashMap<String, Object>();
 		try {
 			taskGroupService.removeTaskGroup(groupId);
+			reulst.put("success", "true");
 		} catch (Exception e) {
-			return "error";
+			e.printStackTrace();
+			reulst.put("success", "false");
 		}
-		return "success";
+		return reulst;
 	}
 	
 	/**
@@ -125,13 +132,16 @@ public class TaskGroupController {
 	 * @return
 	 */
 	@RequestMapping(value="/modifyTaskGroup", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String modifyTaskGroup(@RequestBody TaskGroup taskGroup) {
+	public @ResponseBody Map<String, Object> modifyTaskGroup(@RequestBody TaskGroup taskGroup) {
+		Map<String, Object> reulst = new HashMap<String, Object>();
 		try {
 			taskGroupService.modifyTaskGroup(taskGroup);
+			reulst.put("success", "true");
 		} catch (Exception e) {
-			return "error";
+			e.printStackTrace();
+			reulst.put("success", "false");
 		}
-		return "success";
+		return reulst;
 	}
 	
 }

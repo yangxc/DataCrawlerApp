@@ -7,7 +7,6 @@
 <script th:inline="javascript">
 	/*<![CDATA[*/
 	$(document).ready(function () {
-		
 		// 删除任务分组
 		$("#deleteGroup").click(function () {
 			var groupIds = '';
@@ -15,7 +14,8 @@
 				groupIds += $(this).val() + ',';
 			});
 			if (groupIds == '') {
-				alert("Error:no one selected.");
+				alert('请选择组名称！');
+				return;
 			} else {
 				// 开始任务
 				$.ajax({
@@ -26,14 +26,18 @@
 					dataType : "json",
 					contentType : "application/json; charset=utf-8",
 					data : groupIds,
-					success : function(msg) {
+					success : function(data) {
+						if (data['success'] == 'true') {
+							alert('删除成功！');
+							window.location.reload();
+						} else {
+							alert('删除失败！');
+						}
 					},
-					error : function(msg) {
-						//200的响应也有可能被认定为error，responseText中没有Message部分
+					error : function(data) {
+						alert('网络通讯异常！');
 					}
 				});
-				alert('删除成功！');
-				window.location.reload();
 			}
 		});
 		
@@ -44,7 +48,8 @@
 				taskIds += $(this).val() + ',';
 			});
 			if (taskIds == '') {
-				alert("Error:no one selected.");
+				alert('请选择任务名称！');
+				return;
 			} else {
 				// 开始任务
 				$.ajax({
@@ -56,12 +61,17 @@
 					contentType : "application/json; charset=utf-8",
 					data : taskIds,
 					success : function(data) {
+						if (data['success'] == 'true') {
+							alert('开始成功！');
+							window.location.reload();
+						} else {
+							alert('开始失败！');
+						}
 					},
 					error : function(data) {
+						alert('网络通讯异常！');
 					}
 				});
-				alert('开始成功!');
-				window.location.reload();
 			}
 		});
 
@@ -72,7 +82,8 @@
 				taskIds += $(this).val() + ',';
 			});
 			if (taskIds == '') {
-				alert("Error:no one selected.");
+				alert('请选择任务名称！');
+				return;
 			} else {
 				// 停止任务
 				$.ajax({
@@ -84,12 +95,17 @@
 					contentType : "application/json; charset=utf-8",
 					data : taskIds,
 					success : function(data) {
+						if (data['success'] == 'true') {
+							alert('停止成功！');
+							window.location.reload();
+						} else {
+							alert('停止失败！');
+						}
 					},
 					error : function(data) {
+						alert('网络通讯异常！');
 					}
 				});
-				alert('停止成功!');
-				window.location.reload();
 			}
 		});
 
@@ -101,7 +117,8 @@
 				taskIds += $(this).val() + ',';
 			});
 			if (taskIds == '') {
-				alert("Error:no one selected.");
+				alert('请选择任务名称！');
+				return;
 			} else {
 				$.ajax({
 					url : "/task/removeTask",
@@ -110,16 +127,19 @@
 					contentType : "application/json; charset=utf-8",
 					data : taskIds,
 					success : function(data) {
-						alert(data);
+						if (data['success'] == 'true') {
+							alert('删除成功！');
+							window.location.reload();
+						} else {
+							alert('删除失败！');
+						}
 					},
 					error : function(data) {
+						alert('网络通讯异常！');
 					}
 				});
-				alert('删除成功！');
-				window.location.reload();
 			}
 		});
-
 	});
 	/*]]>*/
 	</script>

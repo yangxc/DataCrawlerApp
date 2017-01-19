@@ -2,12 +2,17 @@
 <script th:inline="javascript">
 	$(document).ready(function() {
 		$("#saveGroup").click(function() {
-
 			var parentId = $("#parentId").val();
 			var groupName = $("#groupName").val();
 			if (groupName == '') {
-				alert("Error:no one selected.");
+				alert("请输入任务组名称！");
+				return;
 			} else {
+				// 拼写json字符串
+				var buffer = "{";
+				buffer += "\"parentId\":\"" + parentId + "\",";
+				buffer += "\"groupName\":\"" + groupName + "\"";
+				buffer += "}";
 				// 开始任务
 				$.ajax({
 					url : "/taskgroup/createTaskGroup",
@@ -16,19 +21,20 @@
 					type : "POST",
 					dataType : "json",
 					contentType : "application/json; charset=utf-8",
-					data : JSON.stringify({
-						'parentId' : parentId,
-						'groupName' : groupName
-					}),
-					success : function(msg) {
+					data : buffer,
+					success : function(data) {
+						if (data['success'] == 'true') {
+							alert('创建成功！');
+							window.location.reload();
+						} else {
+							alert('创建失败！');
+						}
 					},
-					error : function(msg) {
+					error : function(data) {
+						alert('网络通讯异常！');
 					}
 				});
-				alert('添加成功！');
-				window.location.reload();
 			}
-
 		});
 	});
 </script>

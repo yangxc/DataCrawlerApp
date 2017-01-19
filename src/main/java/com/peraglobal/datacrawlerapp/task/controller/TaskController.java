@@ -1,6 +1,8 @@
 package com.peraglobal.datacrawlerapp.task.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -103,14 +105,16 @@ public class TaskController {
 	 * @return
 	 */
 	@RequestMapping(value="/createWebCrawler", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String createWebCrawler(@RequestBody WebCrawler webCrawler) {
+	public @ResponseBody Map<String, Object> createWebCrawler(@RequestBody WebCrawler webCrawler) {
+		Map<String, Object> reulst = new HashMap<String, Object>();
 		try {
 			taskService.createWebCrawler(webCrawler);
+			reulst.put("success", "true");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			reulst.put("success", "false");
 		}
-		return "success";
+		return reulst;
 	}
 	
 	/**
@@ -118,14 +122,16 @@ public class TaskController {
 	 * @return
 	 */
 	@RequestMapping(value="/createDbCrawler", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String createDbCrawler(@RequestBody DbCrawler dbCrawler) {
+	public @ResponseBody Map<String, Object> createDbCrawler(@RequestBody DbCrawler dbCrawler) {
+		Map<String, Object> reulst = new HashMap<String, Object>();
 		try {
 			taskService.createDbCrawler(dbCrawler);
+			reulst.put("success", "true");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			reulst.put("success", "false");
 		}
-		return "success";
+		return reulst;
 	}
 	
 	/**
@@ -133,14 +139,16 @@ public class TaskController {
 	 * @return
 	 */
 	@RequestMapping(value="/removeTask", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String removeTask(@RequestBody String taskIds) {
+	public @ResponseBody Map<String, Object> removeTask(@RequestBody String taskIds) {
+		Map<String, Object> reulst = new HashMap<String, Object>();
 		try {
 			taskService.removeTask(taskIds);
+			reulst.put("success", "true");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			reulst.put("success", "false");
 		}
-		return "success";
+		return reulst;
 	}
 	
 	/**
@@ -148,14 +156,16 @@ public class TaskController {
 	 * @return
 	 */
 	@RequestMapping(value="/startTask", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String startTask(@RequestBody String taskIds) {
+	public @ResponseBody Map<String, Object> startTask(@RequestBody String taskIds) {
+		Map<String, Object> reulst = new HashMap<String, Object>();
 		try {
 			taskService.startTask(taskIds);
+			reulst.put("success", "true");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			reulst.put("success", "false");
 		}
-		return "success";
+		return reulst;
 	}
 	
 	/**
@@ -163,14 +173,16 @@ public class TaskController {
 	 * @return
 	 */
 	@RequestMapping(value="/stopTask", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String stopTask(@RequestBody String taskIds) {
+	public @ResponseBody Map<String, Object> stopTask(@RequestBody String taskIds) {
+		Map<String, Object> reulst = new HashMap<String, Object>();
 		try {
 			taskService.stopTask(taskIds);
+			reulst.put("success", "true");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error";
+			reulst.put("success", "false");
 		}
-		return "success";
+		return reulst;
 	}
 	
 	/**

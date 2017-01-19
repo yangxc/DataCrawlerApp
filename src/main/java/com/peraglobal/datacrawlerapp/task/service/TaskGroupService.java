@@ -86,7 +86,6 @@ public class TaskGroupService {
 	 * @param groupId 组 ID
 	 */
 	public void removeTaskGroup(String groupId) {
-		
 		String[] groupIds = groupId.split(",");
 		for (int i = 0; i < groupIds.length; i++) {
 			if (groupIds[i] != null) {
@@ -94,10 +93,6 @@ public class TaskGroupService {
 				restTemplate.delete(url);
 			}
 		}
-		
-		
 	}
-
-	
 	
 }

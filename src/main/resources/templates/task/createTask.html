@@ -15,206 +15,15 @@
 			$("#db_div").show();
 		});
 		
-		// 数据库连接
-		$("#btn_connection").click(function () {
-			// db 采集任务创建
-			var db_type = $("#db_type").val();
-			var db_id = $("#db_id").val();
-			var db_name = $("#db_name").val();
-			var db_port = $("#db_port").val();
-			var db_user = $("#db_user").val();
-			var db_password = $("#db_password").val();
-			
-			// 开始任务
-			$.ajax({
-				url : "/task/getTables",
-				cache: false,
-				async: false,
-				type : "POST",
-				dataType : "json",
-				contentType : "application/json; charset=utf-8",
-				data: JSON.stringify({ 
-					'type': db_type,
-					'url': 'jdbc:mysql://'+ db_id + ':' + db_port + '/' + db_name,
-					'user': db_user,
-					'password': db_password,
-					'driver': 'com.mysql.jdbc.Driver'
-				}),
-				success : function(msg) {
-					if (msg != null) {
-						for (var i=0;i<msg.length;i++) {
-							$("#db_tables").append("<option value='"+msg[i]+"'>"+msg[i]+"</option>");
-						}
-					}
-				},
-				error : function(msg) {
-					alert('连接失败！');
-				}
-			}); 
-			
-		});
-		
-		// 表选择加载列属性
-		$("#db_tables").change(function () {
-			// db 采集任务创建
-			var db_type = $("#db_type").val();
-			var db_id = $("#db_id").val();
-			var db_name = $("#db_name").val();
-			var db_port = $("#db_port").val();
-			var db_user = $("#db_user").val();
-			var db_password = $("#db_password").val();
-			var db_tables = $("#db_tables").val();
-			// 开始任务
-			$.ajax({
-				url : "/task/getFields",
-				cache: false,
-				async: false,
-				type : "POST",
-				dataType : "json",
-				contentType : "application/json; charset=utf-8",
-				data: JSON.stringify({ 
-					'type': db_type,
-					'url': 'jdbc:mysql://'+ db_id + ':' + db_port + '/' + db_name,
-					'user': db_user,
-					'password': db_password,
-					'driver': 'com.mysql.jdbc.Driver',
-					'tables': {
-						'name': db_tables
-					}
-					
-				}),
-				success : function(msg) {
-					if (msg != null) {
-						$("input[name='db_checkbox']").attr("checked","true"); 
-						for (var i=0;i<msg.length;i++) {
-							var tr = "<tr>"
-								+"<td><input type='checkbox' name='db_field_name' checked='checked' /></td>"
-								+"<td><input type='text' name='db_field_as' class='form-control' value='"+msg[i]+"' /></td>"
-								+"<td>"+msg[i]+"</td>"
-								+"</tr>"
-							$("#db_tbody_add").append(tr);
-						}
-					}
-				},
-				error : function(msg) {
-					alert('连接失败！');
-				}
-			}); 
-			
-		});
-		
-		// 保存功能
-		$("#saveTask").click(function () {
-			var groupId = $("#groupId").val();
-			var groupName = $("#groupId").find("option:selected").text();
-			var taskName = $("#taskName").val();
-			// 获得创建任务的类型：1.web；2.db
-			var crawlerType = $("input[name=crawlerType]:checked").val();
-			if (crawlerType == '1') {
-				
-				// web 采集任务创建
-				var web_url = $("#web_url").val();
-				
-				// 列表
-				var web_list_url = $("#web_list_url").val();
-				var web_list_url_type = $("#web_list_url_type").val();
-				
-				// 详情
-				var web_detail_url = $("#web_detail_url").val();
-				var web_detail_url_type = $("#web_detail_url_type").val();
-				
-				// 属性
-				var web_field_key = $("#web_field_key").val();
-				var web_field_text = $("#web_field_text").val();
-				var web_field_type = $("#web_field_type").val();
-				
-				
-				// 开始任务
-				$.ajax({
-					url : "/task/createWebCrawler",
-					cache: false,
-					async: false,
-					type : "POST",
-					dataType : "json",
-					contentType : "application/json; charset=utf-8",
-					data: JSON.stringify({ 
-						'crawlerName': taskName, 
-						'groupId': groupId,
-						'groupName': groupName,
-						'webRule':{
-							'url': web_url,
-							'listUrl':web_list_url,
-							'listUrlType':web_list_url_type,
-							'detailUrl':web_detail_url,
-							'detailUrlType':web_detail_url_type,
-							'webRuleFields': [
-								{
-									'fieldKey': web_field_key,
-									'fieldType': web_field_type,
-									'fieldText': web_field_text
-								}
-							]
-						}
-					}),
-					success : function(msg) {
-					},
-					error : function(msg) {
-					}
-				}); 
-				alert('添加成功！');
-			}else {
-				// db 采集任务创建
-				var db_type = $("#db_type").val();
-				var db_id = $("#db_id").val();
-				var db_name = $("#db_name").val();
-				var db_port = $("#db_port").val();
-				var db_user = $("#db_user").val();
-				var db_password = $("#db_password").val();
-				var db_tables = $("#db_tables").val();
-				
-				
-				// 开始任务
-				$.ajax({
-					url : "/task/createDbCrawler",
-					cache: false,
-					async: false,
-					type : "POST",
-					dataType : "json",
-					contentType : "application/json; charset=utf-8",
-					data: JSON.stringify({ 
-						'crawlerName': taskName, 
-						'groupId': groupId,
-						'groupName': groupName,
-						'dbConnection':{
-							'type': db_type,
-							'url': 'jdbc:mysql://'+ db_id + ':' + db_port + '/' + db_name,
-							'user': db_user,
-							'password': db_password,
-							'driver': 'com.mysql.jdbc.Driver',
-							'tables': {
-								'name': db_tables
-							}
-						}
-					}),
-					success : function(msg) {
-					},
-					error : function(msg) {
-					}
-				}); 
-				alert('添加成功！');
-			}
-			window.location.reload();
-		});
-		
 		// 增加一行
 		$("#web_but_add_row").click(function() {
 		    var row = 
 		    	"<div class='col-sm-2'></div>"
 				+"<div class='col-sm-2'>"
-				+"<input type='text' name='web_field_key' class='form-control' />"
+				+"<input type='text' name='webFieldKey' class='form-control' />"
 				+"</div>"
 				+"<div class='col-sm-4' style='padding-left: 0;'>"
-				+"<input type='text' name='web_field_text' style='width: 210px;' class='form-control' placeholder='请输规则内容' />"
+				+"<input type='text' name='webFieldText' style='width: 210px;' class='form-control' placeholder='请输规则内容' />"
 				+"</div>"
 				+"<div class='col-sm-2'>"
 				+"<select class='form-control' style='width: 100px; padding-left: 0;'>"
@@ -229,6 +38,179 @@
 			$("#web_div_add").append(row);
 		});
 		
+		// 获得DB规则Json串
+		function getConnection() {
+			var buffer = "{\"type\":\"" + $("#dbType").val() + "\",";
+			buffer += "\"url\":\"jdbc:mysql://" + $("#dbIp").val() + ":" + $("#dbPort").val() + "/" + $("#dbName").val() + "\",";
+			buffer += "\"user\":\"" + $("#dbUser").val() + "\",";
+			buffer += "\"password\":\"" + $("#dbPassword").val() + "\",";
+			buffer += "\"driver\":\"com.mysql.jdbc.Driver\",";
+			buffer += "\"tables\":{\"name\":\"" + $("#db_tables").val() + "\"}";
+			buffer += "}";
+			return buffer;
+		}
+		
+		// 数据库连接
+		$("#btn_connection").click(function () {
+			var buffer = getConnection();
+			// 开始任务
+			$.ajax({
+				url : "/task/getTables",
+				cache: false,
+				async: false,
+				type : "POST",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8",
+				data: buffer,
+				success : function(data) {
+					if (data != null) {
+						for (var i=0;i<data.length;i++) {
+							$("#db_tables").append("<option value='"+data[i]+"'>"+data[i]+"</option>");
+						}
+					}
+				},
+				error : function(data) {
+					alert('网络通讯异常！');
+				}
+			}); 
+		});
+		
+		// 表选择加载列属性
+		$("#db_tables").change(function () {
+			var buffer = getConnection();
+			// 开始任务
+			$.ajax({
+				url : "/task/getFields",
+				cache: false,
+				async: false,
+				type : "POST",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8",
+				data: buffer,
+				success : function(data) {
+					if (data != null) {
+						$("input[name='db_checkbox']").attr("checked","true"); 
+						for (var i=0;i<data.length;i++) {
+							var tr = "<tr>"
+								+"<td><input type='checkbox' name='dbFieldName' checked='checked' /></td>"
+								+"<td><input type='text' name='dbFieldAs' class='form-control' value='"+data[i]+"' /></td>"
+								+"<td>"+data[i]+"</td>"
+								+"</tr>"
+							$("#db_tbody_add").append(tr);
+						}
+					}
+				},
+				error : function(data) {
+					alert('网络通讯异常！');
+				}
+			}); 
+		});
+		
+		// 保存功能
+		$("#saveTask").click(function () {
+			var groupId = $("#groupId").val();
+			var groupName = $("#groupId").find("option:selected").text();
+			var taskName = $("#taskName").val();
+			// 验证任务名称
+			if (taskName == '') {
+				alert('请输入任务名称！');
+				return;
+			}
+			// 获得创建任务的类型：1.web；2.db
+			var crawlerType = $("input[name=crawlerType]:checked").val();
+			if (crawlerType == '1') {
+				// 拼写json字符串
+				var buffer = "{";
+				buffer += "\"groupId\":\"" + groupId + "\",";
+				buffer += "\"groupName\":\"" + groupName + "\",";
+				buffer += "\"crawlerName\":\"" + taskName + "\",";
+				// 添加web规则
+				buffer += "\"webRule\":{";
+				buffer += "\"url\":\"" + $("#webUrl").val() + "\",";
+				// 列表
+				buffer += "\"listUrl\":\"" + $("#webListUrl").val() + "\",";
+				buffer += "\"listUrlType\":\"" + $("#webListUrlType").val() + "\",";
+				// 详情
+				buffer += "\"detailUrl\":\"" + $("#webDetailUrl").val() + "\",";
+				buffer += "\"detailUrlType\":\"" + $("#webDetailUrlType").val() + "\",";
+				buffer += "\"webRuleFields\":[";
+				// 页面元素规则
+				// 属性
+				//var webFieldKey = $("#webFieldKey").val();
+				//var webFieldText = $("#webFieldText").val();
+				//var webFieldType = $("#webFieldType").val();
+				
+				buffer += "]";
+				buffer += "}";
+				buffer += "}";
+				
+				// 开始任务
+				$.ajax({
+					url : "/task/createWebCrawler",
+					cache: false,
+					async: false,
+					type : "POST",
+					dataType : "json",
+					contentType : "application/json; charset=utf-8",
+					data: buffer,
+					success : function(data) {
+						if (data['success'] == 'true') {
+							alert('创建成功！');
+							window.location.reload();
+						} else {
+							alert('创建失败！');
+						}
+					},
+					error : function(data) {
+						alert('网络通讯异常！');
+					}
+				}); 
+			}else {
+				// db 采集任务创建
+				var dbType = $("#dbType").val();
+				var dbId = $("#dbId").val();
+				var dbName = $("#dbName").val();
+				var dbPort = $("#dbPort").val();
+				var dbUser = $("#dbUser").val();
+				var dbPassword = $("#dbPassword").val();
+				var dbTables = $("#dbTables").val();
+				// 开始任务
+				$.ajax({
+					url : "/task/createDbCrawler",
+					cache: false,
+					async: false,
+					type : "POST",
+					dataType : "json",
+					contentType : "application/json; charset=utf-8",
+					data: JSON.stringify({ 
+						'crawlerName': taskName, 
+						'groupId': groupId,
+						'groupName': groupName,
+						'dbConnection':{
+							'type': dbType,
+							'url': 'jdbc:mysql://'+ dbId + ':' + dbPort + '/' + dbName,
+							'user': dbUser,
+							'password': dbPassword,
+							'driver': 'com.mysql.jdbc.Driver',
+							'tables': {
+								'name': dbTables
+							}
+						}
+					}),
+					success : function(data) {
+						if (data['success'] == 'true') {
+							alert('创建成功！');
+							window.location.reload();
+						} else {
+							alert('创建失败！');
+						}
+					},
+					error : function(data) {
+						alert('网络通讯异常！');
+					}
+				}); 
+			}
+		});
 	});
 	/*]]>*/
 </script>
@@ -306,7 +288,7 @@
 						<label for="lastname" class="col-sm-2 control-label"
 							style="font-size: 12px; color: #808080">起始网址：</label>
 						<div class="col-sm-10">
-							<input type="text" id="web_url" name="web_url"
+							<input type="text" id="webUrl" name="webUrl"
 								class="form-control" placeholder="请输入网址规则" style="width: 340px;" />
 						</div>
 					</div>
@@ -318,13 +300,13 @@
 							style="font-size: 12px; color: #808080; padding-left: 0; padding-right: 0;">列表网址规则：</label>
 						<div class="col-sm-7">
 							<div class="col-sm-7" style="padding-left: 0;">
-								<input type="text" id="web_list_url" name="web_list_url"
+								<input type="text" id="webListUrl" name="webListUrl"
 									class="form-control" placeholder="请输入网址规则"
 									style="width: 340px;" />
 							</div>
 						</div>
 						<div class="col-sm-3">
-							<select id="web_list_url_type" name="web_list_url_type"
+							<select id="webListUrlType" name="webListUrlType"
 								class="form-control" style="width: 110px; padding-left: 0;">
 								<option value="xpath">XPATH</option>
 								<option value="regex">正则表达式</option>
@@ -338,13 +320,13 @@
 							style="font-size: 12px; color: #808080; padding-left: 0; padding-right: 0;">详情网址规则：</label>
 						<div class="col-sm-7">
 							<div class="col-sm-7" style="padding-left: 0;">
-								<input type="text" id="web_detail_url" name="web_detail_url"
+								<input type="text" id="webDetailUrl" name="webDetailUrl"
 									class="form-control" placeholder="请输入详情网址规则"
 									style="width: 340px;" />
 							</div>
 						</div>
 						<div class="col-sm-3">
-							<select id="web_detail_url_type" name="web_detail_url_type"
+							<select id="webDetailUrlType" name="webDetailUrlType"
 								class="form-control" style="width: 110px; padding-left: 0;">
 								<option value="xpath">XPATH</option>
 								<option value="regex">正则表达式</option>
@@ -370,15 +352,15 @@
 					<div class="form-group" id="web_div_add">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-2">
-							<input type="text" id="web_field_key" name="web_field_key"
+							<input type="text" id="webFieldKey" name="webFieldKey"
 								class="form-control" placeholder="请输规则内容" />
 						</div>
 						<div class="col-sm-4" style="padding-left: 0;">
-							<input type="text" id="web_field_text" name="web_field_text"
+							<input type="text" id="webFieldText" name="webFieldText"
 								style="width: 210px;" class="form-control" placeholder="请输规则内容" />
 						</div>
 						<div class="col-sm-2">
-							<select id="web_field_type" name="web_field_type"
+							<select id="webFieldType" name="webFieldType"
 								class="form-control" style="width: 100px; padding-left: 0;">
 								<option value="xpath">XPATH</option>
 								<option value="regex">正则表达式</option>
@@ -533,7 +515,7 @@
 						<label for="lastname" class="col-sm-2 control-label"
 							style="font-size: 12px; color: #808080; padding-left: 0;">数据库类型：</label>
 						<div class="col-sm-10">
-							<select id="db_type" name="db_type" class="form-control"
+							<select id="dbType" name="dbType" class="form-control"
 								style="width: 200px;">
 								<option value="mysql">Mysql</option>
 								<option value="oracle">Oracle</option>
@@ -547,8 +529,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">服务器地址：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" id="db_id" name="db_id" class="form-control"
-									placeholder="请输入数据库链接" value="127.0.0.1" />
+								<input type="text" id="dbIp" name="dbIp" class="form-control"
+									value="127.0.0.1" />
 							</div>
 						</div>
 					</div>
@@ -558,8 +540,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">数据库名称：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" id="db_name" name="db_name"
-									class="form-control" placeholder="请输入数据库链接" value="test" />
+								<input type="text" id="dbName" name="dbName"
+									class="form-control" value="test" />
 							</div>
 						</div>
 					</div>
@@ -569,8 +551,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">端口号：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" id="db_port" name="db_port"
-									class="form-control" placeholder="请输入数据库链接" value="3306" />
+								<input type="text" id="dbPort" name="dbPort"
+									class="form-control" value="3306" />
 							</div>
 						</div>
 					</div>
@@ -580,8 +562,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">用户名：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" id="db_user" name="db_user"
-									class="form-control" placeholder="请输入用户名" value="root" />
+								<input type="text" id="dbUser" name="dbUser"
+									class="form-control" value="root" />
 							</div>
 						</div>
 					</div>
@@ -591,8 +573,8 @@
 							style="font-size: 12px; color: #808080; padding-left: 0;">密码：</label>
 						<div class="col-sm-10">
 							<div class="col-sm-10" style="padding-left: 0;">
-								<input type="text" id="db_password" name="db_password"
-									class="form-control" placeholder="请输入密码" value="root" />
+								<input type="text" id="dbPassword" name="dbPassword"
+									class="form-control" value="root" />
 							</div>
 						</div>
 					</div>
