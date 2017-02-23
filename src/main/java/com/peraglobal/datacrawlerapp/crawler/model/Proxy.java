@@ -3,7 +3,7 @@ package com.peraglobal.datacrawlerapp.crawler.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Proxy1 implements Serializable {
+public class Proxy implements Serializable {
 	
 	/**
 	 * 
