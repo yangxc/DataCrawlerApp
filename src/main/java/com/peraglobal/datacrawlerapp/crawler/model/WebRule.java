@@ -3,6 +3,16 @@ package com.peraglobal.datacrawlerapp.crawler.model;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ *  <code>Proxy.java</code>
+ *  <p>功能：互联网采集规则
+ *  
+ *  <p>Copyright 安世亚太 2017 All right reserved.
+ *  @author yongqian.liu	
+ *  @version 1.0
+ *  @see 2017-2-24
+ *  </br>最后修改人 无
+ */
 public class WebRule implements Serializable {
 
 	private static final long serialVersionUID = -8606521947569860193L;
@@ -56,6 +66,12 @@ public class WebRule implements Serializable {
 	 * @category 规则对象
 	 */
 	private List<WebRuleField> webRuleFields;
+	
+	/**
+	 * @category 附件下载规则
+	 */
+	private attachmentRule attachmentRule;
+	
 
 	public String getCoding() {
 		return coding;
@@ -135,6 +151,14 @@ public class WebRule implements Serializable {
 
 	public void setWebRuleFields(List<WebRuleField> webRuleFields) {
 		this.webRuleFields = webRuleFields;
+	}
+	
+	public attachmentRule getAttachmentRule() {
+		return attachmentRule;
+	}
+
+	public void setAttachmentRule(attachmentRule attachmentRule) {
+		this.attachmentRule = attachmentRule;
 	}
 	
 }

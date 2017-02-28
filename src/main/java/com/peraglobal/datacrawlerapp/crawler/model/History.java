@@ -1,6 +1,5 @@
 package com.peraglobal.datacrawlerapp.crawler.model;
 
-
 import java.io.Serializable;
 import java.util.Date;
 

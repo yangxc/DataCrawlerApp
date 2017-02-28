@@ -1,14 +1,53 @@
 package com.peraglobal.datacrawlerapp.crawler.model;
 
-public class DbConnection {
+import java.io.Serializable;
 
+/**
+ *  <code>DbConnection.java</code>
+ *  <p>功能:数据库连接类
+ *  
+ *  <p>Copyright 安世亚太 2016 All right reserved.
+ *  @author yongqian.liu	
+ *  @version 1.0
+ *  @see 2016-12-14
+ */
+public class DbConnection implements Serializable {
+
+	private static final long serialVersionUID = 3741021089502624197L;
+
+	/**
+	 * @category 名称
+	 */
 	private String name;
+	
+	/**
+	 * @category 驱动
+	 */
 	private String driver;
+	
+	/**
+	 * @category 地址
+	 */
 	private String url;
+	
+	/**
+	 * @category 用户名
+	 */
 	private String user;
+	
+	/**
+	 * @category 密码
+	 */
 	private String password;
+	
+	/**
+	 * @category 类型
+	 */
 	private String type;
 	
+	/**
+	 * @category 表信息
+	 */
 	private DbTable tables;
 	
 	public DbTable getTables() {

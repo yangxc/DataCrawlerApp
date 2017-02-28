@@ -1,5 +1,6 @@
 package com.peraglobal.datacrawlerapp.crawler.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +10,9 @@ import java.util.Date;
  *  @version 1.0
  *  @see 2016-12-14
  */
-public class Crawler {
+public class Crawler implements Serializable {
+
+	private static final long serialVersionUID = -720798240512865428L;
 
 	/**
 	 * @category 采集 ID

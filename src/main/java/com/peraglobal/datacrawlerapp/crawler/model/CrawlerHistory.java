@@ -1,18 +1,24 @@
 package com.peraglobal.datacrawlerapp.crawler.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- *  <code>Crawler.java</code>
+ *  <code>CrawlerHistory.java</code>
  *  <p>功能:定义顶层爬虫对象（包括运行履历和爬虫规则）
  *  
  *  <p>Copyright 安世亚太 2016 All right reserved.
- *  @author xiaochen.yang	
+ *  @author yongqian.liu	
  *  @version 1.0
  *  @see 2016-12-14
  */
-public class CrawlerHistory {
+public class CrawlerHistory implements Serializable {
 	
+	private static final long serialVersionUID = -6298366861523705057L;
+
+	/**
+	 * @category ID
+	 */
 	private String id;
 
 	/**

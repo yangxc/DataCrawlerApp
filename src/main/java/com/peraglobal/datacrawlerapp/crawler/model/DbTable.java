@@ -1,11 +1,34 @@
 package com.peraglobal.datacrawlerapp.crawler.model;
 
-
+import java.io.Serializable;
 import java.util.List;
 
-public class DbTable {
+/**
+ *  <code>DbTable.java</code>
+ *  <p>功能:数据库表
+ *  
+ *  <p>Copyright 安世亚太 2016 All right reserved.
+ *  @author yongqian.liu	
+ *  @version 1.0
+ *  @see 2016-12-14
+ */
+public class DbTable implements Serializable {
+	
+	private static final long serialVersionUID = -26282454940127085L;
+	
+	/**
+	 * @category 表名称
+	 */
 	private String name;
+	
+	/**
+	 * @category 查询条件
+	 */
 	private String query;
+	
+	/**
+	 * @category 主键
+	 */
 	private String pk;
 	
 	private List<DbField> fields;

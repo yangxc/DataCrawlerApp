@@ -3,11 +3,18 @@ package com.peraglobal.datacrawlerapp.crawler.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ *  <code>Proxy.java</code>
+ *  <p>功能：互联网采集代理
+ *  
+ *  <p>Copyright 安世亚太 2017 All right reserved.
+ *  @author yongqian.liu	
+ *  @version 1.0
+ *  @see 2017-2-24
+ *  </br>最后修改人 无
+ */
 public class Proxy implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6423766042544908834L;
 
 	/**

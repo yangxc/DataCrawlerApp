@@ -1,11 +1,31 @@
 package com.peraglobal.datacrawlerapp.crawler.model;
 
-public class WebCrawler extends Crawler {
+import java.io.Serializable;
 
+/**
+ *  <code>Proxy.java</code>
+ *  <p>功能：互联网采集
+ *  
+ *  <p>Copyright 安世亚太 2017 All right reserved.
+ *  @author yongqian.liu	
+ *  @version 1.0
+ *  @see 2017-2-24
+ *  </br>最后修改人 无
+ */
+public class WebCrawler extends Crawler implements Serializable {
+
+	private static final long serialVersionUID = -1139979303186216422L;
+
+	/**
+	 * @category 采集规则
+	 */
 	private WebRule webRule;
 	
+	/**
+	 * @category 代理
+	 */
 	private Proxy proxy;
-
+	
 
 	public WebRule getWebRule() {
 		return webRule;

@@ -2,6 +2,16 @@ package com.peraglobal.datacrawlerapp.crawler.model;
 
 import java.io.Serializable;
 
+/**
+ *  <code>Proxy.java</code>
+ *  <p>功能：互联网采集规则属性
+ *  
+ *  <p>Copyright 安世亚太 2017 All right reserved.
+ *  @author yongqian.liu	
+ *  @version 1.0
+ *  @see 2017-2-24
+ *  </br>最后修改人 无
+ */
 public class WebRuleField implements Serializable {
 
 	private static final long serialVersionUID = -1156028056553870021L;
