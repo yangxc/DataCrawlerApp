@@ -154,8 +154,7 @@
 				buffer += "]";
 				
 				// 拼写附件
-				var web_attachment = $('input:radio[name="web_attachment"]:checked').val();
-				if(web_attachment) {
+				if($('#web_attachment').is(':checked')) {
 					var attachment = $("#attachment").val();
 					var attachmentType = $("select[name='attachmentType']").val();
 					buffer += ",\"attachmentRule\":{";
