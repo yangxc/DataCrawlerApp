@@ -40,11 +40,15 @@
 						新建<b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="#" data-toggle="modal" data-target="#myModal">新建采集</a></li>
-						<li><a href="#" data-toggle="modal" data-target="#myModal3">新建转换</a></li>
-						<li><a href="#" data-toggle="modal" data-target="#myModal4">新建传输</a></li>
-						<li><a href="/createGroup" data-toggle="modal"
+						<li><a th:href="@{/taskgroup/createTaskGroupPage(groupId=${groupId})}" data-toggle="modal"
 							data-target="#theModal">新建分组</a></li>
+						<li><a th:href="@{/task/createTaskPage(groupId=${groupId})}" data-toggle="modal" 
+							data-target="#theModal">新建采集</a></li>
+						<li><a th:href="@{/dataprocess/createDataProcessPage(groupId=${groupId})}" data-toggle="modal"
+							data-target="#theModal">新建转换</a></li>
+						<li><a th:href="@{/dataprocess/createTaskPage(groupId=${groupId})}" data-toggle="modal"
+							data-target="#theModal">新建传输</a></li>
+						
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <span
