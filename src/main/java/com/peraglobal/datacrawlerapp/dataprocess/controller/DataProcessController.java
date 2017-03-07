@@ -1,4 +1,4 @@
-package com.peraglobal.datacrawlerapp.task.controller;
+package com.peraglobal.datacrawlerapp.dataprocess.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,14 +42,6 @@ public class DataProcessController {
 		return "/dataprocess/createDataProcess";
 	}
 	
-	/**
-	 * 返回任务分组创建页面
-	 * @return
-	 */
-	@RequestMapping(value="/createTaskPage", method=RequestMethod.GET)
-	public String createTaskCrawler(Model model, @RequestParam(value="groupId") String groupId) {
-		model.addAttribute("groupId", groupId);
-		model.addAttribute("groups", taskGroupService.getTaskGroupList());
-		return "/task/createTask";
-	}
+	
+	
 }

@@ -215,4 +215,19 @@ public class TaskController {
 		return null;
 	}
 	
+	
+	/**
+	 * 根据 groupId 查询任务集合
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value="/getTasksByGroupId", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List getTasksByGroupId(String groupId) {
+		try {
+			return taskService.getTasksByGroupId(groupId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
