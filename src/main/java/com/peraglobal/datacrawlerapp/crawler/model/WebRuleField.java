@@ -17,11 +17,6 @@ public class WebRuleField implements Serializable {
 	private static final long serialVersionUID = -1156028056553870021L;
 	
 	/**
-	 * @category page 类型：addTargetRequests，putField
-	 */
-	private String type;
-	
-	/**
 	 * @category key
 	 */
 	private String fieldKey;
@@ -36,13 +31,6 @@ public class WebRuleField implements Serializable {
 	 */
 	private String fieldText;
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 	
 	public String getFieldKey() {
 		return fieldKey;
