@@ -143,13 +143,11 @@
 					buffer += "{\"fieldKey\":\"" + $("input[name='webFieldKey']")[i].value + "\",";
 					buffer += "\"fieldText\":\"" + $("input[name='webFieldText']")[i].value + "\",";
 					buffer += "\"fieldType\":\"" + $("select[name='webFieldType']")[i].value + "\"";
-					alert(i);
 					if (i == (leng - 1)) {
 						buffer += "}";
 					} else {
 						buffer += "},";
 					}
-					
 				}
 				buffer += "]";
 				
