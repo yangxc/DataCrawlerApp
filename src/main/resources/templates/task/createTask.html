@@ -20,13 +20,13 @@
 		    var row = 
 		    	"<div class='col-sm-2'></div>"
 				+"<div class='col-sm-2'>"
-				+"<input type='text' name='webFieldKey' class='form-control' />"
+				+"<input type='text' id='webFieldKey' name='webFieldKey' class='form-control' placeholder='请输规则内容' />"
 				+"</div>"
 				+"<div class='col-sm-4' style='padding-left: 0;'>"
-				+"<input type='text' name='webFieldText' style='width: 210px;' class='form-control' placeholder='请输规则内容' />"
+				+"<input type='text' id='webFieldText' name='webFieldText' style='width: 210px;' class='form-control' placeholder='请输规则内容' />"
 				+"</div>"
 				+"<div class='col-sm-2'>"
-				+"<select class='form-control' style='width: 100px; padding-left: 0;'>"
+				+"<select  id='webFieldType' name='webFieldType' class='form-control' style='width: 100px; padding-left: 0;'>"
 				+"<option value='xpath'>XPATH</option>"
 				+"<option value='regex'>正则表达式</option>"
 				+"<option value='css'>CSS</option>"
@@ -138,19 +138,19 @@
 				// 页面元素规则
 				var leng = $("input[name='webFieldKey']").length;
 				for (var i = 0; i < leng; i ++) {
-					if (i == 0) {
-						buffer += "{";
-					} else {
-						buffer += ",{";
-					}
 					
 					// 添加属性规则
-					buffer += "\"fieldKey\":\"" + $("input[name='webFieldKey']")[i].value + "\",";
+					buffer += "{\"fieldKey\":\"" + $("input[name='webFieldKey']")[i].value + "\",";
 					buffer += "\"fieldText\":\"" + $("input[name='webFieldText']")[i].value + "\",";
 					buffer += "\"fieldType\":\"" + $("select[name='webFieldType']")[i].value + "\"";
-					buffer += "}";
+					alert(i);
+					if (i == (leng - 1)) {
+						buffer += "}";
+					} else {
+						buffer += "},";
+					}
+					
 				}
-				
 				buffer += "]";
 				
 				// 拼写附件
@@ -176,6 +176,7 @@
 				}
 				
 				buffer += "}";
+				alert(buffer);
 				// 开始任务
 				$.ajax({
 					url : "/task/createWebCrawler",
