@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,8 +27,13 @@ public class TaskService {
 	private final String dbServiceURL;
 	private final String webServiceURL;
 	private final String taskServiceURL;
-    
+	private final String TaskServiceName = "task-manager";
     @Autowired
+    private DiscoveryClient discoveryClient;
+    @Autowired
+    private LoadBalancerClient balancerClient;
+
+	@Autowired
     public TaskService(WebServiceProperties webServiceProperty) {
     	dbServiceURL = webServiceProperty.getDbService();
     	webServiceURL = webServiceProperty.getWebService();
@@ -75,12 +82,14 @@ public class TaskService {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Task> getTasksByTaskStatus(String status) {
-		String url = taskServiceURL;
+		// String url = taskServiceURL;
+		String url = getTaskManagerUri();
 		if ("all".equals(status)) { // 全部分类
 			url += "/task/getTasks/" + 0 + 1;
 		}else {
 			url += "/task/getTasksByState/" + status;
 		}
+		System.out.println("uri=" + url);
 		return restTemplate.getForEntity(url, List.class).getBody();
 	}
 	
@@ -95,7 +104,8 @@ public class TaskService {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Task> getTasks(int pageNo, int pageNum) {
-		String url = taskServiceURL + "/task/getTasks/" + pageNo + 1;
+		// String url = taskServiceURL + "/task/getTasks/" + pageNo + 1;
+        String url = getTaskManagerUri() + "/task/getTasks/" + pageNo + 1;
 		return restTemplate.getForEntity(url, List.class).getBody();
 	}
 
@@ -106,7 +116,8 @@ public class TaskService {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Task> getTasksByGroupId(String groupId) {
-		String url = taskServiceURL + "/task/getTaskList/" + groupId;
+//		String url = taskServiceURL + "/task/getTaskList/" + groupId;
+        String url = getTaskManagerUri() + "/task/getTaskList/" + groupId;
 		return restTemplate.getForEntity(url, List.class).getBody();
 	}
 	
@@ -128,7 +139,8 @@ public class TaskService {
 		task.setGroupName(webCrawler.getGroupName());
 		task.setStartCommand(webServiceURL + "/start");
 		task.setStopCommand(webServiceURL + "/stop");
-		url = taskServiceURL + "/task/createTask/";
+		// url = taskServiceURL + "/task/createTask/";
+        url = getTaskManagerUri() + "/task/createTask/";
 		restTemplate.postForEntity(url, task, String.class);
 	}
 
@@ -150,7 +162,8 @@ public class TaskService {
 		task.setGroupName(dbCrawler.getGroupName());
 		task.setStartCommand(dbServiceURL + "/start");
 		task.setStopCommand(dbServiceURL + "/stop");
-		url = taskServiceURL + "/task/createTask/";
+//		url = taskServiceURL + "/task/createTask/";
+        url = getTaskManagerUri() + "/task/createTask/";
 		restTemplate.postForEntity(url, task, String.class);
 	}
 	
@@ -164,7 +177,7 @@ public class TaskService {
 		for (String taskId : ids) {
 			if (taskId != null && !"".equals(taskId)) {
 				// 删除任务
-				String url = taskServiceURL + "/task/removeTask/" + taskId;
+				String url = getTaskManagerUri() + "/task/removeTask/" + taskId;
 				restTemplate.delete(url);
 				
 				// 删除 db
@@ -184,7 +197,7 @@ public class TaskService {
 	 * @return
 	 */
 	public boolean startTask(String taskIds) {
-		String url = taskServiceURL + "/task/start";
+		String url = getTaskManagerUri() + "/task/start";
 		String[] ids = taskIds.split(",");
 		for (String taskId : ids) {
 			if (taskId != null && !"".equals(taskId)) {
@@ -202,7 +215,7 @@ public class TaskService {
 	 * @return
 	 */
 	public boolean stopTask(String taskIds) {
-		String url = taskServiceURL + "/task/stop";
+		String url = getTaskManagerUri() + "/task/stop";
 		String[] ids = taskIds.split(",");
 		for (String taskId : ids) {
 			if (taskId != null && !"".equals(taskId)) {
@@ -254,4 +267,11 @@ public class TaskService {
 		String url = dbServiceURL + "/getFields/";
 		return (List)restTemplate.postForObject(url, dbConnection, List.class);
 	}
+
+	private String getTaskManagerUri() {
+	    String uri = balancerClient.choose("crawler-app").getUri().toString();
+	    return uri + "/taskmanager";
+	    //return discoveryClient.getInstances(TaskServiceName).get(0).getUri().toString() + "/taskmanager";
+        // return "http://task-manager" + "/taskmanager";
+    }
 }
